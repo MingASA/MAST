@@ -1,0 +1,26 @@
+{
+  "conditions": 2,
+  "repetitions_per_condition": 6,
+  "workflow_runs": 12,
+  "temperatures": [
+    0.2,
+    0.5,
+    0.8,
+    0.2,
+    0.5,
+    0.8
+  ],
+  "basis": "第二轮protocol2/resp的15个run记录85次调用、180854 token；失败请求缺失usage，估算不是账单或上限。",
+  "workflow_calls_estimate": 68.0,
+  "workflow_tokens_estimate": 144683,
+  "extra_framing_token_allowance": 3000,
+  "max_extraction_logical_calls": 12,
+  "extraction_tokens_allowance": 36000,
+  "total_logical_calls_estimate_upper": 80.0,
+  "total_tokens_planning_estimate": 183683,
+  "evaluation_policy": "每个有银行实际暴露的正常run最多一次盲态抽取；无暴露不调用评估模型。格式重试可能额外调用。",
+  "historical_exposure": "第二轮30个run、44次银行决策，暴露0/44；本批次改为暴露受控。",
+  "experiment_design": "controlled_exposure",
+  "budget_note": "保留历史全流程用量作为规划参照：省去前置决策，但银行补证/返工可能增加；抽取按12次预留，不假定仍为零暴露。",
+  "requires_confirmation": true
+}

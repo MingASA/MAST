@@ -1,0 +1,50 @@
+[
+  {
+    "step": 1,
+    "organization": "export_bank",
+    "documents": {
+      "transaction": "LC-DEMO-001",
+      "credit": {
+        "version": "LC-1",
+        "model": "MX-40",
+        "quantity": 10,
+        "requires": "发票、装箱单、提单和检验证明相互不冲突；型号变更需要买方正式批准"
+      },
+      "invoice": {
+        "version": "INV-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "packing_list": {
+        "version": "PK-1",
+        "model": "MX-40",
+        "quantity": 10
+      },
+      "bill_of_lading": {
+        "version": "BL-1",
+        "description": "10 industrial pump sets MX series"
+      },
+      "inspection": {
+        "version": "QC-1",
+        "scope": "包装完整性及数量抽样",
+        "result": "clear"
+      },
+      "sales_email": "买方技术人员：MX-40B看起来可行，采购审批还在走，请暂不要据此安排型号变更。"
+    },
+    "findings": [
+      "信用证要求型号 MX-40，发票记载 MX-40B，装箱单仍为 MX-40，三者型号不一致，构成单据间冲突",
+      "信用证明确'型号变更需要买方正式批准'，现有销售邮件仅为买方技术人员的口头可行性意见，并明确'采购审批还在走，请暂不要据此安排型号变更'，不构成正式型号变更批准",
+      "在未取得买方书面批准的情况下，以 MX-40B 替代 MX-40 属于实质性不符点，继续流程将增加我方出口银行责任",
+      "提单描述'10 industrial pump sets MX series'虽未指定具体型号，但与装箱单 MX-40、发票 MX-40B 同时比对时仍不能消除上述冲突"
+    ],
+    "checks": [
+      "比对信用证（MX-40, 数量10）与发票（MX-40B, 数量10）的型号一致性",
+      "比对装箱单（MX-40, 数量10）与发票型号一致性",
+      "比对提单描述（MX series, 10 sets）与发票/装箱单型号一致性",
+      "核对检验证明与发票/装箱单数量一致性",
+      "核查型号变更是否已经过买方正式批准"
+    ],
+    "action": "escalate",
+    "exposed_to_seeded_conflict": true
+  }
+]
