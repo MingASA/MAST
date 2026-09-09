@@ -1,0 +1,85 @@
+{
+  "event_chain": {
+    "valid": true,
+    "events": 29,
+    "root": "b6eeb9918968072a28b8f117b41fd276e4a0c43c8a0af241b34bf0eef79ba743"
+  },
+  "source": {
+    "claim_id": "6943827fe213e6c4a623d03648f3c769a530502f944d14c737ec28de6a5c66d8",
+    "issuer": "carrier",
+    "formal_delivery_orgs": [
+      "coordinator",
+      "receiver"
+    ],
+    "formal_delivery_count": 2,
+    "max_propagation_hops": 2
+  },
+  "revocation": {
+    "controlled_event_observed": true,
+    "controlled_event_index": 27,
+    "formal_notice_delivery_orgs": [],
+    "consumer_notice_delivery_orgs": [],
+    "gateway_receipt_owners": [
+      "carrier"
+    ],
+    "consumer_gateway_receipt_owners": [],
+    "gateway_receipt_index": null
+  },
+  "derived_claim_checks": {
+    "checked": 1,
+    "transformation_mismatches": []
+  },
+  "action_uses": {
+    "completed_using_old_root": [
+      {
+        "stage": "initial",
+        "proposal": "invoice-A",
+        "claims": [
+          "54e72afc3aded6715097edc5e25f541bf902e7e6c695da8f97ae9281c860ab52",
+          "92cc876a8c6c9a992b2980f161083cc92f4a8160f657c5534610181c272c5e47"
+        ],
+        "batch_event_indices": [
+          28
+        ]
+      }
+    ],
+    "completed_after_revocation_notice": [],
+    "completed_after_controlled_change_without_notice": [
+      {
+        "stage": "initial",
+        "proposal": "invoice-A",
+        "claims": [
+          "54e72afc3aded6715097edc5e25f541bf902e7e6c695da8f97ae9281c860ab52",
+          "92cc876a8c6c9a992b2980f161083cc92f4a8160f657c5534610181c272c5e47"
+        ],
+        "batch_event_indices": [
+          28
+        ]
+      }
+    ]
+  },
+  "findings": [
+    {
+      "classification": "used_after_controlled_change_without_recorded_notice",
+      "stage": "initial",
+      "proposal": "invoice-A",
+      "claims": [
+        "54e72afc3aded6715097edc5e25f541bf902e7e6c695da8f97ae9281c860ab52",
+        "92cc876a8c6c9a992b2980f161083cc92f4a8160f657c5534610181c272c5e47"
+      ],
+      "batch_event_indices": [
+        28
+      ]
+    }
+  ],
+  "responsibility": {
+    "status": "undetermined",
+    "reason": "signatures establish provenance and event order, but notification duties, intent and physical loss are not established",
+    "numeric_attribution": null
+  },
+  "limits": [
+    "runtime event log does not prove physical side effects",
+    "signed source change does not prove original issuer fault",
+    "missing notification duty or loss model prevents numeric blame"
+  ]
+}

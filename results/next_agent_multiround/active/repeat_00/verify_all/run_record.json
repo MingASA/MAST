@@ -1,0 +1,177 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "active",
+  "repeat": 0,
+  "policy": "verify_all",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "cf05be652468f859c3af92dd27257a0f2c06d166feb851c83da917b4d9b38fb9",
+      "full_input_hash": "8abdff2d9d99e423e7c2010e33073885f96f54186d33e4f24d1d224de9d5d0da",
+      "draft": {
+        "action": "proceed",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        },
+        "reason": "费用清单由 charge_manifest 指定两个组件 goods 与 freight，分别由供应商签名的 charge/goods=10000 分与承运商签名的 charge/freight=700 分支持，二者均以 CNY 计、来源金额未被改动；两者之和 10700 分完整覆盖清单且无遗漏组件，符合 generate total_charge 派生声明的提交条件。此处仅生成派生声明并提交运行时校验，不构成对账单的批准或放款。"
+      },
+      "usage": {
+        "total_tokens": 2048,
+        "prompt_tokens": 1918,
+        "completion_tokens": 130,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "575d8d9edcf857e0825b3274a8f70c7a9f29552d0ae61823e71dcce0399bdb79",
+      "full_input_hash": "e376ed15ce6a5b8b3e6d07f958fe89bbd1da8951580f1f2dea8cc1c3ddfe73c4",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "approve",
+            "claims": [
+              "402d0afc4de9e9265812cc1afb293fe4dc881642e7b96dc12642d2afa705147c",
+              "4c0586a0f9b1c67a966aa3a8262a913ac17147e83f5ec55d5c6cce9ed73e15bb"
+            ],
+            "reason": "订单A：buyer签发charge_manifest声明components为goods+freight；supplier签发charge/goods=10000分；carrier签发charge/freight=700分；coordinator签发total_charge=10700分（与10000+700一致）；buyer签发invoice_authorization批准approve_invoice且maximum_cents=11000，10700≤11000。所有签名通过且无findings。符合账单确认条件（仅确认，不付款不出库）。"
+          },
+          {
+            "id": "schedule-reference",
+            "action": "forward",
+            "claims": [
+              "0067326de09bd564d2d162ea94fbcd1e87d490c42a6aefa5db1aab2fa9299e13"
+            ],
+            "reason": "carrier签发的delivery_schedule为reference_only的低风险参考信息，签名通过且无findings，可转发下游。"
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 2743,
+        "prompt_tokens": 2467,
+        "completion_tokens": 276,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": false,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "invoice-A",
+          "operation": "approve_invoice",
+          "order": "A",
+          "claims": [
+            "402d0afc4de9e9265812cc1afb293fe4dc881642e7b96dc12642d2afa705147c",
+            "4c0586a0f9b1c67a966aa3a8262a913ac17147e83f5ec55d5c6cce9ed73e15bb"
+          ]
+        },
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "0067326de09bd564d2d162ea94fbcd1e87d490c42a6aefa5db1aab2fa9299e13"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "invoice-A",
+          "result": {
+            "simulated": true,
+            "proposal": "invoice-A",
+            "operation": "approve_invoice"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        },
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 5,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "invoice-A",
+      "claims": [
+        "402d0afc4de9e9265812cc1afb293fe4dc881642e7b96dc12642d2afa705147c",
+        "4c0586a0f9b1c67a966aa3a8262a913ac17147e83f5ec55d5c6cce9ed73e15bb"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "invoice-A",
+        "operation": "approve_invoice"
+      }
+    },
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "0067326de09bd564d2d162ea94fbcd1e87d490c42a6aefa5db1aab2fa9299e13"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": "4c0586a0f9b1c67a966aa3a8262a913ac17147e83f5ec55d5c6cce9ed73e15bb",
+  "old_root": "836dd0dbf72d17708d37f90228ec21653b6a89b2fa1847692a5f4b251777d4b5",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "836dd0dbf72d17708d37f90228ec21653b6a89b2fa1847692a5f4b251777d4b5",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 0,
+      "invalid": 0
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false
+}

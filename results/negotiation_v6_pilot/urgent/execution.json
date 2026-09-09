@@ -1,0 +1,157 @@
+{
+  "duplicate": false,
+  "receipt": {
+    "transaction": "PROCUREMENT-017",
+    "workflow_id": "4e2be9bfd78945af9cb34fccd1ca083f",
+    "plan_hash": "c82cb328cc4b628701c0c18e6726acaf18f943aa6fe5f65f8fbc7868f1473e57",
+    "plan": {
+      "transaction": "PROCUREMENT-017",
+      "model": "MX-40B",
+      "quantity": 10,
+      "shipments": [
+        {
+          "lot": "early",
+          "quantity": 4,
+          "dispatch_day": 1,
+          "service": "air",
+          "arrival_day": 2,
+          "cost": 1500
+        },
+        {
+          "lot": "later",
+          "quantity": 6,
+          "dispatch_day": 3,
+          "service": "bulk",
+          "arrival_day": 5,
+          "cost": 900
+        }
+      ]
+    },
+    "commitments": [
+      {
+        "body": {
+          "owner": "supplier",
+          "workflow_id": "4e2be9bfd78945af9cb34fccd1ca083f",
+          "scope": "delivery_supplier",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "shipments": [
+              {
+                "lot": "later",
+                "quantity": 6,
+                "dispatch_day": 3
+              },
+              {
+                "lot": "early",
+                "quantity": 4,
+                "dispatch_day": 1
+              }
+            ]
+          },
+          "sequence": 1,
+          "issued_at": 1788838629.1865366,
+          "expires_at": 1788838929.1865366,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "supplier",
+          "version": 1,
+          "bundle_hash": "500d2e03e68ec4d21efd01dbdeac0a669381f0a4d7508df5625c493467d04d41",
+          "checks": [
+            "delivery_supplier"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6bfea741826631a517cfd93a7451fd5b1133901239effa788e026a37d1cbe75d271435f34ef163b1ed015e064d9e9530b73da5f45b5fa2984a2696c6b81ec00d"
+        }
+      },
+      {
+        "body": {
+          "owner": "carrier",
+          "workflow_id": "4e2be9bfd78945af9cb34fccd1ca083f",
+          "scope": "delivery_carrier",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "shipments": [
+              {
+                "quantity": 4,
+                "dispatch_day": 1,
+                "service": "air",
+                "arrival_day": 2,
+                "cost": 1500
+              },
+              {
+                "quantity": 6,
+                "dispatch_day": 3,
+                "service": "bulk",
+                "arrival_day": 5,
+                "cost": 900
+              }
+            ]
+          },
+          "sequence": 1,
+          "issued_at": 1788838629.2903054,
+          "expires_at": 1788838929.2903054,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "321a40e000575ecf780212c58b94632650eed2e1e6d113ada77662fcb72a1d9c",
+          "checks": [
+            "delivery_carrier"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "159a131172a18352720baff127c4a1286925ccf47e461293e6b07eb77c5db9f749551b705ab0f4537a85e3769b14b9351158d5b344bca6eff2a13d8534c66801"
+        }
+      },
+      {
+        "body": {
+          "owner": "buyer",
+          "workflow_id": "4e2be9bfd78945af9cb34fccd1ca083f",
+          "scope": "delivery_buyer",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "total_cost": 2400,
+            "shipments": [
+              {
+                "quantity": 6,
+                "arrival_day": 5
+              },
+              {
+                "quantity": 4,
+                "arrival_day": 2
+              }
+            ]
+          },
+          "sequence": 1,
+          "issued_at": 1788838629.4450366,
+          "expires_at": 1788838929.4450366,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "a0394c9354b11e28ce0219d87508be1a9ce54900cf36b36e2823e4f643e2cca6",
+          "checks": [
+            "delivery_buyer"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "33e40f1609202eec8d3a04cfd105e3f1d362fc37ad51e306f433e7b8d7a8ff15567b6d40f9d7cdaf09eaa86658a612762f69322989bad0e3f5589654eec96a03"
+        }
+      }
+    ],
+    "committed_at": 1788838629.4681346
+  }
+}

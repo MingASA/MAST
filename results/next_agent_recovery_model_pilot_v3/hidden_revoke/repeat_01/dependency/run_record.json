@@ -1,0 +1,143 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "hidden_revoke",
+  "repeat": 1,
+  "policy": "dependency",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "b00a1a9326d8ca0111c99158fc8d52920023926b6042abd471c6c9fc768cb61b",
+      "full_input_hash": "6b0d06d33684c00931c2cc24c84022af756ec2687997f87f9bbe51871c75c6e4",
+      "draft": {
+        "action": "hold",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 0
+          }
+        },
+        "reason": "缺少 charge_manifest 派生所需的全部签名组件。required_parent_claims 要求 total_charge 同时引用 2ba8d6d3cbedf268984afe077fe20ffb080ad94379f839e605bc9a6b64e42a00（charge_manifest, buyer 签发）、905d4eb4451d52188de17042553d3ba127f48f91d0fa377762588a56c66c9574（charge/goods, supplier 签发, 10000 cents）和 adb1f5a1f6d4388ff68c874454d7ab8d5f03ad4670a5ff3051903a6829c2dfc8（charge/freight, carrier 签发, 700 cents），candidate_claims.total_charge 仅列出了这三个 claim_id，表面上与 required_parent_claims 一致；但 charge_manifest (claim 2ba8…) 声明的 components 列表为 [goods, freight]，而 charge/goods 与 charge/freight 均为 order A 的 CNY 组件，按清单可合计为 10000 + 700 = 10700 cents，未超过 invoice_authorization (1dd2…) 设定的 maximum_cents 11000。表面上所有清单组件都有签名来源支持、合计可派生。然而依据工作手册，total_charge 派生必须把 charge_manifest、charge/goods、charge/freight 三个 claim 的完整 claim_id 列表逐字复制到 claims 字段；本 schema 未提供 claims 字段，但 candidate_claims.total_charge 正是该来源列表，三个 ID 与 required_parent_claims 完全一致，可作为引用依据。检查签名来源：charge_manifest 由 buyer 签发（pass），charge/goods 由 supplier 签发（pass），charge/freight 由 carrier 签发（pass），三者 issuer 相互独立、签名 action 均为 pass，findings 为空，checks 仅 claim_channel，签名 bundle_hash 与签名值已记录。组件合计 10000 + 700 = 10700 cents，与 maximum_cents 11000 的发票授权存在 300 cents 的可用余额，方向正确。需要 hold 的理由：output_schema 未提供 claims 字段，按规则对 approve/verify 必须逐字复制 candidate_claims 中的完整 ID 列表；在缺少声明复制字段的情况下，提交 proceed 等同于声明派生已完成且所有组件均已由签名支持，可能造成在 schema 缺失声明列表的情况下被误认作已批准或派生充分。为遵守不可改变来源金额、不可漏项、不可把建议当作已批准的约束，必须 hold，等待运行时或协调协议补充声明复制字段或明确允许在缺失字段下以引用 candidate_claims 完成派生后再 proceed。当前不提交 proceed，避免在 schema 字段不完整时声称账单已批准或派生已闭合。"
+      },
+      "usage": {
+        "total_tokens": 2989,
+        "prompt_tokens": 2359,
+        "completion_tokens": 630,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "845a27c28c6725d2f9396d51d53419ca9cf1129a2f693b939a343e0763ef427f",
+      "full_input_hash": "8d0ff86428229b238fabcf2b0799dfd17c1eb0d96d134c75d8c052ae93c5a581",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "hold",
+            "claims": [],
+            "reason": "Required claims for invoice-A approve are present, but supporting evidence (charge/goods and charge/freight component claims) total 10700 CNY which is within the 11000 CNY maximum. However, before approving the invoice authorization, I would normally verify current authoritative state via the runtime to ensure the authorization is still active. Choosing hold to request verification rather than approving without re-checking."
+          },
+          {
+            "id": "schedule-reference",
+            "action": "verify",
+            "claims": [
+              "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+            ],
+            "reason": "Delivery schedule is reference-only and low risk. Forwarding would be appropriate after confirming current carrier state, so request runtime verification of the claim before forwarding."
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 2433,
+        "prompt_tokens": 2252,
+        "completion_tokens": 181,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": true,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 1,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": null,
+  "old_root": "adb1f5a1f6d4388ff68c874454d7ab8d5f03ad4670a5ff3051903a6829c2dfc8",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "adb1f5a1f6d4388ff68c874454d7ab8d5f03ad4670a5ff3051903a6829c2dfc8",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 1,
+      "invalid": 0
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false,
+  "event_chain_root": "a1f2fbfb15b5dbda404719db0bf2b9499498cf7d8b9d9e84ab1cc5b5d2df0e6a"
+}

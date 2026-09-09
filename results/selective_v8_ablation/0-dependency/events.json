@@ -1,0 +1,788 @@
+[
+  {
+    "kind": "start",
+    "schema_version": 2,
+    "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+    "public_request": {
+      "transaction": "PROCUREMENT-017",
+      "model": "MX-40B",
+      "quantity": 10,
+      "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+    },
+    "binding_mode": "dependency",
+    "protocol": "dependency"
+  },
+  {
+    "kind": "request",
+    "owner": "supplier",
+    "request": {
+      "operation": "offer",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "38df5e116df3459eb38f1ccf723918ee",
+      "messages": [],
+      "feedback": []
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "supplier",
+    "response": {
+      "message": {
+        "body": {
+          "organization": "supplier",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "38df5e116df3459eb38f1ccf723918ee",
+          "input_hash": "21c3673f6d1219f0dd307a6b26e705e1606d7eb8991aaf0a93c2d3c6017bafb4",
+          "content": {
+            "lots": {
+              "early": {
+                "model": "MX-40B",
+                "quantity": 4,
+                "ready_day": 1
+              },
+              "later": {
+                "model": "MX-40B",
+                "quantity": 6,
+                "ready_day": 3
+              }
+            }
+          },
+          "issued_at": 1788863002.3496091
+        },
+        "signature": {
+          "issuer": "supplier",
+          "version": 1,
+          "bundle_hash": "52f27048e97067d73106fa5604b984ada50f1ad89f7d441ca87738ef68b13f56",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d6aa13d909b5ba813b92c0de7a728712e36a692f5e9d266978def7138849ee3339e7d982bfed93b8d4c55e5f499ade2dfafc7defadab91969518e986a2975009"
+        }
+      },
+      "draft": {
+        "lots": {
+          "early": {
+            "model": "MX-40B",
+            "quantity": 4,
+            "ready_day": 1
+          },
+          "later": {
+            "model": "MX-40B",
+            "quantity": 6,
+            "ready_day": 3
+          }
+        },
+        "explanation": "本组织可向买方PROCUREMENT-017提供MX-40B共10件，分为两批发货：第1批4件于第1天就绪，第2批6件于第3天就绪。两批合计满足买方10件的需求。建议买方与物流商协调，在第1天和第3天安排取货或收货，以匹配本组织的备货就绪时间。本组织仅承诺自有库存与可发货时间，不替物流商确定班次，亦不替买方批准型号。"
+      },
+      "usage": {
+        "total_tokens": 753,
+        "prompt_tokens": 363,
+        "completion_tokens": 390,
+        "attempts": 1
+      }
+    },
+    "received_at": 1788863002.3880463
+  },
+  {
+    "kind": "request",
+    "owner": "carrier",
+    "request": {
+      "operation": "offer",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "e15df58aec674e93991acf48d4877da8",
+      "messages": [
+        {
+          "body": {
+            "organization": "supplier",
+            "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+            "request_id": "38df5e116df3459eb38f1ccf723918ee",
+            "input_hash": "21c3673f6d1219f0dd307a6b26e705e1606d7eb8991aaf0a93c2d3c6017bafb4",
+            "content": {
+              "lots": {
+                "early": {
+                  "model": "MX-40B",
+                  "quantity": 4,
+                  "ready_day": 1
+                },
+                "later": {
+                  "model": "MX-40B",
+                  "quantity": 6,
+                  "ready_day": 3
+                }
+              }
+            },
+            "issued_at": 1788863002.3496091
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "52f27048e97067d73106fa5604b984ada50f1ad89f7d441ca87738ef68b13f56",
+            "checks": [
+              "negotiation_message"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "d6aa13d909b5ba813b92c0de7a728712e36a692f5e9d266978def7138849ee3339e7d982bfed93b8d4c55e5f499ade2dfafc7defadab91969518e986a2975009"
+          }
+        }
+      ],
+      "feedback": []
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "carrier",
+    "response": {
+      "message": {
+        "body": {
+          "organization": "carrier",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "e15df58aec674e93991acf48d4877da8",
+          "input_hash": "b78b75377cc198e28eda9ee4c705759d95fd2bdec795a2df75c1cfb153e68fff",
+          "content": {
+            "services": {
+              "air": {
+                "capacity": 4,
+                "dispatch_day": 1,
+                "arrival_day": 2,
+                "price": 1500
+              },
+              "road": {
+                "capacity": 6,
+                "dispatch_day": 3,
+                "arrival_day": 5,
+                "price": 600
+              }
+            }
+          },
+          "issued_at": 1788863014.9707944
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "4374afb94493b121a70341e5af8679a5cf7d101130ef2c583559bfee2d4eff72",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "4ae22adf805be2843f531156c5ed079a49699ba0a83882284592e6703250c5c8275432eb5346ac0bd8503423e789f638c091c4a76235708fa9aa3f3d7647850a"
+        }
+      },
+      "draft": {
+        "services": {
+          "air": {
+            "capacity": 4,
+            "dispatch_day": 1,
+            "arrival_day": 2,
+            "price": 1500
+          },
+          "road": {
+            "capacity": 6,
+            "dispatch_day": 3,
+            "arrival_day": 5,
+            "price": 600
+          }
+        },
+        "explanation": "根据供应商提供的两批次备件就绪时间，本组织可匹配以下班次：\n\n1. **air（空运）**：dispatch_day=1，与 early 批次（4件，ready_day=1）匹配。容量4刚好满足 early 批次数量，arrival_day=2。\n2. **road（公路）**：dispatch_day=3，与 later 批次（6件，ready_day=3）匹配。容量6刚好满足 later 批次数量，arrival_day=5。\n\n**替代方案分析**：\n- 若将所有10件用 road 一次性发运：road 的 dispatch_day=3，但 early 批次在 day1 就已就绪，需等到 day3 才能发出，会造成 early 批次延迟约2天；且 capacity=6 无法一次容纳10件，不可行。\n- 若全部用 air：capacity=4 无法容纳10件，且 cost 过高。\n- bulk（dispatch_day=3, arrival_day=5, capacity=10, price=900）：可在 day3 一次性发运10件，但 day1 就绪的 early 批次（4件）需等待2天。与分两批（air+road）相比，early 批次延迟2天，但 total price=900 比 air+road 总价 2100 节省1200，且 later 批次到货时间相同（day5）。\n\n**推荐方案**：分两批走 air（early 4件） + road（later 6件）。若买方更注重成本且可接受 early 批次延迟2天，也可选择 bulk 一次发运（10件，day3 发，day5 到，900元）。本组织不可承诺不存在运力，故未提供超出自身记录的其他方案。"
+      },
+      "usage": {
+        "total_tokens": 1050,
+        "prompt_tokens": 583,
+        "completion_tokens": 467,
+        "attempts": 1
+      }
+    },
+    "received_at": 1788863015.0000975
+  },
+  {
+    "kind": "request",
+    "owner": "buyer",
+    "request": {
+      "operation": "plan",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "f9efb0940c354e7e9d12b9966b846ebe",
+      "messages": [
+        {
+          "body": {
+            "organization": "supplier",
+            "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+            "request_id": "38df5e116df3459eb38f1ccf723918ee",
+            "input_hash": "21c3673f6d1219f0dd307a6b26e705e1606d7eb8991aaf0a93c2d3c6017bafb4",
+            "content": {
+              "lots": {
+                "early": {
+                  "model": "MX-40B",
+                  "quantity": 4,
+                  "ready_day": 1
+                },
+                "later": {
+                  "model": "MX-40B",
+                  "quantity": 6,
+                  "ready_day": 3
+                }
+              }
+            },
+            "issued_at": 1788863002.3496091
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "52f27048e97067d73106fa5604b984ada50f1ad89f7d441ca87738ef68b13f56",
+            "checks": [
+              "negotiation_message"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "d6aa13d909b5ba813b92c0de7a728712e36a692f5e9d266978def7138849ee3339e7d982bfed93b8d4c55e5f499ade2dfafc7defadab91969518e986a2975009"
+          }
+        },
+        {
+          "body": {
+            "organization": "carrier",
+            "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+            "request_id": "e15df58aec674e93991acf48d4877da8",
+            "input_hash": "b78b75377cc198e28eda9ee4c705759d95fd2bdec795a2df75c1cfb153e68fff",
+            "content": {
+              "services": {
+                "air": {
+                  "capacity": 4,
+                  "dispatch_day": 1,
+                  "arrival_day": 2,
+                  "price": 1500
+                },
+                "road": {
+                  "capacity": 6,
+                  "dispatch_day": 3,
+                  "arrival_day": 5,
+                  "price": 600
+                }
+              }
+            },
+            "issued_at": 1788863014.9707944
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "4374afb94493b121a70341e5af8679a5cf7d101130ef2c583559bfee2d4eff72",
+            "checks": [
+              "negotiation_message"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "4ae22adf805be2843f531156c5ed079a49699ba0a83882284592e6703250c5c8275432eb5346ac0bd8503423e789f638c091c4a76235708fa9aa3f3d7647850a"
+          }
+        }
+      ],
+      "feedback": []
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "buyer",
+    "response": {
+      "message": {
+        "body": {
+          "organization": "buyer",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "f9efb0940c354e7e9d12b9966b846ebe",
+          "input_hash": "91de2f8235303706869b06c07e31c4d3121d376dc4d3d0496124fbd7cea7c421",
+          "content": {
+            "action": "propose",
+            "plan": {
+              "transaction": "PROCUREMENT-017",
+              "model": "MX-40B",
+              "quantity": 10,
+              "shipments": [
+                {
+                  "lot": "early",
+                  "quantity": 4,
+                  "dispatch_day": 1,
+                  "service": "air",
+                  "arrival_day": 2,
+                  "cost": 1500
+                },
+                {
+                  "lot": "later",
+                  "quantity": 6,
+                  "dispatch_day": 3,
+                  "service": "road",
+                  "arrival_day": 5,
+                  "cost": 600
+                }
+              ]
+            }
+          },
+          "issued_at": 1788863022.9588714
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "3820f0210e9e1d9cccc3cd73308ce7d2890d4b976a988562c96e5b6c423253c2",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "15eadc5d27e6c4d8907e4f6d425fbc8eb831af3a426cdb61d502f89081f1adae6c6396a5344257bb3104cfc3b64d8c7d08f5cd902478158b706adc7616e35a0e"
+        }
+      },
+      "draft": {
+        "action": "propose",
+        "plan": {
+          "transaction": "PROCUREMENT-017",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "explanation": "硬条件全部满足：型号MX-40B已获批准，数量10，运价合计2100≤2400上限，两批到齐日分别为2和5，均在latest_day=5之前。偏好方面：早批4件经空运于day2到达，正好满足early_quantity=4、early_day=2的偏好；余量6件走公路day5到达，运费最低。priority为minimize_freight，故空运用于不可推迟的早批，公路承担后续批，避免多余空运费用，整体运费最小化。"
+      },
+      "usage": {
+        "total_tokens": 1088,
+        "prompt_tokens": 882,
+        "completion_tokens": 206,
+        "attempts": 1
+      }
+    },
+    "received_at": 1788863022.9932086
+  },
+  {
+    "kind": "request",
+    "owner": "supplier",
+    "request": {
+      "operation": "attest",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "a3a2405a2aec41e482d31f25b5c81af9",
+      "plan": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "shipments": [
+          {
+            "lot": "early",
+            "quantity": 4,
+            "dispatch_day": 1,
+            "service": "air",
+            "arrival_day": 2,
+            "cost": 1500
+          },
+          {
+            "lot": "later",
+            "quantity": 6,
+            "dispatch_day": 3,
+            "service": "road",
+            "arrival_day": 5,
+            "cost": 600
+          }
+        ]
+      },
+      "buyer_decision": {
+        "body": {
+          "organization": "buyer",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "f9efb0940c354e7e9d12b9966b846ebe",
+          "input_hash": "91de2f8235303706869b06c07e31c4d3121d376dc4d3d0496124fbd7cea7c421",
+          "content": {
+            "action": "propose",
+            "plan": {
+              "transaction": "PROCUREMENT-017",
+              "model": "MX-40B",
+              "quantity": 10,
+              "shipments": [
+                {
+                  "lot": "early",
+                  "quantity": 4,
+                  "dispatch_day": 1,
+                  "service": "air",
+                  "arrival_day": 2,
+                  "cost": 1500
+                },
+                {
+                  "lot": "later",
+                  "quantity": 6,
+                  "dispatch_day": 3,
+                  "service": "road",
+                  "arrival_day": 5,
+                  "cost": 600
+                }
+              ]
+            }
+          },
+          "issued_at": 1788863022.9588714
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "3820f0210e9e1d9cccc3cd73308ce7d2890d4b976a988562c96e5b6c423253c2",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "15eadc5d27e6c4d8907e4f6d425fbc8eb831af3a426cdb61d502f89081f1adae6c6396a5344257bb3104cfc3b64d8c7d08f5cd902478158b706adc7616e35a0e"
+        }
+      },
+      "binding_mode": "dependency"
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "supplier",
+    "response": {
+      "commitment": {
+        "body": {
+          "owner": "supplier",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "scope": "delivery_supplier",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "shipments": [
+              {
+                "lot": "later",
+                "quantity": 6,
+                "dispatch_day": 3
+              },
+              {
+                "lot": "early",
+                "quantity": 4,
+                "dispatch_day": 1
+              }
+            ]
+          },
+          "binding_mode": "dependency",
+          "sequence": 1,
+          "issued_at": 1788863023.2244773,
+          "expires_at": 1788863323.2244773,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "supplier",
+          "version": 1,
+          "bundle_hash": "78f7a56bc64af2f5e3754fc80af2532352905f4efe7050e7adeeb8fcd4102303",
+          "checks": [
+            "delivery_supplier"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "78f24f13afa67abef85c826dd3a7a7772e5db0f63d5e34c8efb6bfb2b6c32e6eecb1d8b81c16cfc1612ec466256f355261bae56d84c6e656c1159c8b94385204"
+        }
+      }
+    },
+    "received_at": 1788863023.2622354
+  },
+  {
+    "kind": "request",
+    "owner": "carrier",
+    "request": {
+      "operation": "attest",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "89dca7e3392d4fb19aa9a8760404b376",
+      "plan": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "shipments": [
+          {
+            "lot": "early",
+            "quantity": 4,
+            "dispatch_day": 1,
+            "service": "air",
+            "arrival_day": 2,
+            "cost": 1500
+          },
+          {
+            "lot": "later",
+            "quantity": 6,
+            "dispatch_day": 3,
+            "service": "road",
+            "arrival_day": 5,
+            "cost": 600
+          }
+        ]
+      },
+      "buyer_decision": {
+        "body": {
+          "organization": "buyer",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "f9efb0940c354e7e9d12b9966b846ebe",
+          "input_hash": "91de2f8235303706869b06c07e31c4d3121d376dc4d3d0496124fbd7cea7c421",
+          "content": {
+            "action": "propose",
+            "plan": {
+              "transaction": "PROCUREMENT-017",
+              "model": "MX-40B",
+              "quantity": 10,
+              "shipments": [
+                {
+                  "lot": "early",
+                  "quantity": 4,
+                  "dispatch_day": 1,
+                  "service": "air",
+                  "arrival_day": 2,
+                  "cost": 1500
+                },
+                {
+                  "lot": "later",
+                  "quantity": 6,
+                  "dispatch_day": 3,
+                  "service": "road",
+                  "arrival_day": 5,
+                  "cost": 600
+                }
+              ]
+            }
+          },
+          "issued_at": 1788863022.9588714
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "3820f0210e9e1d9cccc3cd73308ce7d2890d4b976a988562c96e5b6c423253c2",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "15eadc5d27e6c4d8907e4f6d425fbc8eb831af3a426cdb61d502f89081f1adae6c6396a5344257bb3104cfc3b64d8c7d08f5cd902478158b706adc7616e35a0e"
+        }
+      },
+      "binding_mode": "dependency"
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "carrier",
+    "response": {
+      "commitment": {
+        "body": {
+          "owner": "carrier",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "scope": "delivery_carrier",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "shipments": [
+              {
+                "quantity": 4,
+                "dispatch_day": 1,
+                "service": "air",
+                "arrival_day": 2,
+                "cost": 1500
+              },
+              {
+                "quantity": 6,
+                "dispatch_day": 3,
+                "service": "road",
+                "arrival_day": 5,
+                "cost": 600
+              }
+            ]
+          },
+          "binding_mode": "dependency",
+          "sequence": 1,
+          "issued_at": 1788863023.5457325,
+          "expires_at": 1788863323.5457325,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "a4353dfc299a877f70203420453d431c55ddb51fa3088a87d1eb08ae2b3bd9e8",
+          "checks": [
+            "delivery_carrier"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "e496b6c3912dc8130f6b0f5b39c22c3b18d2b8b41833d22cec953bd7aa1da565590ce55f926708fe4e3e66f45c3dc74a8d22f8d9ea2d0356fc88cb60453e8903"
+        }
+      }
+    },
+    "received_at": 1788863023.5896373
+  },
+  {
+    "kind": "request",
+    "owner": "buyer",
+    "request": {
+      "operation": "attest",
+      "public_request": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "request": "请供应商、买方和物流商协商可接受的备件交付方案。"
+      },
+      "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+      "request_id": "4a997d7eaa594f068a1d03ee5d4bc01a",
+      "plan": {
+        "transaction": "PROCUREMENT-017",
+        "model": "MX-40B",
+        "quantity": 10,
+        "shipments": [
+          {
+            "lot": "early",
+            "quantity": 4,
+            "dispatch_day": 1,
+            "service": "air",
+            "arrival_day": 2,
+            "cost": 1500
+          },
+          {
+            "lot": "later",
+            "quantity": 6,
+            "dispatch_day": 3,
+            "service": "road",
+            "arrival_day": 5,
+            "cost": 600
+          }
+        ]
+      },
+      "buyer_decision": {
+        "body": {
+          "organization": "buyer",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "request_id": "f9efb0940c354e7e9d12b9966b846ebe",
+          "input_hash": "91de2f8235303706869b06c07e31c4d3121d376dc4d3d0496124fbd7cea7c421",
+          "content": {
+            "action": "propose",
+            "plan": {
+              "transaction": "PROCUREMENT-017",
+              "model": "MX-40B",
+              "quantity": 10,
+              "shipments": [
+                {
+                  "lot": "early",
+                  "quantity": 4,
+                  "dispatch_day": 1,
+                  "service": "air",
+                  "arrival_day": 2,
+                  "cost": 1500
+                },
+                {
+                  "lot": "later",
+                  "quantity": 6,
+                  "dispatch_day": 3,
+                  "service": "road",
+                  "arrival_day": 5,
+                  "cost": 600
+                }
+              ]
+            }
+          },
+          "issued_at": 1788863022.9588714
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "3820f0210e9e1d9cccc3cd73308ce7d2890d4b976a988562c96e5b6c423253c2",
+          "checks": [
+            "negotiation_message"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "15eadc5d27e6c4d8907e4f6d425fbc8eb831af3a426cdb61d502f89081f1adae6c6396a5344257bb3104cfc3b64d8c7d08f5cd902478158b706adc7616e35a0e"
+        }
+      },
+      "binding_mode": "dependency"
+    }
+  },
+  {
+    "kind": "response",
+    "owner": "buyer",
+    "response": {
+      "commitment": {
+        "body": {
+          "owner": "buyer",
+          "workflow_id": "1c2398af7941437b8c01b6e1f2aef809",
+          "scope": "delivery_buyer",
+          "projection": {
+            "transaction": "PROCUREMENT-017",
+            "model": "MX-40B",
+            "quantity": 10,
+            "total_cost": 2100,
+            "shipments": [
+              {
+                "quantity": 6,
+                "arrival_day": 5
+              },
+              {
+                "quantity": 4,
+                "arrival_day": 2
+              }
+            ]
+          },
+          "binding_mode": "dependency",
+          "sequence": 1,
+          "issued_at": 1788863023.885674,
+          "expires_at": 1788863323.885674,
+          "status": "approved",
+          "reasons": []
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "fe783e3dc16510e14314c6e4cb70acfe1c2010f94e99b2186c43f83db4df1d07",
+          "checks": [
+            "delivery_buyer"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ef944622732f24e1d520c7729abe975c23e99dfa3b0dde155795e63470ab5f15ca081a398061081c53bd4b4016b1c76410bd5994cc8c4ec2e66654e532a34109"
+        }
+      }
+    },
+    "received_at": 1788863023.9179747
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "run": "0-rate-full",
+    "tokens": 11720,
+    "denials": [
+      {
+        "owner": "carrier",
+        "workflow_id": "9b5fc20e12744e2696e8a327038220aa",
+        "scope": "delivery_carrier",
+        "projection": {
+          "transaction": "PROCUREMENT-017",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "binding_mode": "full",
+        "sequence": 1,
+        "issued_at": 1788863792.1535478,
+        "expires_at": 1788864092.1535478,
+        "status": "denied",
+        "reasons": [
+          "transport_quote_mismatch"
+        ]
+      },
+      {
+        "owner": "carrier",
+        "workflow_id": "9b5fc20e12744e2696e8a327038220aa",
+        "scope": "delivery_carrier",
+        "projection": {
+          "transaction": "PROCUREMENT-017",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1600
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 0
+            }
+          ]
+        },
+        "binding_mode": "full",
+        "sequence": 2,
+        "issued_at": 1788863806.174994,
+        "expires_at": 1788864106.174994,
+        "status": "denied",
+        "reasons": [
+          "transport_quote_mismatch"
+        ]
+      }
+    ],
+    "final_draft": {
+      "action": "reject",
+      "plan": null,
+      "explanation": "上一版计划被承运方以 transport_quote_mismatch 拒绝，原因是将两条不同服务（air + road）的运费合并、仅在第一条计费 1600、其余计 0；这不符合承运方对各服务分别按报价收费的规则。本次在公开报价范围内，任何满足硬条件的组合都无法同时满足偏好（早期 4 件 day≤2 到齐）。逐项排查：(1) early 4 件走 air（1600）+ later 6 件走 road（700）= 2300 ≤ 2400 上限，且 day2 到 4 件、day5 到齐共 10 件，硬条件全部满足，但运费 2300，非最低——承运方此前对类似合并计费方式已拒，故该方案在计费口径上不可执行。(2) 全部 10 件走 bulk（1000）虽费用最低，但 dispatch_day=3，day5 才到齐，早期 4 件 day2 到齐的偏好完全无法满足。(3) 全部 10 件走 air 不行，air 容量仅 4。综上，在承运方已明确拒绝合并/零费用计费、且不允许编造报价的前提下，当前公开报价集合内不存在既满足硬条件又满足早期到货偏好、且能被承运方接受的方案。按规则拒绝本次协商。"
+    }
+  },
+  {
+    "run": "0-unchanged-full",
+    "tokens": 5822,
+    "denials": [
+      {
+        "owner": "carrier",
+        "workflow_id": "3f0a4b7cf2ab4939a5c6830d2e312b80",
+        "scope": "delivery_carrier",
+        "projection": {
+          "transaction": "PROCUREMENT-017",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 0
+            }
+          ]
+        },
+        "binding_mode": "full",
+        "sequence": 1,
+        "issued_at": 1788863752.167566,
+        "expires_at": 1788864052.167566,
+        "status": "denied",
+        "reasons": [
+          "transport_quote_mismatch"
+        ]
+      }
+    ],
+    "final_draft": {
+      "action": "reject",
+      "plan": null,
+      "explanation": "供应商和买方已批准先前的方案，但承运商以 transport_quote_mismatch 拒绝。carrier 的报价明确显示 air(1500)、road(600)、bulk(900) 三种服务，没有 0 元的共享优惠条款；硬条件要求费用不超过 2400。把 road 标为 0 既不符合 carrier 报价，也不是 carrier 在 binding_mode=full 投影中签字的内容，因此该方案无可接受的执行形式。我代表买方在此拒绝结束本轮协商。"
+    }
+  }
+]

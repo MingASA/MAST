@@ -1,0 +1,2610 @@
+[
+  {
+    "fault": "none",
+    "policy": "commit_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "commit_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "a003742d036e8a60120769455d5e348b09e4aaca496d2b7fbf48950cc440a7f9",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1adf2fb3fd335d69057fe75d20faccb52fda884db972f30ad2664233729d174fba2b2d6da12ac58a52e5aa886bb399a6c68e7c06734a5a0a626fbbe50eb3200b"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "forward",
+          "draft": {
+            "action": "forward",
+            "reason": "费用清单(goods 10000 + freight 700)与上游总价(10700)一致，组件完整，无不一致，可继续转交审核。"
+          },
+          "usage": {
+            "total_tokens": 442,
+            "prompt_tokens": 395,
+            "completion_tokens": 47,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "5c0cc0293ec571bec69996a04191e5efc1f6357f670c1e4cc0d2f6eacb880e36",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68",
+                "reasons": [],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "406372d55e130bee08021485a466ef32a01d4ff268df922a8b2c45ef8df87bcd",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "da9fe000d689bb93b8fd1a3ca8b73ec3543492d8a34fadec6fe4ec9b592e8cbd7fa22b62eae4961ef7c61badd9e9a317fadaf75d9048de4d8a0842a72bb42b08"
+              }
+            }
+          ],
+          "packet": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-action-pilot",
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              },
+              "parents": [
+                "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+              ],
+              "rule": "relay"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+            }
+          },
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "5c0cc0293ec571bec69996a04191e5efc1f6357f670c1e4cc0d2f6eacb880e36",
+              "draft": {
+                "action": "forward",
+                "reason": "费用清单(goods 10000 + freight 700)与上游总价(10700)一致，组件完整，无不一致，可继续转交审核。"
+              },
+              "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "6476b99ae8623c98c3923d1ad31a23605eaecd31ba302014e84ad803063e73ac",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "2d41307cfbcf70e1a73fd516a5dd2dc1381d14438f800ee306445f932074423f8dca655c6ae7799800f5e6b889a268c39800a6b76ece856c9ab5836bc234840e"
+            }
+          }
+        }
+      },
+      {
+        "owner": "accounting",
+        "request": {
+          "policy": "commit_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "a003742d036e8a60120769455d5e348b09e4aaca496d2b7fbf48950cc440a7f9",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1adf2fb3fd335d69057fe75d20faccb52fda884db972f30ad2664233729d174fba2b2d6da12ac58a52e5aa886bb399a6c68e7c06734a5a0a626fbbe50eb3200b"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "forward",
+          "draft": {
+            "action": "forward",
+            "reason": "费用清单显示订单A包含两项：商品费用10000分（CNY）和运费700分（CNY），合计10700分（CNY）。上游提供的总价声明为10700分（CNY），与各项费用明细之和完全一致，币种、订单号均匹配，金额核对无误，无异常，建议继续转交下一组织审核。"
+          },
+          "usage": {
+            "total_tokens": 512,
+            "prompt_tokens": 426,
+            "completion_tokens": 86,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "cd612c2c71102abdeb3ffeebb91547e5bbc76c3ed9a03058167ebb818a5d2efd",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "9f17221ad91faa8694018da55345fd364d3f7439bfed490ca80cbf49f0def6a9af5f09baec466ea712f78ec0e9ba2f05159598daabcd8b9e243e4bbc1ca46408"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "7a2086beea714e1a4f98548cc63302983183adc157acbb9bf37ffcb95fe9eb96"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "3b9455025005139d440fea391ded9525c0781ca2e2e839217dd062e9a68af70e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "f0f4c4f107b64de17e711fbbe5f14b6b734026a15ac9626b10573101f39be815f0d3b620e25cf510b7174adc69e543b6175df70b84752030c61ff90ccc5d8e03"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "d09fff5bbcedc0296df5c52c5adbd228e68d3a2f002c7f5eb8aaf3cd4ea7f390"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "3736e14697dacd09e198206f7bb29c0d134b59f71c9db18c1233845bc7d1ce93",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "0b762fec552a8f1669c2f18d5583388e7f42343f288c9be16ee430e55471c8d922306944aaeda5571bd8e137b4a796044ea5489ae9db5b860b73bc19b9eefd01"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68",
+                "reasons": [],
+                "sequence": 4,
+                "previous": "471d5dd1ac9b8368bf21c18ba3dcac304ae24ee49c65e5cbb1506f06f4919eb9"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "6614322826f279074d6b7180e664889c03965b2d0c9643738218f7b47fd03698",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1c6ed3853bbf24d7c7aa2ef8f2824cad7fd3ca0e10fabb59f1270f6454761163590353f6221859a49cee211681ea72467ed4c536dded60376ae021ccec6a0008"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800",
+                "reasons": [],
+                "sequence": 5,
+                "previous": "4aba6bf1b005b475c18c8c92137266391b3acd7ae05417c9ccb57815a126f244"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "fba6224d71f17d01db17d4e5c28b78a2199230a8f39e1766b1e819884fc79a70",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e506267bdf6a094acc1c1efe45917a554c9c20a2769e05dc864370988708da99d83b117dc03c922471045591528ac3387ebc93b100f12649d417187dcea63403"
+              }
+            }
+          ],
+          "packet": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-action-pilot",
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              },
+              "parents": [
+                "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+              ],
+              "rule": "relay"
+            },
+            "signature": {
+              "issuer": "accounting",
+              "version": 1,
+              "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+            }
+          },
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "cd612c2c71102abdeb3ffeebb91547e5bbc76c3ed9a03058167ebb818a5d2efd",
+              "draft": {
+                "action": "forward",
+                "reason": "费用清单显示订单A包含两项：商品费用10000分（CNY）和运费700分（CNY），合计10700分（CNY）。上游提供的总价声明为10700分（CNY），与各项费用明细之和完全一致，币种、订单号均匹配，金额核对无误，无异常，建议继续转交下一组织审核。"
+              },
+              "target": "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+            },
+            "signature": {
+              "issuer": "accounting",
+              "version": 1,
+              "bundle_hash": "acc1afe370097f2da2c3caf79912ed302d2ab6d758975f0d5684365337d57895",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "9cfe49956b675c170a63562af9ea8af56620d05fb0f062a3bd7fae3baf30d70ed6aba4c66f085fa194c1b3b8a6f3b9b100963327081155ae3f0d1ff67fe3fc0d"
+            }
+          }
+        }
+      }
+    ],
+    "forward_count": 2,
+    "model_exposure_hops": 2,
+    "final_eligible": true,
+    "model_calls": 2,
+    "tokens": 954
+  },
+  {
+    "fault": "none",
+    "policy": "receive_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "receive_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "a003742d036e8a60120769455d5e348b09e4aaca496d2b7fbf48950cc440a7f9",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1adf2fb3fd335d69057fe75d20faccb52fda884db972f30ad2664233729d174fba2b2d6da12ac58a52e5aa886bb399a6c68e7c06734a5a0a626fbbe50eb3200b"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "forward",
+          "draft": {
+            "action": "forward",
+            "reason": "费用清单显示订单A包含两个组成部分：货物(goods) 10000分和运费(freight) 700分，合计10700分。上游总价声明total_charge为10700分，货币均为CNY。各分项费用与总价完全一致，无差异，转交审核。"
+          },
+          "usage": {
+            "total_tokens": 469,
+            "prompt_tokens": 395,
+            "completion_tokens": 74,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "b9864af7b6f5cb4ff77ed9751353b025570ec8d65b23f953fd8e383759614a29",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68",
+                "reasons": [],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "406372d55e130bee08021485a466ef32a01d4ff268df922a8b2c45ef8df87bcd",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "da9fe000d689bb93b8fd1a3ca8b73ec3543492d8a34fadec6fe4ec9b592e8cbd7fa22b62eae4961ef7c61badd9e9a317fadaf75d9048de4d8a0842a72bb42b08"
+              }
+            }
+          ],
+          "packet": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-action-pilot",
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              },
+              "parents": [
+                "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+              ],
+              "rule": "relay"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+            }
+          },
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "b9864af7b6f5cb4ff77ed9751353b025570ec8d65b23f953fd8e383759614a29",
+              "draft": {
+                "action": "forward",
+                "reason": "费用清单显示订单A包含两个组成部分：货物(goods) 10000分和运费(freight) 700分，合计10700分。上游总价声明total_charge为10700分，货币均为CNY。各分项费用与总价完全一致，无差异，转交审核。"
+              },
+              "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "5203a1f49c48dcaf2a19776e167f621b178315b0ca60bf5b385ea7e9d1c96bcc",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "f1c24d0fb8db13a54b3dcee6891fcd85b5fdccb74c6a030606a8c2cf1ce14fc15d3d07c5e2e14ddc362e7fdbdd33e6a86d38eb9118250ad58c211d4784776f01"
+            }
+          }
+        }
+      },
+      {
+        "owner": "accounting",
+        "request": {
+          "policy": "receive_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "a003742d036e8a60120769455d5e348b09e4aaca496d2b7fbf48950cc440a7f9",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1adf2fb3fd335d69057fe75d20faccb52fda884db972f30ad2664233729d174fba2b2d6da12ac58a52e5aa886bb399a6c68e7c06734a5a0a626fbbe50eb3200b"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6c1875564f0ccfed63eca3eff852e1dfd618327139cf6718d42a97f76871125e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2109011800de819758564a8e4b4a8cf18e8c883a5842e5f94b93cfdced3fd51acaac1fc4bd42d89b392be19f169d764edaa91ab78cb492fc39e81a3dff294906"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "forward",
+          "draft": {
+            "action": "forward",
+            "reason": "费用清单包含goods(10000分)和freight(700分)两个组件，合计10700分，与上游总价声明10700分完全一致，且存在两条相同的总价声明相互印证，数据合理有据，转交下一步审核。"
+          },
+          "usage": {
+            "total_tokens": 499,
+            "prompt_tokens": 437,
+            "completion_tokens": 62,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "1adf9885a2fd904a0364d68af14b53d49d4bec3b62e27afd59ed469f2fe53429",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "9f17221ad91faa8694018da55345fd364d3f7439bfed490ca80cbf49f0def6a9af5f09baec466ea712f78ec0e9ba2f05159598daabcd8b9e243e4bbc1ca46408"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "7a2086beea714e1a4f98548cc63302983183adc157acbb9bf37ffcb95fe9eb96"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "3b9455025005139d440fea391ded9525c0781ca2e2e839217dd062e9a68af70e",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "f0f4c4f107b64de17e711fbbe5f14b6b734026a15ac9626b10573101f39be815f0d3b620e25cf510b7174adc69e543b6175df70b84752030c61ff90ccc5d8e03"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "d09fff5bbcedc0296df5c52c5adbd228e68d3a2f002c7f5eb8aaf3cd4ea7f390"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "3736e14697dacd09e198206f7bb29c0d134b59f71c9db18c1233845bc7d1ce93",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "0b762fec552a8f1669c2f18d5583388e7f42343f288c9be16ee430e55471c8d922306944aaeda5571bd8e137b4a796044ea5489ae9db5b860b73bc19b9eefd01"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "d8b95a14c5ad55aef7c458f1488f0c73ac1ac9abb16cc5a537a6a761bcfccb68",
+                "reasons": [],
+                "sequence": 4,
+                "previous": "471d5dd1ac9b8368bf21c18ba3dcac304ae24ee49c65e5cbb1506f06f4919eb9"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "6614322826f279074d6b7180e664889c03965b2d0c9643738218f7b47fd03698",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "1c6ed3853bbf24d7c7aa2ef8f2824cad7fd3ca0e10fabb59f1270f6454761163590353f6221859a49cee211681ea72467ed4c536dded60376ae021ccec6a0008"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800",
+                "reasons": [],
+                "sequence": 5,
+                "previous": "4aba6bf1b005b475c18c8c92137266391b3acd7ae05417c9ccb57815a126f244"
+              },
+              "signature": {
+                "issuer": "accounting",
+                "version": 1,
+                "bundle_hash": "fba6224d71f17d01db17d4e5c28b78a2199230a8f39e1766b1e819884fc79a70",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e506267bdf6a094acc1c1efe45917a554c9c20a2769e05dc864370988708da99d83b117dc03c922471045591528ac3387ebc93b100f12649d417187dcea63403"
+              }
+            }
+          ],
+          "packet": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-action-pilot",
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              },
+              "parents": [
+                "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+              ],
+              "rule": "relay"
+            },
+            "signature": {
+              "issuer": "accounting",
+              "version": 1,
+              "bundle_hash": "968090f17c1ef0d9d62bc595db9cd7865b7884ee855b907ccd5e1ba2c35aef4e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "e2b3711c00c653bec5e00686391a5445012b6fd5e707fe96f1f749024d88fc4dbd4597f17ed172ecc727858c84c8f981ddafb686ffd3d739b9dd778b4ac3cf09"
+            }
+          },
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "1adf9885a2fd904a0364d68af14b53d49d4bec3b62e27afd59ed469f2fe53429",
+              "draft": {
+                "action": "forward",
+                "reason": "费用清单包含goods(10000分)和freight(700分)两个组件，合计10700分，与上游总价声明10700分完全一致，且存在两条相同的总价声明相互印证，数据合理有据，转交下一步审核。"
+              },
+              "target": "ef7cbaf766d5b1276a9067533323d4c0eb49623a14e184780c4a6260172ec800"
+            },
+            "signature": {
+              "issuer": "accounting",
+              "version": 1,
+              "bundle_hash": "ed486f8d389c6122e335637280b80617c64e4cc0e574fb57a23c75ac761f1588",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "a1ee771b04c378dfc88e580ec13e92cbd36772ee6177fad94d49736f02d51c642652ef2b96f1a35d8b863e1b69efb84b5a1b57f8e941d626a97e045a0abdc10b"
+            }
+          }
+        }
+      }
+    ],
+    "forward_count": 2,
+    "model_exposure_hops": 2,
+    "final_eligible": true,
+    "model_calls": 2,
+    "tokens": 968
+  },
+  {
+    "fault": "changed_total",
+    "policy": "commit_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "commit_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10699
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "26bf078c00d2916021bbdedfd3f11227c1fd4d9bc000e2914c6c751130aab1db",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "78c025915d468dd0f896eac7690b28cd54ddd5d3e8f602fd32e3c4820a8e9cbcee72d2d8adb188b6939d9e1b12654a42e3b7493e51c091894764127b4a8fa80c"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "hold",
+          "draft": {
+            "action": "hold",
+            "reason": "上游总价声明与费用清单不一致：货物(goods)=10000 + 运费(freight)=700 = 10700 cents，但上游total_charge声明为10699 cents，差额1 cent。费用清单仅包含goods和freight两项，无其他调整项说明，无法确认差异来源，存在金额计算或录入错误，需上游澄清修正后再行转交。"
+          },
+          "usage": {
+            "total_tokens": 480,
+            "prompt_tokens": 395,
+            "completion_tokens": 85,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "619bc8368bf344577f9d6734ac9a9ee80f1c3a0f84eaf1fc097db0c824aa3f5d",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "blocked",
+                "target": "8667b02af21ffb7e15a5e16af86dc69462da865f11597bce44ec181e6943d976",
+                "reasons": [
+                  "unsupported_transformation"
+                ],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "872cbd990e1bddfe687e3a1ca4d124bab4e7548bb57757fff6a820c41f94c92f",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "5317d291b15219c14bd2c1b63b6f02ee92728fd716fae3fa3a3bc7a9a0eed634cc45f20bfac8212f9731272017e17f58358e63f02c54a575567966deb76d250d"
+              }
+            }
+          ],
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "619bc8368bf344577f9d6734ac9a9ee80f1c3a0f84eaf1fc097db0c824aa3f5d",
+              "draft": {
+                "action": "hold",
+                "reason": "上游总价声明与费用清单不一致：货物(goods)=10000 + 运费(freight)=700 = 10700 cents，但上游total_charge声明为10699 cents，差额1 cent。费用清单仅包含goods和freight两项，无其他调整项说明，无法确认差异来源，存在金额计算或录入错误，需上游澄清修正后再行转交。"
+              },
+              "target": "8667b02af21ffb7e15a5e16af86dc69462da865f11597bce44ec181e6943d976"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "ae6924e894fb6ad3ffb915bed98b404d226b2042664766c1040b7108cebf9af4",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "6fc635c81f45c73805b3b528e81b392fa93e4815b9460be98963972d896ce430af54c9062bf4bed2a76efbe5c32e782af8842c43ac0c80012411ff20e3362b0c"
+            }
+          }
+        }
+      }
+    ],
+    "forward_count": 0,
+    "model_exposure_hops": 1,
+    "final_eligible": false,
+    "model_calls": 1,
+    "tokens": 480
+  },
+  {
+    "fault": "changed_total",
+    "policy": "receive_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "receive_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10699
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                  "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "26bf078c00d2916021bbdedfd3f11227c1fd4d9bc000e2914c6c751130aab1db",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "78c025915d468dd0f896eac7690b28cd54ddd5d3e8f602fd32e3c4820a8e9cbcee72d2d8adb188b6939d9e1b12654a42e3b7493e51c091894764127b4a8fa80c"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "gateway_blocked",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "blocked",
+                "target": "8667b02af21ffb7e15a5e16af86dc69462da865f11597bce44ec181e6943d976",
+                "reasons": [
+                  "unsupported_transformation"
+                ],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "872cbd990e1bddfe687e3a1ca4d124bab4e7548bb57757fff6a820c41f94c92f",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "5317d291b15219c14bd2c1b63b6f02ee92728fd716fae3fa3a3bc7a9a0eed634cc45f20bfac8212f9731272017e17f58358e63f02c54a575567966deb76d250d"
+              }
+            }
+          ],
+          "model_calls": 0
+        }
+      }
+    ],
+    "forward_count": 0,
+    "model_exposure_hops": 0,
+    "final_eligible": false,
+    "model_calls": 0,
+    "tokens": 0
+  },
+  {
+    "fault": "omitted_component",
+    "policy": "commit_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "commit_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "c577a587c4d7d86f3e41395a8b49eadb1474cda1da8593fd24be76391e52181b",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e452d577f75cc6f3f745c34b9f2fd057dc46491e66db6a8a302dcddc38128c4f26220313c8efc1942bba41699d3987c1c685df6771daa2b4f0a82df38ec76b06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "50427dd52119d00f1269613a783ec7b1f3956c026d6618f1ef9e49aaf95b581c",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2b82eb12103f5a031839be07e35269b61c5f8cf2eb44846c7c2daee2b286e25034f3f9353213fb977d7916b2fcf7824a4830c278e2d268e82c0b67c3bd269e00"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "forward",
+          "draft": {
+            "action": "forward",
+            "reason": "费用明细与总价一致：goods 10000分 + freight 700分 = 10700分（CNY），无不一致或异常，可继续转交审核。"
+          },
+          "usage": {
+            "total_tokens": 444,
+            "prompt_tokens": 395,
+            "completion_tokens": 49,
+            "attempts": 1
+          },
+          "model_calls": 1,
+          "input_hash": "19beb91332dc0110fa2743e88f1aa08378f52048096f36b56f503b12048b754a",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "blocked",
+                "target": "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895",
+                "reasons": [
+                  "unsupported_transformation"
+                ],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "26c56245c05bd7be31c4210234dcd5d3101a8db95d824e3d6fb3684d13d4a6fc",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "3714e8aaf7a7d3cf1754e3076dfe65d1ec8e65d9d19c7f57c3593e0e8949c5a974339ee185b69a9c011e0b63af440cf7f5c7335cf8ffaeb0751ed9e9ce9d0005"
+              }
+            }
+          ],
+          "packet": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-action-pilot",
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              },
+              "parents": [
+                "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895"
+              ],
+              "rule": "relay"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "50427dd52119d00f1269613a783ec7b1f3956c026d6618f1ef9e49aaf95b581c",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "2b82eb12103f5a031839be07e35269b61c5f8cf2eb44846c7c2daee2b286e25034f3f9353213fb977d7916b2fcf7824a4830c278e2d268e82c0b67c3bd269e00"
+            }
+          },
+          "decision": {
+            "body": {
+              "kind": "propagation_decision",
+              "workflow": "invoice-action-pilot",
+              "input_hash": "19beb91332dc0110fa2743e88f1aa08378f52048096f36b56f503b12048b754a",
+              "draft": {
+                "action": "forward",
+                "reason": "费用明细与总价一致：goods 10000分 + freight 700分 = 10700分（CNY），无不一致或异常，可继续转交审核。"
+              },
+              "target": "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895"
+            },
+            "signature": {
+              "issuer": "reviewer",
+              "version": 1,
+              "bundle_hash": "15a2205b165c16730877bffd3fc02267d3c91150194104e5cc9cf209b4ec58f6",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ca9721c860ec4a87c61dfed962e91153e69b05e07d6b31e5bd11f8dfe9d9b0be175ba07b6d96482bd3a2916dd0dc1db9754cf57131e2deeb6239f4a364246908"
+            }
+          }
+        }
+      },
+      {
+        "owner": "accounting",
+        "request": {
+          "policy": "commit_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "c577a587c4d7d86f3e41395a8b49eadb1474cda1da8593fd24be76391e52181b",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e452d577f75cc6f3f745c34b9f2fd057dc46491e66db6a8a302dcddc38128c4f26220313c8efc1942bba41699d3987c1c685df6771daa2b4f0a82df38ec76b06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895"
+                ],
+                "rule": "relay"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "50427dd52119d00f1269613a783ec7b1f3956c026d6618f1ef9e49aaf95b581c",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "2b82eb12103f5a031839be07e35269b61c5f8cf2eb44846c7c2daee2b286e25034f3f9353213fb977d7916b2fcf7824a4830c278e2d268e82c0b67c3bd269e00"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "runtime_error",
+          "model_calls": 0
+        }
+      }
+    ],
+    "forward_count": 1,
+    "model_exposure_hops": 1,
+    "final_eligible": false,
+    "model_calls": 1,
+    "tokens": 444
+  },
+  {
+    "fault": "omitted_component",
+    "policy": "receive_validation",
+    "hops": [
+      {
+        "owner": "reviewer",
+        "request": {
+          "policy": "receive_validation",
+          "packets": [
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge_manifest",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "components": [
+                      "goods",
+                      "freight"
+                    ]
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "buyer",
+                "version": 1,
+                "bundle_hash": "3bd5c8d38ab6fddb33ab1040e18cf5d5b1e984725a1924f3d89f99ea60743ec4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "37933ecef675801a2c4d35834acb51f6506868b1c574ee22e1308567aa31ba0cdb29d83de15e9f4b8d2c7cf357d2c2991fd1543189cc0e715238cd9bc6754d06"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/goods",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "goods",
+                    "cents": 10000
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "supplier",
+                "version": 1,
+                "bundle_hash": "d603da218ec4a98891538c9cd8d40989b80f3f2af6318da9252a3f7863ada393",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "05be3835544e8be28ea1964ebba94ff045e14c7365f2beea56835b95241572573ed7d3d1428dd2108c660c131b498a46f24f7da3d83b0c462fe63f598d9dbe0e"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "parents": [],
+                "fact": {
+                  "predicate": "charge/freight",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "component": "freight",
+                    "cents": 700
+                  }
+                }
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "e930fddfe892bbdda6202a90faa0f7986a82d46d4dfc88a746fcbed70e90c593",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "bd56ad6662ee4729aa0f4149e387d3039ea39ace7a754b687b5879f1eb0a3c2a53c598beca6ae4b88dd20cd503407f5e13c4880f676fbd95473b3b426d5c9300"
+              }
+            },
+            {
+              "body": {
+                "kind": "claim",
+                "workflow": "invoice-action-pilot",
+                "fact": {
+                  "predicate": "total_charge",
+                  "value": {
+                    "order": "A",
+                    "currency": "CNY",
+                    "cents": 10700
+                  }
+                },
+                "parents": [
+                  "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                  "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88"
+                ],
+                "rule": "sum_charges"
+              },
+              "signature": {
+                "issuer": "broker",
+                "version": 1,
+                "bundle_hash": "c577a587c4d7d86f3e41395a8b49eadb1474cda1da8593fd24be76391e52181b",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e452d577f75cc6f3f745c34b9f2fd057dc46491e66db6a8a302dcddc38128c4f26220313c8efc1942bba41699d3987c1c685df6771daa2b4f0a82df38ec76b06"
+              }
+            }
+          ]
+        },
+        "response": {
+          "status": "gateway_blocked",
+          "events": [
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "a01d74020fff61fe86f84831a8aa2f1c4f1a77a7f0d1652e92a69f14d4e2a66a",
+                "reasons": [],
+                "sequence": 1,
+                "previous": null
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "bfd505d40ed8b89272e79d1d40bae7c517232be868100c91836beea5214e70c0",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "ebccb3ade2b6633ae44017bc3aa449fbbd7dd2963be0e0b3ae4dd1082297ff48a5a125c09eefd95accf76f7caa9da8f5883c17fb56b92c203a158f57c314050b"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "6c97cced18c66b9757dd85bfbcd5786c4685589129109f9944e76218eaad3b88",
+                "reasons": [],
+                "sequence": 2,
+                "previous": "8ba6373a8d662a03583663f688e7e5e38193ab36b1bc525f1b6079b950ddae69"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "4e2f674fdef5182928351eab86d626a70d7964ffc420b22458366a808d337fba",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "d2eb3b22fca1388c3dc68b793993253c70dccfa9873d0d42c4359faf91813b56f33e669f2d3076760985ace23a539b69216027b1470e814d53c9854de9e7f006"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "received",
+                "target": "262ada7fa033d749266b767d51832cac3bcdec9ec28e353aeb273bf7696aaa69",
+                "reasons": [],
+                "sequence": 3,
+                "previous": "f1137d626ad1b515e937257cdd8191f80bd092afb2432316e574ff8a6f19d95f"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "6bb82619567d2ad40df2885ce797f9335d5ce6dfb1fa24d203275ca721d0d8f4",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "e7c8839bcf53f53f2409f9734c38547693e56f48c2046be3e1e81b3b0066656123f844c9fb8de803942668b36d030a4ad4db0a0d24d1074af8ce9b9d2b38d00e"
+              }
+            },
+            {
+              "body": {
+                "kind": "gateway_event",
+                "workflow": "invoice-action-pilot",
+                "action": "blocked",
+                "target": "271f7b238e787167a98242b46fc44a302045790f6ba4b6b9c0dae815f6175895",
+                "reasons": [
+                  "unsupported_transformation"
+                ],
+                "sequence": 4,
+                "previous": "867ce8bef8897e3100147645f6d79ebf9e938a8279c06e72538c3345077fcbba"
+              },
+              "signature": {
+                "issuer": "reviewer",
+                "version": 1,
+                "bundle_hash": "26c56245c05bd7be31c4210234dcd5d3101a8db95d824e3d6fb3684d13d4a6fc",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "3714e8aaf7a7d3cf1754e3076dfe65d1ec8e65d9d19c7f57c3593e0e8949c5a974339ee185b69a9c011e0b63af440cf7f5c7335cf8ffaeb0751ed9e9ce9d0005"
+              }
+            }
+          ],
+          "model_calls": 0
+        }
+      }
+    ],
+    "forward_count": 0,
+    "model_exposure_hops": 0,
+    "final_eligible": false,
+    "model_calls": 0,
+    "tokens": 0
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "actor_mode": "scripted_always_pass",
+  "real_minimax_calls": 0,
+  "tokens": 0,
+  "risk_config": {
+    "change_prior": 0.2,
+    "routine_prior": 0.02,
+    "change_loss": 100.0,
+    "routine_loss": 10.0,
+    "verification_cost": 3.0,
+    "escalation_cost": 5.0,
+    "budget": 9.0,
+    "omission_weight": 0.0,
+    "maximum_unverified_risk": 0.05
+  },
+  "public_keys": {
+    "export_bank": "255714ca9084140b48ebb0091a87a1453dc046da3017621b39755ef2d4d0984a",
+    "issuing_bank": "7a3ebc153e349a8f1add9278db9b4f006c18130363cf5f9ccf82092dd22bd831",
+    "fulfillment": "8a39037284361b972d20f4df6a6a427769037555fe6adfc52da3241acc8c7546",
+    "buyer_authority": "9852772918c020c1376c930910115e8fcced33a6838217d3153b5946446aa7d1",
+    "runtime": "3e1fe6d7fd4d01fabaf513f23f2b11e1f149e402f8a24b5b2c98cf70ee33e888"
+  },
+  "public_view_pairs": {
+    "case_01": {
+      "view_hash": "675839c1202cd240b41ecbaf0f7c6135a1500558d072ce0fbe0f6ab27ca7e4bf",
+      "authorized_truth": true
+    },
+    "case_02": {
+      "view_hash": "675839c1202cd240b41ecbaf0f7c6135a1500558d072ce0fbe0f6ab27ca7e4bf",
+      "authorized_truth": false
+    },
+    "case_03": {
+      "view_hash": "7b7b7688ef87b12a47370f4ce1e725b21c7285f6e6a5007d308da81e41ba946c",
+      "authorized_truth": true
+    },
+    "case_04": {
+      "view_hash": "7b7b7688ef87b12a47370f4ce1e725b21c7285f6e6a5007d308da81e41ba946c",
+      "authorized_truth": false
+    }
+  },
+  "audited_events": 159,
+  "preserved_historical_files": 209,
+  "self_checks": {
+    "public_fields_do_not_determine_truth": true,
+    "policy_can_veto_llm_pass_proposal": true,
+    "selective_verification_reduces_real_query_count": true
+  },
+  "estimate": {
+    "cases": 4,
+    "policies": [
+      "autonomous",
+      "verify_all",
+      "risk_aware"
+    ],
+    "temperatures": [
+      0.2,
+      0.5,
+      0.8
+    ],
+    "planned_runs": 36,
+    "runs_per_policy": 12,
+    "planning_actor_calls": 144,
+    "planning_tokens": 306388,
+    "max_actor_calls": 216,
+    "max_model_http_attempts_with_format_retry": 432,
+    "max_authority_queries": 108,
+    "basis": {
+      "historical_logged_calls": 85,
+      "historical_tokens": 180854,
+      "historical_tokens_per_call": 2127.6941176470586
+    },
+    "interpretation": "36run×规划4次业务调用；每组织最多2次、每run最多6次。权威查证是确定性组织服务，无LLM评估调用。",
+    "budget_warning": "新场景没有实测用量；历史均值是规划参照，不是上限或账单。失败usage可能缺失。",
+    "requires_confirmation": true
+  }
+}

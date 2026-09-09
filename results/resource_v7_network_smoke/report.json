@@ -1,0 +1,766 @@
+{
+  "status": "passed",
+  "transport": "authenticated HTTP, separate localhost processes",
+  "scope": "prepare, partial abort, journal recovery, repeated abort, capacity reuse",
+  "model_api_calls": 0,
+  "http_calls": 9,
+  "events": [
+    {
+      "owner": "supplier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_prepare",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-1",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "prepared",
+            "transaction": "NETWORK-RESOURCE-1",
+            "scope_hash": "d9b7cad47b07776c2e958865b3d634da5e1a57f6be1be2a53960b97f375d4daa"
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "dadb40aef342f44198ad98a997b7492bb6cf5a2c187b79a2ca0db9e5de6d6ad1",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "afcde0ceac6369fc3c8e3d7a50e09b70a37aa77d63c127988e6a2803a81cbf5cc915b3dd7132263315282bdc3f00b3842a59fd8d9e70d194deed4c83cb48310e"
+          }
+        }
+      }
+    },
+    {
+      "owner": "carrier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_prepare",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-1",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "prepared",
+            "transaction": "NETWORK-RESOURCE-1",
+            "scope_hash": "4fa22d697856795c64c85d98b087e41315b19febfe2998c1f2cf8fce58af45ac"
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "2a43d6d617c3ea68245944bbe7a4212799ada95133ef9076b1874d57adf5c5aa",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "b4b22eaac8c7e36a270fc49082ff359821d0b9b30f5cbf612b947eb21a827796d7986ea1093c3ae04c118d23314bd080fcc501a82603b7599f00817294ca8a07"
+          }
+        }
+      }
+    },
+    {
+      "owner": "supplier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_decide",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-1",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "decision": {
+          "body": {
+            "kind": "decision",
+            "transaction": "NETWORK-RESOURCE-1",
+            "plan_hash": "24d4d898203a1acad9936337c69cfd3d84a257035dd92ff2c36f4154eef61838",
+            "action": "abort",
+            "votes": {
+              "supplier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "d9b7cad47b07776c2e958865b3d634da5e1a57f6be1be2a53960b97f375d4daa"
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "dadb40aef342f44198ad98a997b7492bb6cf5a2c187b79a2ca0db9e5de6d6ad1",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "afcde0ceac6369fc3c8e3d7a50e09b70a37aa77d63c127988e6a2803a81cbf5cc915b3dd7132263315282bdc3f00b3842a59fd8d9e70d194deed4c83cb48310e"
+                }
+              },
+              "carrier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "4fa22d697856795c64c85d98b087e41315b19febfe2998c1f2cf8fce58af45ac"
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "2a43d6d617c3ea68245944bbe7a4212799ada95133ef9076b1874d57adf5c5aa",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "b4b22eaac8c7e36a270fc49082ff359821d0b9b30f5cbf612b947eb21a827796d7986ea1093c3ae04c118d23314bd080fcc501a82603b7599f00817294ca8a07"
+                }
+              }
+            },
+            "buyer_receipt": null,
+            "workflow_id": "network-smoke"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "729608863d78305d7fd8d116bcddf0e6ff408d4e7b8880902fe4646474cedc21",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "1f78aa454d0ac55ee77e58b85d011d50246d7bfdd16121767d774fe82e327e525a2b7b56cac9a472a6e50cfc650fd3fa8f27dd9af231d6dd3e54f50c9e7f8203"
+          }
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "ack",
+            "transaction": "NETWORK-RESOURCE-1",
+            "decision_hash": "bfa3c96423f3c82b31818daeaff0ccea32dc5a3f9604ae8ee7cc02f0111f35c4",
+            "status": "released"
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "e62e9dee1c7fff96c65d43e89cb6e612e4726258e38b9a250cee9b53ac35584f",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "95c0d18cc38a24bb5a832e36f9c3d469163996e15c20b7e0fd51024fb1c633c3195a4757e1e221509109db6c26b57d6b7a249388d068e33aa9c3bbf255367f09"
+          }
+        }
+      }
+    },
+    {
+      "owner": "supplier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_decide",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-1",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "decision": {
+          "body": {
+            "kind": "decision",
+            "transaction": "NETWORK-RESOURCE-1",
+            "plan_hash": "24d4d898203a1acad9936337c69cfd3d84a257035dd92ff2c36f4154eef61838",
+            "action": "abort",
+            "votes": {
+              "supplier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "d9b7cad47b07776c2e958865b3d634da5e1a57f6be1be2a53960b97f375d4daa"
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "dadb40aef342f44198ad98a997b7492bb6cf5a2c187b79a2ca0db9e5de6d6ad1",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "afcde0ceac6369fc3c8e3d7a50e09b70a37aa77d63c127988e6a2803a81cbf5cc915b3dd7132263315282bdc3f00b3842a59fd8d9e70d194deed4c83cb48310e"
+                }
+              },
+              "carrier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "4fa22d697856795c64c85d98b087e41315b19febfe2998c1f2cf8fce58af45ac"
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "2a43d6d617c3ea68245944bbe7a4212799ada95133ef9076b1874d57adf5c5aa",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "b4b22eaac8c7e36a270fc49082ff359821d0b9b30f5cbf612b947eb21a827796d7986ea1093c3ae04c118d23314bd080fcc501a82603b7599f00817294ca8a07"
+                }
+              }
+            },
+            "buyer_receipt": null,
+            "workflow_id": "network-smoke"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "729608863d78305d7fd8d116bcddf0e6ff408d4e7b8880902fe4646474cedc21",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "1f78aa454d0ac55ee77e58b85d011d50246d7bfdd16121767d774fe82e327e525a2b7b56cac9a472a6e50cfc650fd3fa8f27dd9af231d6dd3e54f50c9e7f8203"
+          }
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "ack",
+            "transaction": "NETWORK-RESOURCE-1",
+            "decision_hash": "bfa3c96423f3c82b31818daeaff0ccea32dc5a3f9604ae8ee7cc02f0111f35c4",
+            "status": "released"
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "e62e9dee1c7fff96c65d43e89cb6e612e4726258e38b9a250cee9b53ac35584f",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "95c0d18cc38a24bb5a832e36f9c3d469163996e15c20b7e0fd51024fb1c633c3195a4757e1e221509109db6c26b57d6b7a249388d068e33aa9c3bbf255367f09"
+          }
+        }
+      }
+    },
+    {
+      "owner": "carrier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_decide",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-1",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "decision": {
+          "body": {
+            "kind": "decision",
+            "transaction": "NETWORK-RESOURCE-1",
+            "plan_hash": "24d4d898203a1acad9936337c69cfd3d84a257035dd92ff2c36f4154eef61838",
+            "action": "abort",
+            "votes": {
+              "supplier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "d9b7cad47b07776c2e958865b3d634da5e1a57f6be1be2a53960b97f375d4daa"
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "dadb40aef342f44198ad98a997b7492bb6cf5a2c187b79a2ca0db9e5de6d6ad1",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "afcde0ceac6369fc3c8e3d7a50e09b70a37aa77d63c127988e6a2803a81cbf5cc915b3dd7132263315282bdc3f00b3842a59fd8d9e70d194deed4c83cb48310e"
+                }
+              },
+              "carrier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-1",
+                  "scope_hash": "4fa22d697856795c64c85d98b087e41315b19febfe2998c1f2cf8fce58af45ac"
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "2a43d6d617c3ea68245944bbe7a4212799ada95133ef9076b1874d57adf5c5aa",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "b4b22eaac8c7e36a270fc49082ff359821d0b9b30f5cbf612b947eb21a827796d7986ea1093c3ae04c118d23314bd080fcc501a82603b7599f00817294ca8a07"
+                }
+              }
+            },
+            "buyer_receipt": null,
+            "workflow_id": "network-smoke"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "729608863d78305d7fd8d116bcddf0e6ff408d4e7b8880902fe4646474cedc21",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "1f78aa454d0ac55ee77e58b85d011d50246d7bfdd16121767d774fe82e327e525a2b7b56cac9a472a6e50cfc650fd3fa8f27dd9af231d6dd3e54f50c9e7f8203"
+          }
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "ack",
+            "transaction": "NETWORK-RESOURCE-1",
+            "decision_hash": "bfa3c96423f3c82b31818daeaff0ccea32dc5a3f9604ae8ee7cc02f0111f35c4",
+            "status": "released"
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "e62e9dee1c7fff96c65d43e89cb6e612e4726258e38b9a250cee9b53ac35584f",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "f300e5ae1c47768bbdba5586368434790d4f4e6f6c423df20c04da161bd7c9e014c9ecec79c14285a3da49b019ae4e023fd949272e4d50eeeba27f315a5d940b"
+          }
+        }
+      }
+    },
+    {
+      "owner": "supplier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_prepare",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-2",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "prepared",
+            "transaction": "NETWORK-RESOURCE-2",
+            "scope_hash": "70e651652d8b0ebfebb5f1943bacd8e825afd841328afcfeb723814a682a0498"
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "a68cfe4ae122a7acd9ba53e8358339e3c60dab0247542f844cc45409b7911171",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "b68fcfe578f2245832752053af797b38093471666fd99cdb74e37174fdfab1cee6d44f691fcc90a854ca4aedb0636e89a2b75d5f738e10074a8edee2102dd30d"
+          }
+        }
+      }
+    },
+    {
+      "owner": "carrier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_prepare",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-2",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "prepared",
+            "transaction": "NETWORK-RESOURCE-2",
+            "scope_hash": "32a77b5003631577c1fdef558bc94ce73e1c8d6176d9e5771c639e2ebbb5fa60"
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "62f4ed1f4790bf752fcd75a7c185f2d45c0b03d8827611d27e633b595522daa4",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "132c6abb33f61e3e3375b4794ae2062755e0b34dfed1adbcd8e8843941b3ae0b786493b058e7cd7cf4011bc611458ae7b46377c3a2f890051b981442284b440d"
+          }
+        }
+      }
+    },
+    {
+      "owner": "supplier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_decide",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-2",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "decision": {
+          "body": {
+            "kind": "decision",
+            "transaction": "NETWORK-RESOURCE-2",
+            "plan_hash": "017336cd50493cb368808262f4e9142d29a651e638f079e0b98250251df3556d",
+            "action": "abort",
+            "votes": {
+              "supplier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-2",
+                  "scope_hash": "70e651652d8b0ebfebb5f1943bacd8e825afd841328afcfeb723814a682a0498"
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "a68cfe4ae122a7acd9ba53e8358339e3c60dab0247542f844cc45409b7911171",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "b68fcfe578f2245832752053af797b38093471666fd99cdb74e37174fdfab1cee6d44f691fcc90a854ca4aedb0636e89a2b75d5f738e10074a8edee2102dd30d"
+                }
+              },
+              "carrier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-2",
+                  "scope_hash": "32a77b5003631577c1fdef558bc94ce73e1c8d6176d9e5771c639e2ebbb5fa60"
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "62f4ed1f4790bf752fcd75a7c185f2d45c0b03d8827611d27e633b595522daa4",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "132c6abb33f61e3e3375b4794ae2062755e0b34dfed1adbcd8e8843941b3ae0b786493b058e7cd7cf4011bc611458ae7b46377c3a2f890051b981442284b440d"
+                }
+              }
+            },
+            "buyer_receipt": null,
+            "workflow_id": "network-smoke"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "7af7499f83b10a4826336b4d1bc9d8978ba63711c34912bd36f52b8846ec2824",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "83c5c703a69e05b82cd05c9f7a2bd986c928f32a73d649907373f98bc1a3ac11f62e02e9bbbed43380e8014dbe4efad0ec2ec7412359477a2e70242c21b91b04"
+          }
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "ack",
+            "transaction": "NETWORK-RESOURCE-2",
+            "decision_hash": "0fe58be07a6b27d9ada3aa578c259388983d06e27447bde2c0c14867880ec111",
+            "status": "released"
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "a2d471ee19e5b207c56a114c6ba9d8961eea456a2b27e7540006ea23ccc62bbf",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "d76e3add4a0f21892b195f92f2c2ac78b63a8560b06a80ababb765c8416387dcdaf2a27bbf5aa61cd36110058c103139a5294ca07169b5e28b02f1ca6528b60e"
+          }
+        }
+      }
+    },
+    {
+      "owner": "carrier",
+      "request": {
+        "workflow_id": "network-smoke",
+        "operation": "resource_decide",
+        "plan": {
+          "transaction": "NETWORK-RESOURCE-2",
+          "model": "MX-40B",
+          "quantity": 10,
+          "shipments": [
+            {
+              "lot": "early",
+              "quantity": 4,
+              "dispatch_day": 1,
+              "service": "air",
+              "arrival_day": 2,
+              "cost": 1500
+            },
+            {
+              "lot": "later",
+              "quantity": 6,
+              "dispatch_day": 3,
+              "service": "road",
+              "arrival_day": 5,
+              "cost": 600
+            }
+          ]
+        },
+        "decision": {
+          "body": {
+            "kind": "decision",
+            "transaction": "NETWORK-RESOURCE-2",
+            "plan_hash": "017336cd50493cb368808262f4e9142d29a651e638f079e0b98250251df3556d",
+            "action": "abort",
+            "votes": {
+              "supplier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-2",
+                  "scope_hash": "70e651652d8b0ebfebb5f1943bacd8e825afd841328afcfeb723814a682a0498"
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "a68cfe4ae122a7acd9ba53e8358339e3c60dab0247542f844cc45409b7911171",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "b68fcfe578f2245832752053af797b38093471666fd99cdb74e37174fdfab1cee6d44f691fcc90a854ca4aedb0636e89a2b75d5f738e10074a8edee2102dd30d"
+                }
+              },
+              "carrier": {
+                "body": {
+                  "kind": "prepared",
+                  "transaction": "NETWORK-RESOURCE-2",
+                  "scope_hash": "32a77b5003631577c1fdef558bc94ce73e1c8d6176d9e5771c639e2ebbb5fa60"
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "62f4ed1f4790bf752fcd75a7c185f2d45c0b03d8827611d27e633b595522daa4",
+                  "checks": [
+                    "resource_protocol"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "132c6abb33f61e3e3375b4794ae2062755e0b34dfed1adbcd8e8843941b3ae0b786493b058e7cd7cf4011bc611458ae7b46377c3a2f890051b981442284b440d"
+                }
+              }
+            },
+            "buyer_receipt": null,
+            "workflow_id": "network-smoke"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "7af7499f83b10a4826336b4d1bc9d8978ba63711c34912bd36f52b8846ec2824",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "83c5c703a69e05b82cd05c9f7a2bd986c928f32a73d649907373f98bc1a3ac11f62e02e9bbbed43380e8014dbe4efad0ec2ec7412359477a2e70242c21b91b04"
+          }
+        }
+      },
+      "response": {
+        "resource": {
+          "body": {
+            "kind": "ack",
+            "transaction": "NETWORK-RESOURCE-2",
+            "decision_hash": "0fe58be07a6b27d9ada3aa578c259388983d06e27447bde2c0c14867880ec111",
+            "status": "released"
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "a2d471ee19e5b207c56a114c6ba9d8961eea456a2b27e7540006ea23ccc62bbf",
+            "checks": [
+              "resource_protocol"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "cc5ae9b81a6036cda94859e75ec3e203dbac2bfbaf0f33c6612c04c466bb99b673996d8cdd07a09a0a1edad317294a53aeab057e09f69a3b4a9ec9058d9bce0c"
+          }
+        }
+      }
+    }
+  ],
+  "public_keys": {
+    "runtime": "e1042451d56916a722acfabc9e53bf01297bfd682d72371bbe0564db2bf6a19c",
+    "supplier": "68dc8e28c9c0d11009332a810794c1f0c02f835333ba11b14b455cc6cd5ff502",
+    "carrier": "8f17dd007cac382db657e53962d6bd6abfe511d4287768d30178b2cefc2e4800",
+    "buyer": "0924c984e4520fc3bed64aa8a3b3435c9536f8f76d81c67e24b5adc5988c7247",
+    "coordinator": "3b83a9ab37231f13a8b88bb1b2c417e8c62d05ddfb13fe5211221e82aa8dc28b"
+  }
+}

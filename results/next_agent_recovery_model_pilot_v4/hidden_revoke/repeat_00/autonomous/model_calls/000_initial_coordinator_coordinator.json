@@ -1,0 +1,346 @@
+{
+  "stage": "initial_coordinator",
+  "owner": "coordinator",
+  "request": {
+    "operation": "reliability_model_decision",
+    "stage": "initial_coordinator",
+    "model_input": {
+      "role": "coordinator",
+      "task": "核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；proceed 时必须逐字复制 required_parent_claims 到 claims；不能漏掉组件、改变来源金额或声称账单已经批准。",
+      "public_claims": [
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "invoice-reliability-multiround",
+            "parents": [],
+            "fact": {
+              "predicate": "charge_manifest",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "components": [
+                  "goods",
+                  "freight"
+                ]
+              }
+            }
+          },
+          "signature": {
+            "issuer": "buyer",
+            "version": 1,
+            "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "44b2085470cc89e2f2808b1bb1d0f25898c840c85e5c62b8d56f402f80536d38252f3ceda08ee9071eb101408ec861755bb99e9694ef6ca9bdbb5d921e0ee702"
+          },
+          "claim_id": "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "invoice-reliability-multiround",
+            "parents": [],
+            "fact": {
+              "predicate": "invoice_authorization",
+              "value": {
+                "order": "A",
+                "operation": "approve_invoice",
+                "currency": "CNY",
+                "maximum_cents": 11000,
+                "approved": true
+              }
+            }
+          },
+          "signature": {
+            "issuer": "buyer",
+            "version": 1,
+            "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "928eed9ca0e8887b9552325abd74dd78bfb1117d25b1537155424597b88d8cc7c3359d2809eaf4de286fce468b6a89a8c177175fbb78d10a0a90dc8fc37c2808"
+          },
+          "claim_id": "3ded65a0968d176ad627f54a48b6ca0d221db3d2dc17489f0ce76ed720996df6"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "invoice-reliability-multiround",
+            "parents": [],
+            "fact": {
+              "predicate": "charge/goods",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "component": "goods",
+                "cents": 10000
+              }
+            }
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "18c4bb2d4c63f716b698a53862efd56d86d7104f58f1d2ca2f6a63a471317efdbaa139c9d5182fa0ccd9a4644e7ebf378fd7720c3032d889c62544ef1202ea05"
+          },
+          "claim_id": "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "invoice-reliability-multiround",
+            "parents": [],
+            "fact": {
+              "predicate": "charge/freight",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "component": "freight",
+                "cents": 700
+              }
+            }
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "b4ba7d8927139568d3bde8bc499ee71198d84b3721a5f87370dab5eec864e859666d78d64e440408034f98ecf8f6b78235700a874c7da3e24f9b3fdcbcd15309"
+          },
+          "claim_id": "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "invoice-reliability-multiround",
+            "parents": [],
+            "fact": {
+              "predicate": "delivery_schedule",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "window": "2026-10-01/2026-10-03",
+                "reference_only": true
+              }
+            }
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "a4e8840f5f3fd2d62f6803cb2f336747d93cff98d7978fe1bc535f3e760705f5340112d43bb8922a19a6f6b8c37a436b9973de1023780586340dee8c0516f403"
+          },
+          "claim_id": "ebd220fec2b733fae9b7057220a18bb1423e42d6ce7f5b4bd75c34b3dbd30fb8"
+        }
+      ],
+      "candidate_claims": {
+        "total_charge": [
+          "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+          "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+          "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+        ]
+      },
+      "required_parent_claims": [
+        "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+        "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+        "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+      ],
+      "available_tools": [
+        "读取已收到的签名声明",
+        "提交 proceed 或 hold 供运行时验证"
+      ],
+      "output_schema": {
+        "action": "proceed|hold",
+        "claims": [
+          "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+          "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+          "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+        ],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": "整数分总额"
+          }
+        },
+        "reason": "string"
+      },
+      "evidence_binding": "每个 public_claims 条目的 claim_id 是该签名 packet 的公开摘要；proceed 的 claims 必须逐字等于 required_parent_claims，运行时只接受这个绑定。"
+    }
+  },
+  "response": {
+    "status": "success",
+    "model": "MiniMax-M3",
+    "public_input_hash": "9f342581a21b013189264269fc0aa462662baef9058d2eed9988690abc773286",
+    "full_input_hash": "cb1049f28fdecf0c7b239585a29ee7d19de19b1d251310433d023f1660344e1f",
+    "draft": {
+      "action": "proceed",
+      "claims": [
+        "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+        "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+        "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "order": "A",
+          "currency": "CNY",
+          "cents": 10700
+        }
+      },
+      "reason": "清单核对:charge_manifest(订单A,CNY,components=[goods,freight])已由买方签名声明(f47cdbe7)覆盖;货物组件10000分由供应商签名声明(9f7bb855)支持;运费组件700分由承运商签名声明(31bf578f)支持。所有清单组件均有签名来源,合计10700分=10000+700,逐字复制required_parent_claims。本动作仅提交派生声明给运行时协议检查,不构成账单已批准或付款。"
+    },
+    "usage": {
+      "total_tokens": 2757,
+      "prompt_tokens": 2499,
+      "completion_tokens": 258,
+      "attempts": 1
+    },
+    "trace": {
+      "model": "MiniMax-M3",
+      "base_url": "https://api.minimaxi.com/v1",
+      "sampling": {
+        "max_completion_tokens": 2500,
+        "temperature": 0.2,
+        "reasoning_split": true,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "public_input_hash": "9f342581a21b013189264269fc0aa462662baef9058d2eed9988690abc773286",
+      "full_input_hash": "cb1049f28fdecf0c7b239585a29ee7d19de19b1d251310433d023f1660344e1f",
+      "system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+      "user_prompt": "{\n  \"role\": \"coordinator\",\n  \"task\": \"核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；proceed 时必须逐字复制 required_parent_claims 到 claims；不能漏掉组件、改变来源金额或声称账单已经批准。\",\n  \"public_claims\": [\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge_manifest\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"components\": [\n              \"goods\",\n              \"freight\"\n            ]\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"44b2085470cc89e2f2808b1bb1d0f25898c840c85e5c62b8d56f402f80536d38252f3ceda08ee9071eb101408ec861755bb99e9694ef6ca9bdbb5d921e0ee702\"\n      },\n      \"claim_id\": \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"invoice_authorization\",\n          \"value\": {\n            \"order\": \"A\",\n            \"operation\": \"approve_invoice\",\n            \"currency\": \"CNY\",\n            \"maximum_cents\": 11000,\n            \"approved\": true\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"928eed9ca0e8887b9552325abd74dd78bfb1117d25b1537155424597b88d8cc7c3359d2809eaf4de286fce468b6a89a8c177175fbb78d10a0a90dc8fc37c2808\"\n      },\n      \"claim_id\": \"3ded65a0968d176ad627f54a48b6ca0d221db3d2dc17489f0ce76ed720996df6\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/goods\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"goods\",\n            \"cents\": 10000\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"supplier\",\n        \"version\": 1,\n        \"bundle_hash\": \"bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"18c4bb2d4c63f716b698a53862efd56d86d7104f58f1d2ca2f6a63a471317efdbaa139c9d5182fa0ccd9a4644e7ebf378fd7720c3032d889c62544ef1202ea05\"\n      },\n      \"claim_id\": \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/freight\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"freight\",\n            \"cents\": 700\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"b4ba7d8927139568d3bde8bc499ee71198d84b3721a5f87370dab5eec864e859666d78d64e440408034f98ecf8f6b78235700a874c7da3e24f9b3fdcbcd15309\"\n      },\n      \"claim_id\": \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"delivery_schedule\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"window\": \"2026-10-01/2026-10-03\",\n            \"reference_only\": true\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"a4e8840f5f3fd2d62f6803cb2f336747d93cff98d7978fe1bc535f3e760705f5340112d43bb8922a19a6f6b8c37a436b9973de1023780586340dee8c0516f403\"\n      },\n      \"claim_id\": \"ebd220fec2b733fae9b7057220a18bb1423e42d6ce7f5b4bd75c34b3dbd30fb8\"\n    }\n  ],\n  \"candidate_claims\": {\n    \"total_charge\": [\n      \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n      \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n      \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    ]\n  },\n  \"required_parent_claims\": [\n    \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n    \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n    \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n  ],\n  \"available_tools\": [\n    \"读取已收到的签名声明\",\n    \"提交 proceed 或 hold 供运行时验证\"\n  ],\n  \"output_schema\": {\n    \"action\": \"proceed|hold\",\n    \"claims\": [\n      \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n      \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n      \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    ],\n    \"fact\": {\n      \"predicate\": \"total_charge\",\n      \"value\": {\n        \"order\": \"A\",\n        \"currency\": \"CNY\",\n        \"cents\": \"整数分总额\"\n      }\n    },\n    \"reason\": \"string\"\n  },\n  \"evidence_binding\": \"每个 public_claims 条目的 claim_id 是该签名 packet 的公开摘要；proceed 的 claims 必须逐字等于 required_parent_claims，运行时只接受这个绑定。\",\n  \"organization_dossier\": \"你代表采购协调组织，负责依据完整签名费用清单生成可验证的总费用派生声明。不能漏项、改值或把建议说成已批准。\"\n}",
+      "attempts": [
+        {
+          "attempt": 1,
+          "request": {
+            "model": "MiniMax-M3",
+            "messages": [
+              {
+                "role": "system",
+                "content": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。"
+              },
+              {
+                "role": "user",
+                "content": "{\n  \"role\": \"coordinator\",\n  \"task\": \"核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；proceed 时必须逐字复制 required_parent_claims 到 claims；不能漏掉组件、改变来源金额或声称账单已经批准。\",\n  \"public_claims\": [\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge_manifest\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"components\": [\n              \"goods\",\n              \"freight\"\n            ]\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"44b2085470cc89e2f2808b1bb1d0f25898c840c85e5c62b8d56f402f80536d38252f3ceda08ee9071eb101408ec861755bb99e9694ef6ca9bdbb5d921e0ee702\"\n      },\n      \"claim_id\": \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"invoice_authorization\",\n          \"value\": {\n            \"order\": \"A\",\n            \"operation\": \"approve_invoice\",\n            \"currency\": \"CNY\",\n            \"maximum_cents\": 11000,\n            \"approved\": true\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"928eed9ca0e8887b9552325abd74dd78bfb1117d25b1537155424597b88d8cc7c3359d2809eaf4de286fce468b6a89a8c177175fbb78d10a0a90dc8fc37c2808\"\n      },\n      \"claim_id\": \"3ded65a0968d176ad627f54a48b6ca0d221db3d2dc17489f0ce76ed720996df6\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/goods\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"goods\",\n            \"cents\": 10000\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"supplier\",\n        \"version\": 1,\n        \"bundle_hash\": \"bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"18c4bb2d4c63f716b698a53862efd56d86d7104f58f1d2ca2f6a63a471317efdbaa139c9d5182fa0ccd9a4644e7ebf378fd7720c3032d889c62544ef1202ea05\"\n      },\n      \"claim_id\": \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/freight\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"freight\",\n            \"cents\": 700\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"b4ba7d8927139568d3bde8bc499ee71198d84b3721a5f87370dab5eec864e859666d78d64e440408034f98ecf8f6b78235700a874c7da3e24f9b3fdcbcd15309\"\n      },\n      \"claim_id\": \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"invoice-reliability-multiround\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"delivery_schedule\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"window\": \"2026-10-01/2026-10-03\",\n            \"reference_only\": true\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"a4e8840f5f3fd2d62f6803cb2f336747d93cff98d7978fe1bc535f3e760705f5340112d43bb8922a19a6f6b8c37a436b9973de1023780586340dee8c0516f403\"\n      },\n      \"claim_id\": \"ebd220fec2b733fae9b7057220a18bb1423e42d6ce7f5b4bd75c34b3dbd30fb8\"\n    }\n  ],\n  \"candidate_claims\": {\n    \"total_charge\": [\n      \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n      \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n      \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    ]\n  },\n  \"required_parent_claims\": [\n    \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n    \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n    \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n  ],\n  \"available_tools\": [\n    \"读取已收到的签名声明\",\n    \"提交 proceed 或 hold 供运行时验证\"\n  ],\n  \"output_schema\": {\n    \"action\": \"proceed|hold\",\n    \"claims\": [\n      \"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\n      \"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\n      \"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"\n    ],\n    \"fact\": {\n      \"predicate\": \"total_charge\",\n      \"value\": {\n        \"order\": \"A\",\n        \"currency\": \"CNY\",\n        \"cents\": \"整数分总额\"\n      }\n    },\n    \"reason\": \"string\"\n  },\n  \"evidence_binding\": \"每个 public_claims 条目的 claim_id 是该签名 packet 的公开摘要；proceed 的 claims 必须逐字等于 required_parent_claims，运行时只接受这个绑定。\",\n  \"organization_dossier\": \"你代表采购协调组织，负责依据完整签名费用清单生成可验证的总费用派生声明。不能漏项、改值或把建议说成已批准。\"\n}"
+              }
+            ],
+            "max_completion_tokens": 2500,
+            "temperature": 0.2,
+            "reasoning_split": true,
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "response_text": "{\"id\":\"06f06433f327e93cca20c7cc3f712a0b\",\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"content\":\"{\\\"action\\\":\\\"proceed\\\",\\\"claims\\\":[\\\"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\\\",\\\"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\\\",\\\"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\\\"],\\\"fact\\\":{\\\"predicate\\\":\\\"total_charge\\\",\\\"value\\\":{\\\"order\\\":\\\"A\\\",\\\"currency\\\":\\\"CNY\\\",\\\"cents\\\":10700}},\\\"reason\\\":\\\"清单核对:charge_manifest(订单A,CNY,components=[goods,freight])已由买方签名声明(f47cdbe7)覆盖;货物组件10000分由供应商签名声明(9f7bb855)支持;运费组件700分由承运商签名声明(31bf578f)支持。所有清单组件均有签名来源,合计10700分=10000+700,逐字复制required_parent_claims。本动作仅提交派生声明给运行时协议检查,不构成账单已批准或付款。\\\"}\",\"role\":\"assistant\"}}],\"created\":1788948788,\"model\":\"MiniMax-M3\",\"object\":\"chat.completion\",\"usage\":{\"total_tokens\":2757,\"total_characters\":0,\"prompt_tokens\":2499,\"completion_tokens\":258,\"prompt_tokens_details\":{\"cached_tokens\":128}},\"input_sensitive\":false,\"output_sensitive\":false,\"input_sensitive_type\":0,\"output_sensitive_type\":0,\"output_sensitive_int\":0,\"service_tier\":\"standard\",\"base_resp\":{\"status_code\":0,\"status_msg\":\"\"}}\n",
+          "response": {
+            "id": "06f06433f327e93cca20c7cc3f712a0b",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "{\"action\":\"proceed\",\"claims\":[\"f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906\",\"9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432\",\"31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f\"],\"fact\":{\"predicate\":\"total_charge\",\"value\":{\"order\":\"A\",\"currency\":\"CNY\",\"cents\":10700}},\"reason\":\"清单核对:charge_manifest(订单A,CNY,components=[goods,freight])已由买方签名声明(f47cdbe7)覆盖;货物组件10000分由供应商签名声明(9f7bb855)支持;运费组件700分由承运商签名声明(31bf578f)支持。所有清单组件均有签名来源,合计10700分=10000+700,逐字复制required_parent_claims。本动作仅提交派生声明给运行时协议检查,不构成账单已批准或付款。\"}",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1788948788,
+            "model": "MiniMax-M3",
+            "object": "chat.completion",
+            "usage": {
+              "total_tokens": 2757,
+              "total_characters": 0,
+              "prompt_tokens": 2499,
+              "completion_tokens": 258,
+              "prompt_tokens_details": {
+                "cached_tokens": 128
+              }
+            },
+            "input_sensitive": false,
+            "output_sensitive": false,
+            "input_sensitive_type": 0,
+            "output_sensitive_type": 0,
+            "output_sensitive_int": 0,
+            "service_tier": "standard",
+            "base_resp": {
+              "status_code": 0,
+              "status_msg": ""
+            }
+          },
+          "parsed": {
+            "action": "proceed",
+            "claims": [
+              "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+              "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+              "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+            ],
+            "fact": {
+              "predicate": "total_charge",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "cents": 10700
+              }
+            },
+            "reason": "清单核对:charge_manifest(订单A,CNY,components=[goods,freight])已由买方签名声明(f47cdbe7)覆盖;货物组件10000分由供应商签名声明(9f7bb855)支持;运费组件700分由承运商签名声明(31bf578f)支持。所有清单组件均有签名来源,合计10700分=10000+700,逐字复制required_parent_claims。本动作仅提交派生声明给运行时协议检查,不构成账单已批准或付款。"
+          },
+          "usage": {
+            "total_tokens": 2757,
+            "total_characters": 0,
+            "prompt_tokens": 2499,
+            "completion_tokens": 258,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            }
+          }
+        }
+      ],
+      "parsed_decision": {
+        "action": "proceed",
+        "claims": [
+          "f47cdbe78fff4fded7c14b0f87418aea4ca19c528b71dc2f24640d884bdb1906",
+          "9f7bb855c56f81f8d58a37454cc1897261e25d5d371ebaadd0bae0097e7c9432",
+          "31bf578fb57fc66962a1ff5e860b79fd78d59616293aaa3a9ba005470513be2f"
+        ],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        },
+        "reason": "清单核对:charge_manifest(订单A,CNY,components=[goods,freight])已由买方签名声明(f47cdbe7)覆盖;货物组件10000分由供应商签名声明(9f7bb855)支持;运费组件700分由承运商签名声明(31bf578f)支持。所有清单组件均有签名来源,合计10700分=10000+700,逐字复制required_parent_claims。本动作仅提交派生声明给运行时协议检查,不构成账单已批准或付款。"
+      },
+      "usage": {
+        "total_tokens": 2757,
+        "prompt_tokens": 2499,
+        "completion_tokens": 258,
+        "attempts": 1
+      },
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "batch": {
+    "body": {
+      "kind": "reliability_batch",
+      "workflow": "invoice-demo",
+      "plan": {
+        "body": {
+          "kind": "reliability_plan",
+          "workflow": "invoice-demo",
+          "plan": {
+            "config": {
+              "policy": "autonomous",
+              "propagation_threshold": 1.0,
+              "omission_weight": 0.0,
+              "operation_loss": {
+                "forward": 0,
+                "approve_invoice": 100
+              },
+              "authority_cost": {}
+            },
+            "proposals_hash": "1a82fb47f60eeab3d62bc5ad62cd48016b5ad740c924bca0455a7e90a8f6edf8",
+            "decisions": [
+              {
+                "proposal": "invoice-A",
+                "action": "PASS",
+                "missing": [],
+                "revoked": [],
+                "roots": [
+                  "6a281ca6ceaed32e21d7863f9ab18e40aa2f856e0b0bff2d29c8e31877b3896e",
+                  "9d9c6d2c5ec6c57a3723b88bc491462226a4b1f480200ee3e09fa9feb6340bcc"
+                ],
+                "rebuild": []
+              }
+            ],
+            "checks": [],
+            "limitations": [
+              "receiver_loss_is_not_error_probability",
+              "omission_weight_is_operational_approximation"
+            ]
+          },
+          "proposals": [
+            {
+              "id": "invoice-A",
+              "operation": "approve_invoice",
+              "order": "A",
+              "claims": [
+                "9d9c6d2c5ec6c57a3723b88bc491462226a4b1f480200ee3e09fa9feb6340bcc",
+                "6a281ca6ceaed32e21d7863f9ab18e40aa2f856e0b0bff2d29c8e31877b3896e"
+              ]
+            }
+          ]
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "c2bcd304ae27c03ec71eea9273d2de70c48017ab6f4eacbf69101438ca166a34",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "5d9327af2f42f37d41ec54b6fb0a60b26b84552fab6e56297851f90fadb931224eb66e5e6db5ae1dcd1f5e16f80b21a7c2ea3c9b6297a33bb46b32d6209a6c03"
+        }
+      },
+      "evidence": {
+        "claims": [
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-demo",
+              "parents": [],
+              "fact": {
+                "predicate": "invoice_authorization",
+                "value": {
+                  "order": "A",
+                  "operation": "approve_invoice",
+                  "currency": "CNY",
+                  "maximum_cents": 11000,
+                  "approved": true
+                }
+              }
+            },
+            "signature": {
+              "issuer": "buyer",
+              "version": 1,
+              "bundle_hash": "eb6978b8e3b52855ae92a7d463704a007f34cccda47a8a1053e569e714fb695c",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "11c5e647b636cc7e95b5d8c0f69bcacd0c6866c52ad13a63e473b9deef95d9d340927c9fef100c0e01babf95e08bba012b0ab40958a45d02d976c54bb5335f09"
+            }
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-demo",
+              "parents": [],
+              "fact": {
+                "predicate": "total_charge",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "cents": 10700
+                }
+              }
+            },
+            "signature": {
+              "issuer": "billing",
+              "version": 1,
+              "bundle_hash": "d6dc3ebb12876fd4cccce4b6cfefc8c9358c3b862c27966f9ee07fc673f81b0d",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "e90c224e6a09e6f5b5a0359d57e742567767b34bc3aaf836685c09e9810db8b0700cb8fde512e8f93148686244cc1f996f66fc7384e5fb37c4e5baa651a5d905"
+            }
+          }
+        ],
+        "revocations": []
+      },
+      "queries": [],
+      "replies": [],
+      "status": {},
+      "outputs": [
+        {
+          "proposal": "invoice-A",
+          "result": {
+            "simulated": true,
+            "proposal": "invoice-A",
+            "operation": "approve_invoice"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 0,
+      "effects_are_adapter_reports": true
+    },
+    "signature": {
+      "issuer": "receiver",
+      "version": 1,
+      "bundle_hash": "452ffb516ee2dc213a8fc74e4a7f515e4db064f3bb5d6f048efbddd88e8cfd61",
+      "checks": [
+        "claim_channel"
+      ],
+      "findings": [],
+      "action": "pass",
+      "signature": "f926f38ec7877990df59b66b473b264573c0073a5a7a82dc42bc456ffb20c47a212ac1113af822205f875014fb0fc71ae75b9267fb6522e823642d4e41d4ca0f"
+    }
+  },
+  "events": [
+    {
+      "body": {
+        "kind": "gateway_event",
+        "workflow": "invoice-demo",
+        "action": "reliability_planned",
+        "target": "399d3d3bb2005702db7e549186d2f411e8e4dcbcf7f5cbb90ac236bd18381f8a",
+        "reasons": [],
+        "sequence": 3,
+        "previous": "6e075242002d9caed2d0214e7dc0cf98bda0e3f5251d42ff31c27f3480aa1ec0"
+      },
+      "signature": {
+        "issuer": "receiver",
+        "version": 1,
+        "bundle_hash": "9b774f1a492cdd8d2b7215fe07a40c6a711bf5e2e814681c902f74e9dfbf7163",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "1be7b5e2a0bba7442dec09d268854a2a0900f714dee8ae83d71e75efc03bb45ff060aa95424ccd8c7c68de5b3c8ce2df971667cf4a669fd68194ff088e490107"
+      }
+    },
+    {
+      "body": {
+        "kind": "gateway_event",
+        "workflow": "invoice-demo",
+        "action": "action_contract_allowed",
+        "target": "07e2fad09d8a3fc8e9150a183edb2acb1a4b9c46a7d0c496337acb901db4148b",
+        "reasons": [
+          "d15760c36288b55cd12386c4f0e3de845250628fd8717e38ef7fdcbf3c834d2b",
+          "9d9c6d2c5ec6c57a3723b88bc491462226a4b1f480200ee3e09fa9feb6340bcc",
+          "6a281ca6ceaed32e21d7863f9ab18e40aa2f856e0b0bff2d29c8e31877b3896e"
+        ],
+        "sequence": 4,
+        "previous": "b627ef17032da6cdbe012e26bc5691192e8eeb28fd93970c9eae2d2c2fcccacf"
+      },
+      "signature": {
+        "issuer": "receiver",
+        "version": 1,
+        "bundle_hash": "ad0fd9bc12e3d0e5aacfc9e2a74ea045665fc8f7a26103a41d2ab6412dda12e6",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "99be99bcf2ddbdf524e5d83fc1ae6d43da1ba3ba43ae79d82f4f08bdb80a90d5f7839413f2ffa7da92c7266a96dd44e505b71fa65c87c31edcba904b49ad3901"
+      }
+    },
+    {
+      "body": {
+        "kind": "gateway_event",
+        "workflow": "invoice-demo",
+        "action": "action_effect_returned",
+        "target": "07e2fad09d8a3fc8e9150a183edb2acb1a4b9c46a7d0c496337acb901db4148b",
+        "reasons": [
+          "568d4528a61e9d8bf63cff8f6bfea8d0c689c92b91e63ad05c61406cc59facdc"
+        ],
+        "sequence": 5,
+        "previous": "102275b09e8a99e655cf5b64ea57a8be81f2309e991f199709e5f17d67f0a43b"
+      },
+      "signature": {
+        "issuer": "receiver",
+        "version": 1,
+        "bundle_hash": "936c6d9ba66fd94b6c51d8b6aaed23799e07b041cebb3305e0272a3b85cc4494",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "7f1b96019956a7e7754a043eaad6bd9ccbd9e5694ca9630f1223270fcbf43f8f2140b39305a276f73236dc7639eeafafd832ee6f6e70a6103e77c5247537fc0b"
+      }
+    },
+    {
+      "body": {
+        "kind": "gateway_event",
+        "workflow": "invoice-demo",
+        "action": "reliability_outcome",
+        "target": "2b7ae43071512ecfc4601b16a640f39d30a078e29ed804e6006320c7d121ab03",
+        "reasons": [
+          "COMPLETED"
+        ],
+        "sequence": 6,
+        "previous": "fa58a68309c2878d305a8692475fbb24012e8999c35a178a4b9ee5014145aced"
+      },
+      "signature": {
+        "issuer": "receiver",
+        "version": 1,
+        "bundle_hash": "38937c57e2b1ffbaa79042e6a72fb2274588453c096ed7cd72291d7ae4d44bfa",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "5b8c13b7b51f267e8bd4b431a66dc3981c17262850c0ab6dd73694866895f710b56adc674626b13c126a338d718d70e74bba93548d40f7638241112928c5e407"
+      }
+    }
+  ]
+}

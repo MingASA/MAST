@@ -1,0 +1,178 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "hidden_revoke",
+  "repeat": 1,
+  "policy": "autonomous",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "b00a1a9326d8ca0111c99158fc8d52920023926b6042abd471c6c9fc768cb61b",
+      "full_input_hash": "6b0d06d33684c00931c2cc24c84022af756ec2687997f87f9bbe51871c75c6e4",
+      "draft": {
+        "action": "proceed",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        },
+        "reason": "清单完整：charge_manifest 列示 order A 下 CNY 的 goods 与 freight 两个组件；supplier 签名的 charge/goods=10000 分与 carrier 签名的 charge/freight=700 分均经 claim_channel 校验通过，合计 10700 分。candidate_claims.total_charge 与 required_parent_claims 所列三个 claim_id（清单 + 两个组件来源）逐字一致，全部组件由签名来源支持，未漏项、未改动来源金额。仅提交总费用派生声明供运行时验证，不代表账单已批准。"
+      },
+      "usage": {
+        "total_tokens": 2505,
+        "prompt_tokens": 2359,
+        "completion_tokens": 146,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "84aa2728e28876ec3f050e6ff8b69b2dbc632e916391cb6a4794cdb3390f07fd",
+      "full_input_hash": "0e931765f0d2b4824ad98868b6a5479fc2bf6c6436aee57cd4f17060fbccb01e",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "approve",
+            "claims": [
+              "1dd2e55a2fe48cbb39002ec419597566969399d69167a602287ab6dbf696446a",
+              "dee6c57616065030898e9046e348eda9ccf2fe5feab8a1b3fc9b0d86cce6526d"
+            ],
+            "reason": "订单A：买家已签发invoice_authorization（CNY，最多11000分，已批准），且coordinator基于charge/goods(10000)+charge/freight(700)汇总的total_charge为10700分，未超过授权上限，所有签字action=pass。申请approve_invoice仅表示账单确认，不触发付款或出库。"
+          },
+          {
+            "id": "schedule-reference",
+            "action": "forward",
+            "claims": [
+              "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+            ],
+            "reason": "订单A：carrier签发的delivery_schedule已标注reference_only=true，签字action=pass，属于低风险参考性交付时间窗口(2026-10-01/2026-10-03)，可转发至下游使用方。"
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 3019,
+        "prompt_tokens": 2758,
+        "completion_tokens": 261,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": false,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "invoice-A",
+          "operation": "approve_invoice",
+          "order": "A",
+          "claims": [
+            "1dd2e55a2fe48cbb39002ec419597566969399d69167a602287ab6dbf696446a",
+            "dee6c57616065030898e9046e348eda9ccf2fe5feab8a1b3fc9b0d86cce6526d"
+          ]
+        },
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "invoice-A",
+          "result": {
+            "simulated": true,
+            "proposal": "invoice-A",
+            "operation": "approve_invoice"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        },
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 0,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "invoice-A",
+      "claims": [
+        "1dd2e55a2fe48cbb39002ec419597566969399d69167a602287ab6dbf696446a",
+        "dee6c57616065030898e9046e348eda9ccf2fe5feab8a1b3fc9b0d86cce6526d"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "invoice-A",
+        "operation": "approve_invoice"
+      }
+    },
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "ded25ec9eb8adcb315f1abe09bc795ec25f1b11736cb871d01b4006b4823a8ce"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": "dee6c57616065030898e9046e348eda9ccf2fe5feab8a1b3fc9b0d86cce6526d",
+  "old_root": "adb1f5a1f6d4388ff68c874454d7ab8d5f03ad4670a5ff3051903a6829c2dfc8",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "adb1f5a1f6d4388ff68c874454d7ab8d5f03ad4670a5ff3051903a6829c2dfc8",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 0,
+      "invalid": 0
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false,
+  "event_chain_root": "82191aa08dc48c532fc82e36ff14f6ff4c597a4bf278e99802dc299b7bfc9e64"
+}

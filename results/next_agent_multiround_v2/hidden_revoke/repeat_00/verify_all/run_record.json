@@ -1,0 +1,99 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "hidden_revoke",
+  "repeat": 0,
+  "policy": "verify_all",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "6b6d32ee8731f28828bb95ece0fd1713c9fd7180bec8108a19d9a3105f14f2e3",
+      "full_input_hash": "b26473d3e1d6f4fab7554567aaefdf8f3c9a37a708df062c2ba15aa8ea4292ee",
+      "draft": {
+        "action": "hold",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 0
+          }
+        },
+        "reason": "无法生成 total_charge 派生声明。charge_manifest 声明订单 A 的费用清单包含 goods 与 freight 两项；当前公开签名声明中已有 charge/goods=10000 分（供应商签发，bundle_hash bf543b37…）和 charge/freight=700 分（承运商签发，bundle_hash 5ab2f588…）。然而本任务声明所依赖的 required_parent_claims（410e64e4…、4956a077…、45052de1…）在提供的公开签名证据中并未出现，无法核验其与清单组件之间的对应绑定与完整性。按手册要求，所有清单组件都必须有签名来源支持且必需父声明必须齐备，缺少任一必需声明时应选择 hold，不得用不完整证据代替，也不得在未核对前出具 total_charge 或声称账单已批准。请补充必需父声明后再提交 proceed。"
+      },
+      "usage": {
+        "total_tokens": 2187,
+        "prompt_tokens": 1969,
+        "completion_tokens": 218,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "0d4c93d6e386e6df11135b94795833ff6ccc86a69848da63f94b2f9e77810355",
+      "full_input_hash": "de75fda6d78db9dbb2efde831de59ddf0880a53d5fd594a897633be0de22d34f",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "hold",
+            "claims": [
+              "eafb140eb51ad6ee4e559728615a0fd741de4d82f3ae620e176248d89c2ff87e"
+            ],
+            "reason": "charge_manifest 与各分项公开签名证据在金额和组件上一致（goods 10000 + freight 700 = 10700 CNY，未超出授权上限 11000 CNY），但当前任务仅给出 candidate_claims 中的 claim 哈希，未提供完整 claim 摘要用于逐字复制；按规则不得用不完整或推测的 claims 替代，因此选择 hold 并等待运行时校验或补全 claim 摘要。"
+          },
+          {
+            "id": "schedule-reference",
+            "action": "hold",
+            "claims": [
+              "2b3b52d745d93e1df6c0cc5b7c7da0de1be2896923169d1d5a04548cc3a27bef"
+            ],
+            "reason": "delivery_schedule 公开签名证据由 carrier 签发且明确标注 reference_only=true，属于低风险转发信息，但 candidate_claims 中仅给出哈希而未提供完整 claim 摘要，无法逐字复制；按规则不得用不完整 claims 替代 forward，故选择 hold 以等待摘要补全或运行时验证。"
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 2333,
+        "prompt_tokens": 2065,
+        "completion_tokens": 268,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [],
+  "effects": [],
+  "initial_total": null,
+  "old_root": "45052de1fa12cc7f0a7515c3e0de8e6814ffd7c37a506695e0ec630901e48b1c",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "45052de1fa12cc7f0a7515c3e0de8e6814ffd7c37a506695e0ec630901e48b1c",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 2,
+      "invalid": 0
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。对 approve 或 verify，claims 必须逐字复制该任务 candidate_claims 中对应任务的完整摘要列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false
+}

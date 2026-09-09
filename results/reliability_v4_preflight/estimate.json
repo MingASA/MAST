@@ -1,0 +1,28 @@
+{
+  "cases": 4,
+  "policies": [
+    "autonomous",
+    "verify_all",
+    "risk_aware"
+  ],
+  "temperatures": [
+    0.2,
+    0.5,
+    0.8
+  ],
+  "planned_runs": 36,
+  "runs_per_policy": 12,
+  "planning_actor_calls": 144,
+  "planning_tokens": 306388,
+  "max_actor_calls": 216,
+  "max_model_http_attempts_with_format_retry": 432,
+  "max_authority_queries": 108,
+  "basis": {
+    "historical_logged_calls": 85,
+    "historical_tokens": 180854,
+    "historical_tokens_per_call": 2127.6941176470586
+  },
+  "interpretation": "36run×规划4次业务调用；每组织最多2次、每run最多6次。权威查证是确定性组织服务，无LLM评估调用。",
+  "budget_warning": "新场景没有实测用量；历史均值是规划参照，不是上限或账单。失败usage可能缺失。",
+  "requires_confirmation": true
+}

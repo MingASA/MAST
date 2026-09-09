@@ -1,0 +1,1656 @@
+[
+  {
+    "kind": "start",
+    "workflow": "invoice-reliability-multiround",
+    "policy": "verify_all",
+    "model_tools_shared": true
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "buyer",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge_manifest",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "components": [
+                "goods",
+                "freight"
+              ]
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6b8c7991b657feca43a2b504d9b107368bc064f1a1c544ca61cf33930a489481029b8861845f6379a9d4a9f1a2c004e47ce1e79f25c80e90655b106b50d50200"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "3f02f693ac7c964565be4a55e7a9fca0c74fe4cfba28d5f823582aefef4bc3a2",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c4dfd1aca7efa2d8906ad63fc98fc6bbd7c3c63913473e19eac88a1e59527d11ca13b4ce9e25aecb3f842b84d05bd6910ed88c730adb4ae1f08dee848fda1508"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "buyer",
+    "receiver": "coordinator",
+    "packet_digest": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 1
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "buyer",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "operation": "approve_invoice",
+              "currency": "CNY",
+              "maximum_cents": 11000,
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ff87a03963d7fc6adf92540a02781d35886df28d65068246afdae15b4de3dbaf833895e65449f4005e36ccd5dbb88a6bdea354930a93fdf6c313dd4fb7234c01"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "1815e813649c5a496dca21fa5c9efbc52077f6d47ca37e6393e1768684f4eddf"
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "ff2ec55a06921920ccf974b361aacb94fc0d6847147bb7b0e53f0e12aaca91ab",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6c08127a8241e387d7e4fd89ab177830b940a4653ff32526019b185fb10876eadc4ca066bdb04d7fe826ae9f02564aeed4a7522a8951a72e36414d5ff6e46a0f"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "buyer",
+    "receiver": "coordinator",
+    "packet_digest": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 1
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "supplier",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge/goods",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "component": "goods",
+              "cents": 10000
+            }
+          }
+        },
+        "signature": {
+          "issuer": "supplier",
+          "version": 1,
+          "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "5776bb6e527afba8261d7e482d504cce06bb1791e30d54a779151eaef730e21c9fb38a08636d32b79d554e032845988f8838aa94785aca34c483ce40005f3006"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534",
+          "reasons": [],
+          "sequence": 3,
+          "previous": "bff5bba4f50412e60f3c1faded2c22b17f35c0b5b3a66ea62f77b92f1657e362"
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "3a88876f3a605209bc36697d86e6cd31a8a0dcede47a1d8e057c095e2f393542",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "903e5b6e51ca12e3290f60e32d8cf1d5c463a083b5b1e7dc9039343e382fb17ab9f257fda34cfa491ac58f58087000807d195585ff3311728c333b864c32c400"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "supplier",
+    "receiver": "coordinator",
+    "packet_digest": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 1
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "carrier",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge/freight",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "component": "freight",
+              "cents": 700
+            }
+          }
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "8585d9693684b3dab6050591ba2900b97c85278da2badb38bc9ddeaeaa827d91"
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "a4afb46a90ede97edd89978c7ac8ba7a34a702546b935630b2075d44411982a3",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "40f23578d6f054a3954afe82de2d8ceb22bacdea792bac8fec8355b199348a4135a4c3b13af99903a8cce77eaa8fd8b8185f7791bf9c3b91ce099169d19fee0d"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "carrier",
+    "receiver": "coordinator",
+    "packet_digest": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 1
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "carrier",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "delivery_schedule",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "window": "2026-10-01/2026-10-03",
+              "reference_only": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "44039d3afa9d579d4f15e6d2a40bc8e3ab5cbda20d5a1721e64695b615b04dd933c8e315172de7eed70dba19668d155789ba062371e3ce2db2506ad5cb51ae0e"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+          "reasons": [],
+          "sequence": 5,
+          "previous": "342b1416049195f8b1b68cbc96b5a1c8c1ce7c7fa22cf9a133034fa8d9384b53"
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "b3ba19f739079d214d26e0db247ae6c3a529031430eba6a6d1e7581fa99eabde",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c6a151e2cee16419e52e1daaf535dafa0a5b6899379648c8f3141af146f883f958aa2fdcf6fcbb16272047c458323fe8a209c40301b6d86e1eac5f507c177801"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "carrier",
+    "receiver": "coordinator",
+    "packet_digest": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 1
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "coordinator",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge_manifest",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "components": [
+                "goods",
+                "freight"
+              ]
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6b8c7991b657feca43a2b504d9b107368bc064f1a1c544ca61cf33930a489481029b8861845f6379a9d4a9f1a2c004e47ce1e79f25c80e90655b106b50d50200"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "3f02f693ac7c964565be4a55e7a9fca0c74fe4cfba28d5f823582aefef4bc3a2",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6354e5c5961b9d8489a6331d21c90a5eb15d3f1c00f2b385f5de27b25905c797de546fbfcc44e6516064eb964f62bb53fc422df9cabde6668a7d251e8c83c106"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "coordinator",
+    "receiver": "receiver",
+    "packet_digest": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 2
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "coordinator",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "operation": "approve_invoice",
+              "currency": "CNY",
+              "maximum_cents": 11000,
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ff87a03963d7fc6adf92540a02781d35886df28d65068246afdae15b4de3dbaf833895e65449f4005e36ccd5dbb88a6bdea354930a93fdf6c313dd4fb7234c01"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "b07d90820c8751f6eb72710a285cf5e1416d920e8e3c8f0a59c24c671cf7b77d"
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "c6f2f9eabdf6905aa59a661677b89a501880ba7df3699e44af84e4541a554212",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "e462bd50ff8fda1611fb80aecd2cf0c2c08a7215552c3a29ff72a167c41c200bb6b9af8a6386a058655864c0aa915d2f9e97ca20764162de5f8a983e2e4d5d07"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "coordinator",
+    "receiver": "receiver",
+    "packet_digest": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 2
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "coordinator",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge/goods",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "component": "goods",
+              "cents": 10000
+            }
+          }
+        },
+        "signature": {
+          "issuer": "supplier",
+          "version": 1,
+          "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "5776bb6e527afba8261d7e482d504cce06bb1791e30d54a779151eaef730e21c9fb38a08636d32b79d554e032845988f8838aa94785aca34c483ce40005f3006"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534",
+          "reasons": [],
+          "sequence": 3,
+          "previous": "89769613ff589dea51af5bd85c0533fce9726326e71e706f6f65efb0208106e2"
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "6d0a3fd9918f7b087ee08ab66293614c86bcdfea4910793626e728cedb27bbc1",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "21fb1426a0eb653bf7028cabead12348c18184dc42fd8f8a1b64c7b46cc28272a257e214bc6cab3352e6d73ef48c9547f1428556cbc3ffafc0213753f0eb3b01"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "coordinator",
+    "receiver": "receiver",
+    "packet_digest": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 2
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "coordinator",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "charge/freight",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "component": "freight",
+              "cents": 700
+            }
+          }
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "9d745861edae8dcd58e333e98f9c3f37fd5debcb9fa8fbcb34b356834b6275c1"
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "a59df108889cbd9731cd851608e93cc17be771c378262ffc20642be5299f3a8d",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "b71eeb89a913e757e87d2669b023152dfe22aaa136cc45360d0fc665e73c14e0a38080555809b51ef017df4bd254a9c5082faafa191c1f3c5c151921e5a8ba05"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "coordinator",
+    "receiver": "receiver",
+    "packet_digest": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 2
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "coordinator",
+    "operation": "receive",
+    "request": {
+      "operation": "receive",
+      "packet": {
+        "body": {
+          "kind": "claim",
+          "workflow": "invoice-reliability-multiround",
+          "parents": [],
+          "fact": {
+            "predicate": "delivery_schedule",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "window": "2026-10-01/2026-10-03",
+              "reference_only": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "44039d3afa9d579d4f15e6d2a40bc8e3ab5cbda20d5a1721e64695b615b04dd933c8e315172de7eed70dba19668d155789ba062371e3ce2db2506ad5cb51ae0e"
+        }
+      }
+    },
+    "response": {
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "received",
+          "target": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+          "reasons": [],
+          "sequence": 5,
+          "previous": "fdf5f61c7c6b9d852213a875865a5f5d8cc7eb69240e2118247cfc18d2f0d93f"
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "7b644d79a150bf8f357a66c0c0b347d50fb6ef4e9a183e7d2dff58257f5ff92d",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3c74ea47a75f219ec3c878881e40145cfd85e4d5eb1898b5691ef430d34e218a110901bdff23a097b18c1f85fcec4e5988b14c009aaffb5fddc35c708556c500"
+        }
+      }
+    }
+  },
+  {
+    "kind": "claim_delivery",
+    "sender": "coordinator",
+    "receiver": "receiver",
+    "packet_digest": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+    "packet_kind": "claim",
+    "action": "received",
+    "path_length": 2
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "coordinator",
+    "sender": "runtime",
+    "operation": "reliability_model_decision",
+    "request": {
+      "operation": "reliability_model_decision",
+      "stage": "initial_coordinator",
+      "model_input": {
+        "role": "coordinator",
+        "task": "核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；不能漏掉组件、改变来源金额或声称账单已经批准。",
+        "public_claims": [
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge_manifest",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "components": [
+                    "goods",
+                    "freight"
+                  ]
+                }
+              }
+            },
+            "signature": {
+              "issuer": "buyer",
+              "version": 1,
+              "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "6b8c7991b657feca43a2b504d9b107368bc064f1a1c544ca61cf33930a489481029b8861845f6379a9d4a9f1a2c004e47ce1e79f25c80e90655b106b50d50200"
+            },
+            "claim_id": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "invoice_authorization",
+                "value": {
+                  "order": "A",
+                  "operation": "approve_invoice",
+                  "currency": "CNY",
+                  "maximum_cents": 11000,
+                  "approved": true
+                }
+              }
+            },
+            "signature": {
+              "issuer": "buyer",
+              "version": 1,
+              "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ff87a03963d7fc6adf92540a02781d35886df28d65068246afdae15b4de3dbaf833895e65449f4005e36ccd5dbb88a6bdea354930a93fdf6c313dd4fb7234c01"
+            },
+            "claim_id": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge/goods",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "component": "goods",
+                  "cents": 10000
+                }
+              }
+            },
+            "signature": {
+              "issuer": "supplier",
+              "version": 1,
+              "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "5776bb6e527afba8261d7e482d504cce06bb1791e30d54a779151eaef730e21c9fb38a08636d32b79d554e032845988f8838aa94785aca34c483ce40005f3006"
+            },
+            "claim_id": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge/freight",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "component": "freight",
+                  "cents": 700
+                }
+              }
+            },
+            "signature": {
+              "issuer": "carrier",
+              "version": 1,
+              "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+            },
+            "claim_id": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "delivery_schedule",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "window": "2026-10-01/2026-10-03",
+                  "reference_only": true
+                }
+              }
+            },
+            "signature": {
+              "issuer": "carrier",
+              "version": 1,
+              "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "44039d3afa9d579d4f15e6d2a40bc8e3ab5cbda20d5a1721e64695b615b04dd933c8e315172de7eed70dba19668d155789ba062371e3ce2db2506ad5cb51ae0e"
+            },
+            "claim_id": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+          }
+        ],
+        "required_parent_claims": [
+          "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77",
+          "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534",
+          "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff"
+        ],
+        "available_tools": [
+          "读取已收到的签名声明",
+          "提交 proceed 或 hold 供运行时验证"
+        ],
+        "output_schema": {
+          "action": "proceed|hold",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": "整数分总额"
+            }
+          },
+          "reason": "string"
+        },
+        "evidence_binding": "每个 public_claims 条目的 claim_id 是该签名 packet 的公开摘要；required_parent_claims 应与这些 claim_id 对照。"
+      }
+    },
+    "response": {
+      "model_decision": {
+        "stage": "initial_coordinator",
+        "owner": "coordinator",
+        "status": "success",
+        "model": "MiniMax-M3",
+        "public_input_hash": "d319d70e49b59cb64c238944d53f714a2ca249bbb067cf97a4baeaa93037887d",
+        "full_input_hash": "6d8987e49f5ac7d58c35151aaa832aa252343a8ab18d31b4e135085902c3de2a",
+        "draft": {
+          "action": "hold",
+          "reason": "签名清单与授权看起来已就绪（charge_manifest f6577a53… 声明订单A的components为[goods, freight]；goods=10000分 由 supplier 签发 0db99334…；freight=700分 由 carrier 签发 9c125283…），派生总额 10700 分也未超出 invoice_authorization 854d1865… 的 11000 分上限。但本轮提供的 output_schema 仅接受 action=proceed|hold，不支持同时给出 proceed 与派生 total_charge fact；为避免在没有可承载派生声明的 schema 字段时错报已批准账单，按规则选择 hold，待控制器提供可写入派生 fact 的输出结构后再提交。"
+        },
+        "usage": {
+          "total_tokens": 2369,
+          "prompt_tokens": 2203,
+          "completion_tokens": 166,
+          "attempts": 1
+        },
+        "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+        "attempts_recorded": 1,
+        "responses_received": 1
+      }
+    }
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "runtime",
+    "operation": "reliability_model_decision",
+    "request": {
+      "operation": "reliability_model_decision",
+      "stage": "initial_receiver",
+      "model_input": {
+        "role": "receiver",
+        "task": "分别处理两个任务：对订单A账单决定是否申请 approve_invoice；对交付时间参考决定是否 forward。approve_invoice 只申请账单确认，不付款、不出库；交付时间参考是独立的低风险转发任务。你可以对任一任务选择 verify 或 hold。",
+        "public_claims": [
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge_manifest",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "components": [
+                    "goods",
+                    "freight"
+                  ]
+                }
+              }
+            },
+            "signature": {
+              "issuer": "buyer",
+              "version": 1,
+              "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "6b8c7991b657feca43a2b504d9b107368bc064f1a1c544ca61cf33930a489481029b8861845f6379a9d4a9f1a2c004e47ce1e79f25c80e90655b106b50d50200"
+            },
+            "claim_id": "f6577a539542c51decbe6e8b8eaa126f4d6cdfe753c89ff7aaade99f7bda5d77"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "invoice_authorization",
+                "value": {
+                  "order": "A",
+                  "operation": "approve_invoice",
+                  "currency": "CNY",
+                  "maximum_cents": 11000,
+                  "approved": true
+                }
+              }
+            },
+            "signature": {
+              "issuer": "buyer",
+              "version": 1,
+              "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ff87a03963d7fc6adf92540a02781d35886df28d65068246afdae15b4de3dbaf833895e65449f4005e36ccd5dbb88a6bdea354930a93fdf6c313dd4fb7234c01"
+            },
+            "claim_id": "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge/goods",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "component": "goods",
+                  "cents": 10000
+                }
+              }
+            },
+            "signature": {
+              "issuer": "supplier",
+              "version": 1,
+              "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "5776bb6e527afba8261d7e482d504cce06bb1791e30d54a779151eaef730e21c9fb38a08636d32b79d554e032845988f8838aa94785aca34c483ce40005f3006"
+            },
+            "claim_id": "0db99334b7ec3798b148203bafaee8ec5430f960839e27ded9ba6703774a5534"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge/freight",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "component": "freight",
+                  "cents": 700
+                }
+              }
+            },
+            "signature": {
+              "issuer": "carrier",
+              "version": 1,
+              "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+            },
+            "claim_id": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff"
+          },
+          {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "delivery_schedule",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "window": "2026-10-01/2026-10-03",
+                  "reference_only": true
+                }
+              }
+            },
+            "signature": {
+              "issuer": "carrier",
+              "version": 1,
+              "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "44039d3afa9d579d4f15e6d2a40bc8e3ab5cbda20d5a1721e64695b615b04dd933c8e315172de7eed70dba19668d155789ba062371e3ce2db2506ad5cb51ae0e"
+            },
+            "claim_id": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+          }
+        ],
+        "candidate_claims": {
+          "invoice-A": [
+            "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58"
+          ],
+          "schedule-reference": [
+            "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+          ]
+        },
+        "available_tools": [
+          "提交 approve、forward、verify 或 hold",
+          "运行时可以根据你的 verify 请求查权威当前状态"
+        ],
+        "output_schema": {
+          "actions": [
+            {
+              "id": "invoice-A",
+              "action": "approve|verify|hold",
+              "claims": [
+                "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58"
+              ],
+              "reason": "string"
+            },
+            {
+              "id": "schedule-reference",
+              "action": "forward|verify|hold",
+              "claims": [
+                "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+              ],
+              "reason": "string"
+            }
+          ]
+        }
+      }
+    },
+    "response": {
+      "model_decision": {
+        "stage": "initial_receiver",
+        "owner": "receiver",
+        "status": "success",
+        "model": "MiniMax-M3",
+        "public_input_hash": "555add8e33a3b34e8ba5a420bb700ed4144dc857af126dc6d97f9dfe76e2f9f4",
+        "full_input_hash": "569f5aa6bec02c7c3751cc06a9f24e4a011e4ea77bf6f6b7f85e3bdaf83e19c4",
+        "draft": {
+          "actions": [
+            {
+              "id": "invoice-A",
+              "action": "approve",
+              "claims": [
+                "854d1865c029a9ca39c9d0b83ecc9dbd154a948c33f055a12bbbde47a7d0ff58"
+              ],
+              "reason": "buyer 签发的 invoice_authorization 批准了 order A 的 approve_invoice，限额 11000 CNY；supplier charge/goods=10000 + carrier charge/freight=700 = 10700 CNY ≤ 11000，且 charge_manifest 的 components（goods, freight）与分项费用一致，签字有效。提交 approve 仅申请账单确认，不触发付款或出库。"
+            },
+            {
+              "id": "schedule-reference",
+              "action": "forward",
+              "claims": [
+                "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+              ],
+              "reason": "carrier 签发的 delivery_schedule 标记 reference_only=true，独立低风险参考信息，签字有效，转发给下游使用方。"
+            }
+          ]
+        },
+        "usage": {
+          "total_tokens": 2463,
+          "prompt_tokens": 2248,
+          "completion_tokens": 215,
+          "attempts": 1
+        },
+        "trace_path": "model_calls/001_initial_receiver_receiver.json",
+        "attempts_recorded": 1,
+        "responses_received": 1
+      }
+    }
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "carrier",
+    "sender": "controlled-event",
+    "operation": "reliability_revoke",
+    "request": {
+      "operation": "reliability_revoke",
+      "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff"
+    },
+    "response": {
+      "packet": {
+        "body": {
+          "kind": "revoke",
+          "workflow": "invoice-reliability-multiround",
+          "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+          "original": {
+            "body": {
+              "kind": "claim",
+              "workflow": "invoice-reliability-multiround",
+              "parents": [],
+              "fact": {
+                "predicate": "charge/freight",
+                "value": {
+                  "order": "A",
+                  "currency": "CNY",
+                  "component": "freight",
+                  "cents": 700
+                }
+              }
+            },
+            "signature": {
+              "issuer": "carrier",
+              "version": 1,
+              "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+            }
+          }
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "1bb1e3cdc4ac10e90be5a02095542d88249a9c5277ffc454740c28fb737ea45a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "f9de4c5325033277a0e02134e74750aeaff383473bd9492f39cf0a720b8bd90e1d126fbcd31db1df5c0e76cea61eda48f166cd289ea491cc00f46e949c760709"
+        }
+      },
+      "event": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "invoice-reliability-multiround",
+          "action": "revocation_received",
+          "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+          "reasons": [
+            "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff"
+          ],
+          "sequence": 3,
+          "previous": "be90da481c24d213fd212eb470f2527ee02daeb1b0066f5372470bcacf9c67f9"
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "8b5838b5fe3f191ac8be751eac52b7c4d9b1f2976e05fd9b51152af09538ae51",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "720292f7992e688514ea2a9e5b29d954cb760dfb4ad6ef8bf279eac67bf7888b6f9b191f34e757c7a94c7368e07eeb7c0386dcc4955ac62a3bdbca88527da201"
+        }
+      }
+    }
+  },
+  {
+    "kind": "controlled_event",
+    "type": "controlled_carrier_freight_replacement_after_initial_receiver_decision",
+    "packet_digest": "14b35c7453fe982d7746503155f242bbe078f2f68b2419409d99e3c6b96722ff",
+    "target": "9c1252836f05d3301302fd4a58f4067bc9cb03209d44df25ece096a560f97dff",
+    "delivered_to": []
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "carrier",
+    "sender": "receiver",
+    "operation": "reliability_status",
+    "request": {
+      "operation": "reliability_status",
+      "query": {
+        "kind": "reliability_query",
+        "workflow": "invoice-reliability-multiround",
+        "root": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+        "batch": "9edaf6ae3c2f77474b50febbf8986955d0496dc77878fbdb426f0e981dca76d0",
+        "challenge": "e30e9deb1d475748b3236069d10947adf28bb23f282bddfa",
+        "proposals": [
+          "schedule-reference"
+        ]
+      }
+    },
+    "response": {
+      "reply": {
+        "body": {
+          "kind": "reliability_status",
+          "query": {
+            "kind": "reliability_query",
+            "workflow": "invoice-reliability-multiround",
+            "root": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+            "batch": "9edaf6ae3c2f77474b50febbf8986955d0496dc77878fbdb426f0e981dca76d0",
+            "challenge": "e30e9deb1d475748b3236069d10947adf28bb23f282bddfa",
+            "proposals": [
+              "schedule-reference"
+            ]
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "carrier",
+          "version": 1,
+          "bundle_hash": "925e66b4a380e7ba053e84c2e0a976041bfaab32f31cf33b180c4c10fb9c964d",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "95caad32bb4e588c472ceb14c3200366c66b2f267c319902dbbe4644ab0e00899330e19884597baf7f4e701bac28be8683878b04c42b9648c9ea2cb663f4f40a"
+        }
+      }
+    }
+  },
+  {
+    "kind": "worker_exchange",
+    "owner": "receiver",
+    "sender": "runtime",
+    "operation": "reliability_batch",
+    "request": {
+      "operation": "reliability_batch",
+      "stage": "initial",
+      "proposals": [
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+          ]
+        }
+      ]
+    },
+    "response": {
+      "batch": {
+        "body": {
+          "kind": "reliability_batch",
+          "workflow": "invoice-reliability-multiround",
+          "plan": {
+            "body": {
+              "kind": "reliability_plan",
+              "workflow": "invoice-reliability-multiround",
+              "plan": {
+                "config": {
+                  "policy": "verify_all",
+                  "propagation_threshold": 1.0,
+                  "omission_weight": 0.0,
+                  "operation_loss": {
+                    "forward": 0,
+                    "approve_invoice": 100
+                  },
+                  "authority_cost": {}
+                },
+                "proposals_hash": "a5d1e92912a5229c0f1a9210a56b47455f548f7d6a1dafe1f1039f9e5a35f5e3",
+                "decisions": [
+                  {
+                    "proposal": "schedule-reference",
+                    "action": "VERIFY",
+                    "missing": [],
+                    "revoked": [],
+                    "roots": [
+                      "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+                    ],
+                    "rebuild": []
+                  }
+                ],
+                "checks": [
+                  {
+                    "root": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+                    "authority": "carrier",
+                    "proposals": [
+                      "schedule-reference"
+                    ],
+                    "exposure": 0.0,
+                    "cost": 1.0,
+                    "priority": 0.0
+                  }
+                ],
+                "limitations": [
+                  "receiver_loss_is_not_error_probability",
+                  "omission_weight_is_operational_approximation"
+                ]
+              },
+              "proposals": [
+                {
+                  "id": "schedule-reference",
+                  "operation": "forward",
+                  "claims": [
+                    "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92"
+                  ]
+                }
+              ]
+            },
+            "signature": {
+              "issuer": "receiver",
+              "version": 1,
+              "bundle_hash": "a8a0255ca879e6a81f35969e777df17e436800de5c71a07c32aeefc37fd88cce",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "6f6bdad29c4633be91c4d651bd6551e1ebd6fd444e24a80576c7537324a8104095eb3431ae0d26ac8836ab9c3cba8e671ac9ce2e58b5721a10ded9d949e46c0a"
+            }
+          },
+          "evidence": {
+            "claims": [
+              {
+                "body": {
+                  "kind": "claim",
+                  "workflow": "invoice-reliability-multiround",
+                  "parents": [],
+                  "fact": {
+                    "predicate": "charge_manifest",
+                    "value": {
+                      "order": "A",
+                      "currency": "CNY",
+                      "components": [
+                        "goods",
+                        "freight"
+                      ]
+                    }
+                  }
+                },
+                "signature": {
+                  "issuer": "buyer",
+                  "version": 1,
+                  "bundle_hash": "2a005b471d53f9e66654ebef907ca35e27044397cba49daaf5885ef8be8995c1",
+                  "checks": [
+                    "claim_channel"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "6b8c7991b657feca43a2b504d9b107368bc064f1a1c544ca61cf33930a489481029b8861845f6379a9d4a9f1a2c004e47ce1e79f25c80e90655b106b50d50200"
+                }
+              },
+              {
+                "body": {
+                  "kind": "claim",
+                  "workflow": "invoice-reliability-multiround",
+                  "parents": [],
+                  "fact": {
+                    "predicate": "invoice_authorization",
+                    "value": {
+                      "order": "A",
+                      "operation": "approve_invoice",
+                      "currency": "CNY",
+                      "maximum_cents": 11000,
+                      "approved": true
+                    }
+                  }
+                },
+                "signature": {
+                  "issuer": "buyer",
+                  "version": 1,
+                  "bundle_hash": "29ac6698e025c78290d56a34583989578cc24a406c4941d71d8685a8f6d85fb3",
+                  "checks": [
+                    "claim_channel"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "ff87a03963d7fc6adf92540a02781d35886df28d65068246afdae15b4de3dbaf833895e65449f4005e36ccd5dbb88a6bdea354930a93fdf6c313dd4fb7234c01"
+                }
+              },
+              {
+                "body": {
+                  "kind": "claim",
+                  "workflow": "invoice-reliability-multiround",
+                  "parents": [],
+                  "fact": {
+                    "predicate": "charge/goods",
+                    "value": {
+                      "order": "A",
+                      "currency": "CNY",
+                      "component": "goods",
+                      "cents": 10000
+                    }
+                  }
+                },
+                "signature": {
+                  "issuer": "supplier",
+                  "version": 1,
+                  "bundle_hash": "bf543b376d439334ce90bca71e5099924c021d9ca0bfaae453142d8ff33593c0",
+                  "checks": [
+                    "claim_channel"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "5776bb6e527afba8261d7e482d504cce06bb1791e30d54a779151eaef730e21c9fb38a08636d32b79d554e032845988f8838aa94785aca34c483ce40005f3006"
+                }
+              },
+              {
+                "body": {
+                  "kind": "claim",
+                  "workflow": "invoice-reliability-multiround",
+                  "parents": [],
+                  "fact": {
+                    "predicate": "charge/freight",
+                    "value": {
+                      "order": "A",
+                      "currency": "CNY",
+                      "component": "freight",
+                      "cents": 700
+                    }
+                  }
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "5ab2f588cbab0d0973449b95a677c8bf7cca4cb050e0002099408f36c2c09fc7",
+                  "checks": [
+                    "claim_channel"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "8439bee86769cd0c0aedb77921e389a0b8468d1acb51b933c777f664ab9902debb2f7321afe62c6b9261ad5f49807ae375c12c85e93eac9849cdaa16c2a4fa01"
+                }
+              },
+              {
+                "body": {
+                  "kind": "claim",
+                  "workflow": "invoice-reliability-multiround",
+                  "parents": [],
+                  "fact": {
+                    "predicate": "delivery_schedule",
+                    "value": {
+                      "order": "A",
+                      "currency": "CNY",
+                      "window": "2026-10-01/2026-10-03",
+                      "reference_only": true
+                    }
+                  }
+                },
+                "signature": {
+                  "issuer": "carrier",
+                  "version": 1,
+                  "bundle_hash": "1ecaae557f24a0f17ac1c6e7c1c91bfe4d51e186e2914b037181b3b9e4895b1b",
+                  "checks": [
+                    "claim_channel"
+                  ],
+                  "findings": [],
+                  "action": "pass",
+                  "signature": "44039d3afa9d579d4f15e6d2a40bc8e3ab5cbda20d5a1721e64695b615b04dd933c8e315172de7eed70dba19668d155789ba062371e3ce2db2506ad5cb51ae0e"
+                }
+              }
+            ],
+            "revocations": []
+          },
+          "queries": [
+            {
+              "authority": "carrier",
+              "query": {
+                "kind": "reliability_query",
+                "workflow": "invoice-reliability-multiround",
+                "root": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+                "batch": "9edaf6ae3c2f77474b50febbf8986955d0496dc77878fbdb426f0e981dca76d0",
+                "challenge": "e30e9deb1d475748b3236069d10947adf28bb23f282bddfa",
+                "proposals": [
+                  "schedule-reference"
+                ]
+              }
+            }
+          ],
+          "replies": [
+            {
+              "body": {
+                "kind": "reliability_status",
+                "query": {
+                  "kind": "reliability_query",
+                  "workflow": "invoice-reliability-multiround",
+                  "root": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+                  "batch": "9edaf6ae3c2f77474b50febbf8986955d0496dc77878fbdb426f0e981dca76d0",
+                  "challenge": "e30e9deb1d475748b3236069d10947adf28bb23f282bddfa",
+                  "proposals": [
+                    "schedule-reference"
+                  ]
+                },
+                "status": "active"
+              },
+              "signature": {
+                "issuer": "carrier",
+                "version": 1,
+                "bundle_hash": "925e66b4a380e7ba053e84c2e0a976041bfaab32f31cf33b180c4c10fb9c964d",
+                "checks": [
+                  "claim_channel"
+                ],
+                "findings": [],
+                "action": "pass",
+                "signature": "95caad32bb4e588c472ceb14c3200366c66b2f267c319902dbbe4644ab0e00899330e19884597baf7f4e701bac28be8683878b04c42b9648c9ea2cb663f4f40a"
+              }
+            }
+          ],
+          "status": {
+            "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92": "active"
+          },
+          "outputs": [
+            {
+              "proposal": "schedule-reference",
+              "result": {
+                "simulated": true,
+                "proposal": "schedule-reference",
+                "operation": "forward"
+              },
+              "failed_roots": [],
+              "action": "COMPLETED"
+            }
+          ],
+          "verification_calls": 1,
+          "effects_are_adapter_reports": true
+        },
+        "signature": {
+          "issuer": "receiver",
+          "version": 1,
+          "bundle_hash": "85e1c5752afc52aacaf70f0027e2afa5ab4fe09790447f61e3b42e6c8b9ecfee",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "0f3075147dc6942ed5a941de905ae54e98b2b0502817d1c4282dba4aab1be53bc84957750f2f6df477d91a40562e044b28d674f91477007040e8fdd15ad20a05"
+        }
+      },
+      "events": [
+        {
+          "body": {
+            "kind": "gateway_event",
+            "workflow": "invoice-reliability-multiround",
+            "action": "reliability_planned",
+            "target": "9edaf6ae3c2f77474b50febbf8986955d0496dc77878fbdb426f0e981dca76d0",
+            "reasons": [],
+            "sequence": 6,
+            "previous": "de9fe7135ef493b4b5e330ba00bd4c9306c527ef943265a8a999d7cf10269a9c"
+          },
+          "signature": {
+            "issuer": "receiver",
+            "version": 1,
+            "bundle_hash": "eff9b8753c9e3c24c914979b7163051017a95f0e943d91a48f3586103f229d4b",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "d1ea14bb2eeaab3962cb6927810ec3c85b42f6725755249cd863c1fa9a3b3d2a40ecbd924f42e725ae27af036fca32eb898d98e4e3cf948b2d45a519fa761007"
+          }
+        },
+        {
+          "body": {
+            "kind": "gateway_event",
+            "workflow": "invoice-reliability-multiround",
+            "action": "reliability_status_received",
+            "target": "606a2729e9eadbdb3b59ecdda1be7eebe67869071efcc838df2bf1290be1bd92",
+            "reasons": [
+              "19191868e265fabff1873ed070871ecf5eec3caff73b1e44774a44fe02b4a857",
+              "active"
+            ],
+            "sequence": 7,
+            "previous": "e314f0378450d107c6acc2126121234f992ed1a033a88db4e8aeea854f09a621"
+          },
+          "signature": {
+            "issuer": "receiver",
+            "version": 1,
+            "bundle_hash": "ef8fd3588749ede6dd571fa06937c81e5cd8f2ced034e185a64dc16a53d4013e",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "c710548de9dd43d32a8c1c94d1c4700522340bf517687219c37c602352365fd6460b5117566d5c42dbe5b3e0c8583f4357d0fd29f5d6c522bbb20443de3d8f08"
+          }
+        },
+        {
+          "body": {
+            "kind": "gateway_event",
+            "workflow": "invoice-reliability-multiround",
+            "action": "reliability_outcome",
+            "target": "3fb0fa6f24814d5302c3a5fa8bfd28f8334c6ab190200f1560cce960c13215b6",
+            "reasons": [
+              "COMPLETED"
+            ],
+            "sequence": 8,
+            "previous": "0b4752e90c6400e8af9410aecab44c2d591e2c3943281d11e8f941451af2e6f4"
+          },
+          "signature": {
+            "issuer": "receiver",
+            "version": 1,
+            "bundle_hash": "cf4dd4e57ec25850adcb9db93ee22518a981d29ec6de06a475bd4d9a39247098",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "567717dd494ac299fb2b7e8950ec60181acbb45d64f1e8a20e969b2623722cd542f80eb61a5844727e194a3f767b1bb29fa59dc4128c4a95db3afcf6291f5107"
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "case": "economy",
+  "outcome": "buyer_rejected",
+  "actor_call_attempts": 6,
+  "logged_api_requests": 6,
+  "tokens": 5364,
+  "commitment_queries": 3,
+  "final_plan": {
+    "transaction": "PROCUREMENT-017",
+    "model": "MX-40B",
+    "quantity": 10,
+    "shipments": [
+      {
+        "lot": "early",
+        "quantity": 4,
+        "dispatch_day": 1,
+        "service": "air",
+        "arrival_day": 2,
+        "cost": 1500
+      },
+      {
+        "lot": "later",
+        "quantity": 6,
+        "dispatch_day": 3,
+        "service": "road",
+        "arrival_day": 5,
+        "cost": 600
+      }
+    ]
+  },
+  "schema_version": 2,
+  "binding_mode": "full",
+  "protocol": "full",
+  "audit_root": "5d7b868d3605ecfaa0d3959f4a15aca2cfbd0f5d99d121481cc94a799d751fee",
+  "execution_hash": null,
+  "scope": "real model pilot, separate local organizations; no comparative benefit claim",
+  "verification_schedule": "all_required",
+  "controlled_event": "carrier_rates_plus_100_after_offers",
+  "supply_update": true,
+  "seal": {
+    "issuer": "runtime",
+    "version": 1,
+    "bundle_hash": "cee996081e705da943059b1f4b17baec477014123236115c450e66f47220242d",
+    "checks": [
+      "negotiation_audit_result"
+    ],
+    "findings": [],
+    "action": "pass",
+    "signature": "00da8862f05dab08cb2b6060e9f153fb781d75f1bafde31b5b84fd353b19b65656a8ba5b1ff8d0778f4b19cb481e572390f956b68e899ac194b6ea918959df0f"
+  }
+}

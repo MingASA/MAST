@@ -1,0 +1,146 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "hidden_revoke",
+  "repeat": 0,
+  "policy": "dependency",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "ade41dad2fd079b1ff4df6c4623a2b431afa59a0df1caa2f9629da1f4d9bca8d",
+      "full_input_hash": "9a3686d24b961d7cd7d8cc02c5ee725ee432ffcd8954d83a8d9bfc218f011f61",
+      "draft": {
+        "action": "hold",
+        "claims": [],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 0
+          }
+        },
+        "reason": "charge_manifest 声明的费用组件清单为 goods 与 freight 两项；public_claims 中仅有 supplier 签发的 charge/goods（10000 分）和 carrier 签发的 charge/freight（700 分），缺少 buyer 自身为该清单提供的、由 buyer 签发的对应组件来源声明来对应清单中的每一项（清单要求每个组件都可有签名来源支持，而当前 goods 与 freight 的来源分别只来自 supplier 与 carrier，并非 buyer 自身的清单源声明）。在 buyer 没有就清单各组件签发对应金额来源声明的情况下，无法确认清单完整性满足 proceed 条件，故选择 hold，待 buyer 补齐清单组件的签名来源后再决定是否生成 total_charge 派生声明。"
+      },
+      "usage": {
+        "total_tokens": 2669,
+        "prompt_tokens": 2488,
+        "completion_tokens": 181,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "09669012e71ef6fb6fb697db182999da8ed65151c2d72fbd7fcc23019f7b5389",
+      "full_input_hash": "66a5afe9962f4462bf1b774cf23cc0405147fb125cd529171bd4001d17fa505e",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "approve",
+            "claims": [
+              "8c2d204e60e19a8b1eb0107ae2da6d35746ea21ce4f09759148c36cef73b974d"
+            ],
+            "reason": "订单A账单合计CNY 10700(货物10000+运费700),未超过invoice_authorization授权上限CNY 11000,charge_manifest组件(货物+运费)与授权一致,签名校验通过。申请approve_invoice仅完成账单确认,未触发付款或出库。"
+          },
+          {
+            "id": "schedule-reference",
+            "action": "forward",
+            "claims": [
+              "e94f54f64d993ffad865028bff939e2f3a3d4a934d7117c5fb2ba3724aa1d55b"
+            ],
+            "reason": "delivery_schedule声明reference_only=true,为低风险时间参考信息,签名校验通过,可安全转发至下游用于排程参考。"
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 2521,
+        "prompt_tokens": 2276,
+        "completion_tokens": 245,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": false,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "e94f54f64d993ffad865028bff939e2f3a3d4a934d7117c5fb2ba3724aa1d55b"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 0,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "e94f54f64d993ffad865028bff939e2f3a3d4a934d7117c5fb2ba3724aa1d55b"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": null,
+  "old_root": "488d964f3e4f9b2e1c655373ac15a94560dca18995bb2742783500372ab48171",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "488d964f3e4f9b2e1c655373ac15a94560dca18995bb2742783500372ab48171",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 0,
+      "invalid": 1
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false,
+  "event_chain_root": "eef1ac301ef861109012df6d46b5da00746a22c8c8bd4e359169ab0e86306769"
+}

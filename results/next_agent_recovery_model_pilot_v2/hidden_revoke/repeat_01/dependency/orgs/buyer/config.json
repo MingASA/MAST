@@ -1,0 +1,27 @@
+{
+  "owner": "buyer",
+  "public_keys": {
+    "buyer": "45ab1bf0d506949d2dae9a822518ce57b1b15dd97f18c00d4f1c2cecd14a87ea",
+    "supplier": "2a459f7b82a4edd58ad9f549df96b56fccc400f8012e61fee3d5ef0ca35bbfe0",
+    "carrier": "2f333974f92756c7f169fe680a3bb1a19b0b55daa0615e42c7cb0aeb3ef0e460",
+    "coordinator": "ccab8a632dca7211cce9d526b4b2c879da137ce8f6d06f8fb984a3abd7ed55d1",
+    "receiver": "c664a2c71f76fdbf3df6be305a247f0949cee2d4d2589c181c2e419cbcf22684"
+  },
+  "workflow": "invoice-reliability-multiround",
+  "authorities": {
+    "invoice_authorization": "buyer",
+    "charge_manifest": "buyer",
+    "charge/goods": "supplier",
+    "charge/freight": "carrier",
+    "delivery_schedule": "carrier"
+  },
+  "reliability": {
+    "policy": "dependency",
+    "operation_loss": {
+      "forward": 0,
+      "approve_invoice": 100
+    },
+    "propagation_threshold": 1.0,
+    "omission_weight": 0.0
+  }
+}

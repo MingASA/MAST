@@ -1,0 +1,183 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "active",
+  "repeat": 4,
+  "policy": "dependency",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "379767f930b9584725df26fcd283750a2d83e574df78cab4408574bd7dd39e9d",
+      "full_input_hash": "d75188616156ffc677749f1da625f95a26aa3bc8e6271c63c47234cf300b9ba7",
+      "draft": {
+        "action": "proceed",
+        "claims": [
+          "1ea2c8e7542f9407f9d90bf15f7597bba127458e9cb44234bbc6c57b5ff49635",
+          "8ba4af46f1464886859193874d328510716d705adb3dcf990e2b575a35fc9d25",
+          "ffd201dfb74ae8d6285b55f1aa6e3df86be0cb4409c64dc23218c3df8d17a97e"
+        ],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        },
+        "reason": "charge_manifest(purchase)声明订单A的费用组件为goods与freight，且均有对应签名来源：供应商签名的goods=10000分、承运商签名的freight=700分，币种均为CNY，组件完整无缺失。汇总10000+700=10700分，与各签名来源金额一致，未做改值或新增来源。required_parent_claims与candidate_claims.total_charge逐字一致：清单声明、采购方发票授权（maximum_cents=11000，覆盖10700）以及goods/freight两个组件声明均作为parent声明绑定。invoice_authorization仅作为授权上限参考，不改变派生总额，未声称账单已批准或已出账，仅提交运行时协议检查。"
+      },
+      "usage": {
+        "total_tokens": 2820,
+        "prompt_tokens": 2517,
+        "completion_tokens": 303,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "f3fe9eb6a9bff5eb779e277eb1d36c441e7f4a223c569efae0a4ef67fecf0f94",
+      "full_input_hash": "cbc1d90387c11d87b6837792652276e0ed2233e01c65f9575b1c6140d7696835",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "approve",
+            "claims": [
+              "d4dd5b996346ac81a30f2712f7109402603384203bdad8921fc91c4829314d2a",
+              "ac85c1aabb5484066eeca5858885b2fb1f4b07a31314f036bd6615d6f9dd8b0d"
+            ],
+            "reason": "Buyer invoice_authorization approves approve_invoice for order A up to 11000 CNY (signed claim d4dd5b...). The total_charge (coordinator-signed claim ac85c1...) aggregates charge/goods (10000) + charge/freight (700) = 10700 CNY, which is under the 11000 CNY ceiling. Components match charge_manifest (goods + freight). Submitting approve_invoice confirmation only; no payment or shipment release."
+          },
+          {
+            "id": "schedule-reference",
+            "action": "forward",
+            "claims": [
+              "e14cd4165e4746597a99b58018a6ba7b6845905f80af2377a930000c87351895"
+            ],
+            "reason": "Carrier-signed delivery_schedule claim marks reference_only=true with window 2026-10-01/2026-10-03 for order A. Low-risk informational reference; signature passes channel checks. Forwarding to downstream as a non-binding schedule reference."
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 3060,
+        "prompt_tokens": 2766,
+        "completion_tokens": 294,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": false,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "invoice-A",
+          "operation": "approve_invoice",
+          "order": "A",
+          "claims": [
+            "d4dd5b996346ac81a30f2712f7109402603384203bdad8921fc91c4829314d2a",
+            "ac85c1aabb5484066eeca5858885b2fb1f4b07a31314f036bd6615d6f9dd8b0d"
+          ]
+        },
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "e14cd4165e4746597a99b58018a6ba7b6845905f80af2377a930000c87351895"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "invoice-A",
+          "result": {
+            "simulated": true,
+            "proposal": "invoice-A",
+            "operation": "approve_invoice"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        },
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 4,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "invoice-A",
+      "claims": [
+        "d4dd5b996346ac81a30f2712f7109402603384203bdad8921fc91c4829314d2a",
+        "ac85c1aabb5484066eeca5858885b2fb1f4b07a31314f036bd6615d6f9dd8b0d"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "invoice-A",
+        "operation": "approve_invoice"
+      }
+    },
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "e14cd4165e4746597a99b58018a6ba7b6845905f80af2377a930000c87351895"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": "ac85c1aabb5484066eeca5858885b2fb1f4b07a31314f036bd6615d6f9dd8b0d",
+  "old_root": "ffd201dfb74ae8d6285b55f1aa6e3df86be0cb4409c64dc23218c3df8d17a97e",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "ffd201dfb74ae8d6285b55f1aa6e3df86be0cb4409c64dc23218c3df8d17a97e",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 0,
+      "invalid": 0
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false,
+  "event_chain_root": "3581f07710947bcd9233a08100c0712f0b2d4eb4b9f1995bd7f675ad771617f2"
+}

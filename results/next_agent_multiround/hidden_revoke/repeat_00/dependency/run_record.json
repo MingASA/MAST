@@ -1,0 +1,64 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "hidden_revoke",
+  "repeat": 0,
+  "policy": "dependency",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "provider_error",
+      "model": "MiniMax-M3",
+      "public_input_hash": "578de7d49cd9a7a3eda37ad175c4f5ccabd2e9e6cb41ea5cf5eaaf092cd3eab2",
+      "full_input_hash": "243551d4cef126dc2147c96f63dd1a1a76f962706756aaac1bc9cbeb61c33000",
+      "draft": null,
+      "usage": null,
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 0,
+      "error": {
+        "type": "ProviderTraceError",
+        "message": "MiniMax network connection failed"
+      }
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "provider_error",
+      "model": "MiniMax-M3",
+      "public_input_hash": "fd6fe19fa8688ed7ad57f68e12101f98c319080c4b9f720f0771d0859c4415be",
+      "full_input_hash": "ed07bc29d8beecbf382070a3b88012967efbe8e8435d208a9c1c001506810e51",
+      "draft": null,
+      "usage": null,
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 0,
+      "error": {
+        "type": "ProviderTraceError",
+        "message": "MiniMax network connection failed"
+      }
+    }
+  ],
+  "batches": [],
+  "effects": [],
+  "initial_total": null,
+  "old_root": "43abaa6bcde9858cffa4090847cc17e8079d32ea9b936012aeddc6ad69753975",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "43abaa6bcde9858cffa4090847cc17e8079d32ea9b936012aeddc6ad69753975",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": "model_failure"
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false
+}

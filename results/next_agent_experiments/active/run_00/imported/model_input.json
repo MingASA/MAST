@@ -1,0 +1,71 @@
+{
+  "task": "审核订单A账单。只决定是否申请确认账单，不付款。可输出approve或hold及理由；approve时必须原样引用提供的claims。",
+  "claims": [
+    "d3bc1318713693dd196aa6f600dabe36bf8b35b0f2832c57809df12870745739",
+    "37607518b95d51164a9eaf16418bfe42b82c31f38b8c28bff9c86d8d77172b87"
+  ],
+  "public_packets": [
+    {
+      "body": {
+        "kind": "claim",
+        "workflow": "invoice-demo",
+        "parents": [],
+        "fact": {
+          "predicate": "invoice_authorization",
+          "value": {
+            "order": "A",
+            "operation": "approve_invoice",
+            "currency": "CNY",
+            "maximum_cents": 11000,
+            "approved": true
+          }
+        }
+      },
+      "signature": {
+        "issuer": "buyer",
+        "version": 1,
+        "bundle_hash": "eb6978b8e3b52855ae92a7d463704a007f34cccda47a8a1053e569e714fb695c",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "be0baa85950fb9d11e6b58303b0a9ae439467a1ddae8605cda083ee425804b58a8defcbbd0648ce23e464ac393d932a388b8dc49b12dac981acf7d0131fc750e"
+      }
+    },
+    {
+      "body": {
+        "kind": "claim",
+        "workflow": "invoice-demo",
+        "parents": [],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        }
+      },
+      "signature": {
+        "issuer": "billing",
+        "version": 1,
+        "bundle_hash": "d6dc3ebb12876fd4cccce4b6cfefc8c9358c3b862c27966f9ee07fc673f81b0d",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "3540b492f09e04cbbce303afa9511c91a7ed897ef12c6fa176ceb704725ab5ca9fbb40de759cbf5d5757c67ff5f329ac30ee04d7752c27dc2b30c16ffce1a209"
+      }
+    }
+  ],
+  "output_schema": {
+    "action": "approve|hold",
+    "claims": [
+      "d3bc1318713693dd196aa6f600dabe36bf8b35b0f2832c57809df12870745739",
+      "37607518b95d51164a9eaf16418bfe42b82c31f38b8c28bff9c86d8d77172b87"
+    ],
+    "reason": "string"
+  }
+}

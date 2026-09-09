@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trust-network"
+version = "0.1.0"
+description = "Cross-organization verification and responsibility experiments"
+requires-python = ">=3.10"
+dependencies = ["numpy", "networkx", "matplotlib", "cryptography"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["trust_network*"]
+
+[tool.pytest.ini_options]
+testpaths = ["trust_network/tests"]
+pythonpath = ["."]

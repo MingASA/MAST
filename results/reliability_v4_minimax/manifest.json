@@ -1,0 +1,153 @@
+{
+  "config": {
+    "change_prior": 0.2,
+    "routine_prior": 0.02,
+    "change_loss": 100.0,
+    "routine_loss": 10.0,
+    "verification_cost": 3.0,
+    "escalation_cost": 5.0,
+    "budget": 9.0,
+    "omission_weight": 0.0,
+    "maximum_unverified_risk": 0.05
+  },
+  "estimate": {
+    "cases": 4,
+    "policies": [
+      "autonomous",
+      "verify_all",
+      "risk_aware"
+    ],
+    "temperatures": [
+      0.2,
+      0.5,
+      0.8
+    ],
+    "planned_runs": 36,
+    "runs_per_policy": 12,
+    "planning_actor_calls": 144,
+    "planning_tokens": 306388,
+    "max_actor_calls": 216,
+    "max_model_http_attempts_with_format_retry": 432,
+    "max_authority_queries": 108,
+    "basis": {
+      "historical_logged_calls": 85,
+      "historical_tokens": 180854,
+      "historical_tokens_per_call": 2127.6941176470586
+    },
+    "interpretation": "36run×规划4次业务调用；每组织最多2次、每run最多6次。权威查证是确定性组织服务，无LLM评估调用。",
+    "budget_warning": "新场景没有实测用量；历史均值是规划参照，不是上限或账单。失败usage可能缺失。",
+    "requires_confirmation": true
+  },
+  "public_keys": {
+    "export_bank": "eb14639aee648de41ac37a39bc94580fcb81b7e20992c7939c057b7e6081839b",
+    "issuing_bank": "3a191cc4a051373bed8c77d1e1b9f5b013dfc7002af5e3ffd0dac6251da5d1ba",
+    "fulfillment": "b049ba3bc081bac1ccb460aa904b2653d7ba2738c477a091464b0af1744a5c5d",
+    "buyer_authority": "06aaf857c6b84c371356474c8c409416d5a3449bd13c09b0d7fae3dfff7a50e3",
+    "runtime": "6b7dd17db6f6ae4f07c69beddb97525cd92effa741638dbe4d946dae24ef7a10"
+  },
+  "actor_endpoints": null,
+  "authority_endpoints": null,
+  "case_public_inputs": {
+    "case_01": {
+      "transaction": "ORDER-2026-017",
+      "document_version": 1,
+      "order": {
+        "version": "PO-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "invoice": {
+        "version": "INV-3",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "packing_list": {
+        "version": "PK-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "transport_order": {
+        "version": "SH-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "seller_statement": "本套单据按照交易双方已确认的订单版本准备，申请继续处理。"
+    },
+    "case_02": {
+      "transaction": "ORDER-2026-017",
+      "document_version": 1,
+      "order": {
+        "version": "PO-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "invoice": {
+        "version": "INV-3",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "packing_list": {
+        "version": "PK-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "transport_order": {
+        "version": "SH-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "seller_statement": "本套单据按照交易双方已确认的订单版本准备，申请继续处理。"
+    },
+    "case_03": {
+      "transaction": "ORDER-2026-017",
+      "document_version": 1,
+      "order": {
+        "version": "PO-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "invoice": {
+        "version": "INV-3",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "packing_list": {
+        "version": "PK-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "transport_order": {
+        "version": "SH-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "seller_statement": "本套单据按照交易双方已确认的订单版本准备，申请继续处理。"
+    },
+    "case_04": {
+      "transaction": "ORDER-2026-017",
+      "document_version": 1,
+      "order": {
+        "version": "PO-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "invoice": {
+        "version": "INV-3",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "packing_list": {
+        "version": "PK-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "transport_order": {
+        "version": "SH-2",
+        "model": "MX-40B",
+        "quantity": 10
+      },
+      "seller_statement": "本套单据按照交易双方已确认的订单版本准备，申请继续处理。"
+    }
+  },
+  "model": "configured MiniMax, resolved only during execution"
+}

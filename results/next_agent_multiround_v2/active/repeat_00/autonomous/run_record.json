@@ -1,0 +1,144 @@
+{
+  "kind": "reliability_workflow_run",
+  "condition": "active",
+  "repeat": 0,
+  "policy": "autonomous",
+  "workflow": "invoice-reliability-multiround",
+  "max_model_decisions": 4,
+  "model_decisions": [
+    {
+      "stage": "initial_coordinator",
+      "owner": "coordinator",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "d21bf151a7dad760958220a421cf3fb746dee9cc819f05ecdd929e6d3ba2f196",
+      "full_input_hash": "b80f5c8be12f2ef6672870b74d3d23dfa54b9830feabc1fe1104bbe8729bc52a",
+      "draft": {
+        "action": "hold",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 0
+          }
+        },
+        "reason": "required_parent_claims 中列出的三个父声明哈希（1f8d37fe…、1648ba50…、137bcd94…）在当前可读的公开签名声明中均未出现，无法确认它们的存在与内容，因此不能为订单 A 生成任何 total_charge 派生声明；签名费用清单中的 charge/goods=10000 分与 charge/freight=700 分虽然可读，但因父依赖缺失而不能据此 proceed，待运行时提供并核对全部必需父声明后再决定是否生成 10700 分的派生声明。"
+      },
+      "usage": {
+        "total_tokens": 2088,
+        "prompt_tokens": 1940,
+        "completion_tokens": 148,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/000_initial_coordinator_coordinator.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    },
+    {
+      "stage": "initial_receiver",
+      "owner": "receiver",
+      "status": "success",
+      "model": "MiniMax-M3",
+      "public_input_hash": "24e8f188547aebe8d1c2aa1eb62e9143b0c85337f8d05db2170502f11ca012e4",
+      "full_input_hash": "826de08937e8772344a2cd2bc418cd4fd829da78e61ae0e81a0d07d1ed4448f0",
+      "draft": {
+        "actions": [
+          {
+            "id": "invoice-A",
+            "action": "approve",
+            "claims": [
+              "84382b1c4e5b1d14acc6eaf9f2abc3017f77739bc01e5b367242644090985087"
+            ],
+            "reason": "Buyer's invoice_authorization (approved=true, maximum_cents=11000, currency=CNY, operation=approve_invoice) is consistent with charge_manifest. Goods (10000) + freight (700) = 10700 CNY, which is within the 11000 CNY authorization cap. Signature checks pass on all three relevant claims (buyer authorization, supplier goods charge, carrier freight charge). This action only requests invoice confirmation and does not trigger payment or shipment."
+          },
+          {
+            "id": "schedule-reference",
+            "action": "forward",
+            "claims": [
+              "f552b397758a66674d684e9ac530dee03a9df07b44d635edc8b081a15372a146"
+            ],
+            "reason": "Carrier-signed delivery_schedule claim has reference_only=true, indicating it is a low-risk informational reference (window 2026-10-01/2026-10-03) suitable for forwarding to downstream consumers. Signature check passes; the claim is explicitly marked as reference-only and does not authorize any operational action."
+          }
+        ]
+      },
+      "usage": {
+        "total_tokens": 2329,
+        "prompt_tokens": 2022,
+        "completion_tokens": 307,
+        "attempts": 1
+      },
+      "trace_path": "model_calls/001_initial_receiver_receiver.json",
+      "attempts_recorded": 1,
+      "responses_received": 1
+    }
+  ],
+  "batches": [
+    {
+      "stage": "initial",
+      "force_verify": false,
+      "path": "batches/00_initial.json",
+      "audit_path": "batches/00_initial_audit.json",
+      "proposals": [
+        {
+          "id": "schedule-reference",
+          "operation": "forward",
+          "claims": [
+            "f552b397758a66674d684e9ac530dee03a9df07b44d635edc8b081a15372a146"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "proposal": "schedule-reference",
+          "result": {
+            "simulated": true,
+            "proposal": "schedule-reference",
+            "operation": "forward"
+          },
+          "failed_roots": [],
+          "action": "COMPLETED"
+        }
+      ],
+      "verification_calls": 0,
+      "audit_findings": 0,
+      "audit_valid": true,
+      "audit_error": null
+    }
+  ],
+  "effects": [
+    {
+      "stage": "initial",
+      "proposal": "schedule-reference",
+      "claims": [
+        "f552b397758a66674d684e9ac530dee03a9df07b44d635edc8b081a15372a146"
+      ],
+      "result": {
+        "simulated": true,
+        "proposal": "schedule-reference",
+        "operation": "forward"
+      }
+    }
+  ],
+  "initial_total": null,
+  "old_root": "137bcd9460e863a5187066dacfc6fac92b853ea54a9e02553893015ba82ad836",
+  "replacement_root": null,
+  "recovery": {
+    "attempted": false,
+    "blocked_initial": false,
+    "succeeded": false,
+    "old_root": "137bcd9460e863a5187066dacfc6fac92b853ea54a9e02553893015ba82ad836",
+    "new_root": null,
+    "new_total": null,
+    "error": null,
+    "batches": []
+  },
+  "parser_stats": {
+    "initial": {
+      "holds": 0,
+      "invalid": 1
+    }
+  },
+  "common_system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。对 approve 或 verify，claims 必须逐字复制该任务 candidate_claims 中对应任务的完整摘要列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+  "runtime_truth_accessed": false
+}

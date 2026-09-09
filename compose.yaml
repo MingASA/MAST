@@ -1,0 +1,61 @@
+services:
+  seller:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/seller:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8800:8765"]
+  freight_forwarder:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/freight_forwarder:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8801:8765"]
+  inspector:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/inspector:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8802:8765"]
+  export_bank:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/export_bank:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8803:8765"]
+  issuing_bank:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/issuing_bank:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8804:8765"]
+  buyer:
+    build: .
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    command: ["--dossier", "/data/private.md", "--env-file", "/run/model.env", "--port", "8765"]
+    volumes:
+      - ./examples/letter_of_credit/organizations/buyer:/data:ro
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to your existing configuration}:/run/model.env:ro
+    ports: ["127.0.0.1:8805:8765"]

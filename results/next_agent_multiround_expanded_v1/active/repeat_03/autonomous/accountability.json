@@ -1,0 +1,63 @@
+{
+  "event_chain": {
+    "valid": true,
+    "events": 27,
+    "root": "0b329e322e577f510f2d2072220fab169b0b456c0354bf488cc417d6d26f8c03"
+  },
+  "source": {
+    "claim_id": "ffd201dfb74ae8d6285b55f1aa6e3df86be0cb4409c64dc23218c3df8d17a97e",
+    "issuer": "carrier",
+    "formal_delivery_orgs": [
+      "coordinator",
+      "receiver"
+    ],
+    "formal_delivery_count": 2,
+    "max_propagation_hops": 2
+  },
+  "revocation": {
+    "controlled_event_observed": false,
+    "controlled_event_index": null,
+    "formal_notice_delivery_orgs": [],
+    "consumer_notice_delivery_orgs": [],
+    "gateway_receipt_owners": [],
+    "consumer_gateway_receipt_owners": [],
+    "gateway_receipt_index": null
+  },
+  "derived_claim_checks": {
+    "checked": 1,
+    "transformation_mismatches": []
+  },
+  "action_uses": {
+    "completed_using_old_root": [
+      {
+        "stage": "initial",
+        "proposal": "invoice-A",
+        "claims": [
+          "d4dd5b996346ac81a30f2712f7109402603384203bdad8921fc91c4829314d2a",
+          "ac85c1aabb5484066eeca5858885b2fb1f4b07a31314f036bd6615d6f9dd8b0d"
+        ],
+        "batch_event_indices": [
+          26
+        ]
+      }
+    ],
+    "completed_after_revocation_notice": [],
+    "completed_after_controlled_change_without_notice": []
+  },
+  "findings": [
+    {
+      "classification": "no_fault_conclusion",
+      "reason": "available signed/runtime evidence does not establish a protocol duty violation"
+    }
+  ],
+  "responsibility": {
+    "status": "undetermined",
+    "reason": "signatures establish provenance and event order, but notification duties, intent and physical loss are not established",
+    "numeric_attribution": null
+  },
+  "limits": [
+    "runtime event log does not prove physical side effects",
+    "signed source change does not prove original issuer fault",
+    "missing notification duty or loss model prevents numeric blame"
+  ]
+}

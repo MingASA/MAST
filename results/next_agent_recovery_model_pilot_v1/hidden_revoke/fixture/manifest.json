@@ -1,0 +1,45 @@
+{
+  "kind": "reliability_workflow_fixture",
+  "condition": "hidden_revoke",
+  "workflow": "invoice-reliability-multiround",
+  "organizations": [
+    "buyer",
+    "supplier",
+    "carrier",
+    "coordinator",
+    "receiver"
+  ],
+  "public_keys": {
+    "buyer": "ced90a9493456aca8445fb2ed9af660babdecc32d55459b6255c6f181893490d",
+    "supplier": "5e94bf9efb8011533e82148e7754c0c3bf4298e1038cd7d6497f980792316e11",
+    "carrier": "8515d3b03d7f7741133f51bd4f3a90c5506c8a44d30c05883f73ad8320e242ce",
+    "coordinator": "0ce9c12a4f6f16c90616293708e7e0b1bba53873347525fc5aacd6a4680a2750",
+    "receiver": "e12fcf0ec989d9cd3d71628c3ad5657be6ce0fe4accfe249f1876473181894d9"
+  },
+  "authorities": {
+    "invoice_authorization": "buyer",
+    "charge_manifest": "buyer",
+    "charge/goods": "supplier",
+    "charge/freight": "carrier",
+    "delivery_schedule": "carrier"
+  },
+  "source_packets": {
+    "manifest": "802db9a8872164928062d0ac5dc38bc1c68cf268474f8e544e7b254d49294042",
+    "authorization": "8d242b2de2887c6699bea4a60857b5019cac1d4dd40b84cbbc1a4459891880a1",
+    "goods": "74e99e2c9c3342eb4c4c8b7c93b39193f232695d573927b574aa004d5cb5bc26",
+    "freight": "12f40e21125c13f628a29563e55d87bbcf0829af440359b8fafc82562c8078b1",
+    "schedule": "0e9e87955c3d677b161f090751243c66cb4b092e1f8698bee807ddf4328cea69"
+  },
+  "coordinator_parents": [
+    "802db9a8872164928062d0ac5dc38bc1c68cf268474f8e544e7b254d49294042",
+    "74e99e2c9c3342eb4c4c8b7c93b39193f232695d573927b574aa004d5cb5bc26",
+    "12f40e21125c13f628a29563e55d87bbcf0829af440359b8fafc82562c8078b1"
+  ],
+  "receiver": "/home/cjy/wuxing/results/next_agent_recovery_model_pilot_v1/hidden_revoke/fixture/receiver",
+  "authorities_dirs": {
+    "buyer": "/home/cjy/wuxing/results/next_agent_recovery_model_pilot_v1/hidden_revoke/fixture/buyer",
+    "supplier": "/home/cjy/wuxing/results/next_agent_recovery_model_pilot_v1/hidden_revoke/fixture/supplier",
+    "carrier": "/home/cjy/wuxing/results/next_agent_recovery_model_pilot_v1/hidden_revoke/fixture/carrier"
+  },
+  "coordinator": "/home/cjy/wuxing/results/next_agent_recovery_model_pilot_v1/hidden_revoke/fixture/coordinator"
+}
