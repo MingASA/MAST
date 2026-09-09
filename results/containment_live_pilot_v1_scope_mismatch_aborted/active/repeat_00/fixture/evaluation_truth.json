@@ -1,0 +1,30 @@
+{
+  "scope": "event_sequence_reliability_workflow",
+  "workflow": "containment-live-v1-repeat-00",
+  "condition": "active",
+  "initial_allowed": {
+    "invoice-A": true,
+    "schedule-reference": true
+  },
+  "recovered_allowed": {
+    "invoice-A": true
+  },
+  "revoked_root": "be27be7ff2ad19fdfc51eb97c57771a061c774e15027195dc23ca048a6a04000",
+  "replacement_fact": {
+    "predicate": "charge/freight",
+    "value": {
+      "order": "A",
+      "currency": "CNY",
+      "component": "freight",
+      "cents": 900
+    }
+  },
+  "event_order": [
+    "initial_source_delivery",
+    "initial_model_decisions",
+    "no_controlled_revocation",
+    "runtime_gate_and_optional_two_layer_recovery",
+    "final_simulated_actions"
+  ],
+  "model_input_is_not_allowed_to_read": "evaluation_truth.json"
+}

@@ -1,3 +1,9 @@
+> **统一离线闭环：** [36条流程与追溯评分结果](results/containment_closed_loop_v1_final/report.md)，[协议与边界](BENCHMARK_PROTOCOL_V1.md)。沿用原组织状态串联传播、冻结、恢复；真实模型 pilot 另存于下方新目录。
+
+> **最新离线机制对照：** [Benchmark协议与frontier-v2](BENCHMARK_PROTOCOL_V1.md)，[结果](results/containment_benchmark_v1_frontier/report.md)。多跳恢复候选已实现，离线结果不与 live 样本混合。
+
+> **最新真实模型 C pilot：** [报告](results/containment_live_pilot_v1/report.md)、[原始 metrics](results/containment_live_pilot_v1/metrics.json)、[机制案例](results/containment_live_pilot_v1/mechanism_cases.md)。hidden-revoke 三跳分叉共 6 个 workflow；frontier-v2 安全恢复 1/2，dependency 按 v1 多层接口限制停止，notice-only 两次恢复模型均 hold；不安全完成 0/6，C 任务继续 6/6。一次错误范围的中止运行保留在 [archive](results/containment_live_pilot_v1_scope_mismatch_aborted/SCOPE_NOTE.md)，不计入正式结果。
+
 > **无历史上下文的实验代理请先读：[完整实验任务书](TASK_EXPERIMENTS_NEXT_AGENT.md)。**包含研究背景、权限与配置、当前代码边界、真实实验步骤、对照公平性、指标和交付标准。
 
 > **实验执行交接：** [下一位实验执行者任务书](EXPERIMENT_OPERATOR_v20.md)，含一条命令离线贯通、外部模型接入、固定对照边界和待验证研究问题。

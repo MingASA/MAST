@@ -47,7 +47,7 @@
 | 程序安全边界 | 已有动作门禁，但 C 阶段未覆盖恢复后的再门禁 | 恢复只重建证据，不授权业务动作；新提议必须再次进入查证、局部冻结和动作合约 |
 | 责任审计 | 曾把 authority 自己收到撤销误当作消费者通知 | 当前审计区分来源方本地 receipt、消费者正式收到的撤销、实际使用顺序和证据不足；没有通知、义务和损失模型时返回 `undetermined` |
 | 实验记录 | 有真实模型 pilot 和离线重放 | 每个 run 保存原始模型请求/响应、解析决定、usage、签名包、批次、事件、评估、accountability 和 hash manifest；已有扩大多轮实验及 v6/v7 独立目录 |
-| 回归验证 | 局部测试覆盖基础路径 | 当前代码最近一次全量测试为 `119 passed`，标准恢复证据的针对性测试、篡改拒绝和离线闭环均通过 |
+| 回归验证 | 局部测试覆盖基础路径 | 当前代码最近一次全量测试为 `128 passed`，标准恢复证据的针对性测试、篡改拒绝和离线闭环均通过 |
 
 这些变化不是把模型 prompt 改得更容易通过，而是把原来由调度器口头假设的恢复条件变成运行时可验证的接口和事件。
 
@@ -59,8 +59,8 @@
 
 这一定义中的几个词有严格边界：
 
-- **跨组织**：当前是五个组织的独立本地目录/进程和签名消息路径，组织服务不直接读其他组织私有文件；还不是跨物理主机、真实机构系统或公网服务。
-- **错误传播**：当前能测量声明被哪些组织正式接收、在模型输入中出现几次、被哪些动作引用以及几跳到达；当前 C fixture 的实际路径是本机串行传播，最大为两跳。
+- **跨组织**：当前是 buyer、supplier、carrier、coordinator、middle、receiver 六个组织的独立本地目录/进程和签名消息路径，组织服务不直接读其他组织私有文件；还不是跨物理主机、真实机构系统或公网服务。
+- **错误传播**：当前能测量声明被哪些组织正式接收、在模型输入中出现几次、被哪些动作引用以及几跳到达；当前 live fixture 的实际路径是本机串行传播，最大为三跳。
 - **恢复**：当前恢复的是声明依赖和新的动作提议，不是撤销历史、外部付款、发货或其他物理副作用的回滚。
 - **责任追溯**：当前能定位签署者、父依赖、接收事件、查证答复、使用批次和是否有消费者通知；它能证明某些协议义务事实，但不能仅凭签名证明事实真伪、恶意意图、实际损失或法律责任。
 - **autonomous**：当前实验中的 autonomous 是“自主选择 freshness verification 的消融基线”，不是完整能力意义上的 autonomous Agent 基线；任务书和报告都按此限制表述。
@@ -132,7 +132,7 @@ v7 是标准接口已经能被真实模型走通的正向信号，不是恢复�
 
 作为一篇声称“降低网络错误传播并准确追责”的强实证研究，目前还不够。原因不是代码没有完成，而是主张尚未被公平 benchmark 充分区分：
 
-1. 当前主要故障是一个受控的 delayed revoke，场景是简化 invoice，传播路径最多两跳；它还没有覆盖多跳、fan-out、丢失、重复、乱序和部分通知。
+1. 当前真实模型 pilot 仍只覆盖一个受控的 hidden revoke、简化 invoice 和单个三跳链；离线 benchmark 已覆盖分叉和多类错误，但 live 还没有覆盖丢失、重复、乱序和部分通知。
 2. 当前的保护效果可能部分来自最基本的“revoked 就阻断”，还没有用 ablation 证明 dependency-aware 冻结、派生重建和标准证据 bundle 各自增加了什么。
 3. 当前责任审计能正确地在证据不足时返回 `undetermined`，但这也说明尚未定义并实证验证一套跨组织通知义务、派生义务和使用义务。
 4. v7 的 2/2 恢复是接线证据，不是稳定性证据；扩大实验的 recovery 成功率仍受真实模型 hold 影响。
@@ -148,7 +148,7 @@ v7 是标准接口已经能被真实模型走通的正向信号，不是恢复�
 
 ## 下一步任务
 
-下一步不是继续单独扩大 v7，也不是马上扩大付费规模。应先冻结当前 `recovery-evidence-v1`，实现并离线验证一个 **causal containment-and-accountability benchmark v1**。v7 的两跳单分支场景作为 benchmark 的校准控制单元，新的多跳和分叉场景在同一 harness 中增加。
+下一步不是继续单独扩大 v7，也不是马上扩大付费规模。当前 **causal containment-and-accountability benchmark v1** 已完成离线闭环和有界 live pilot；后续应先分析恢复阶段 hold 的原因，再在用户决定后扩大真实模型规模。
 
 下一阶段的顺序是：
 
@@ -301,5 +301,31 @@ benchmark 不能只有一个最终 `allowed=true/false` 标签。它需要像一
 
 当前 v7 已完成标准恢复证据的接线验证，benchmark 的下一步应先做离线实现和已有 trace 回放。新的大规模真实模型调用、扩大付费实验或改变核心研究方向，都应在 benchmark 的具体规模、调用上限、停止规则和待解决不确定性写清后，再由用户决定。
 
-仓库根目录的 `.git` 不是有效 Git repository，因此本总结和已有 checkpoint 都是文件形式保存；不能把它们报告为 Git commit。
+仓库根目录的 `.git` 已初始化为有效 Git repository，已有 checkpoint `02b8892` 保留接手时的可靠性实验状态；本阶段的 benchmark 代码、原始结果和本总结将在本轮验证后提交新的本地 checkpoint。
 
+
+## 后续执行补充：离线 benchmark 已接入统一闭环
+
+后续按用户收敛优先级完成了三跳双分支、四类错误（派生错误含两处位置）的离线矩阵，并由该矩阵暴露出v1仅允许单派生重建的限制。新增候选`recovery-frontier-v2`，保留原v1和历史结果。
+
+目前统一闭环入口为`trust_network.benchmark.closed_loop`，36条脚本workflow在同一组织状态和事件链中完成传播、失效、局部冻结和恢复评分；另有追溯标签对照和v7真实历史决定回放。结果见`results/containment_closed_loop_v1_final/report.md`，协议见`BENCHMARK_PROTOCOL_V1.md`。
+
+能够支持的离线增量是多层恢复能力：v2在两条分支完成恢复，原v1失败。尚不能支持v2优于普通notice的真实模型可用性、当前dependency优于强简单门禁的拦截能力，或解决冲突来源/签名事实错误。
+
+## 三跳分叉真实模型 pilot 结果
+
+按 `BENCHMARK_PROTOCOL_V1.md` 完成了有界的 C pilot：只运行 hidden-revoke 条件，三种恢复臂各 2 个 workflow，共 6 个；每条 workflow 最多 6 次模型决定，正式上限为 36 次模型决定和 72 次 provider 尝试。实际使用 27 次模型决定、27 次 provider 尝试，所有已返回决定的 usage 均已知，provider failure 为 0。
+
+|恢复臂|安全完成|不安全完成|两层派生重建|恢复成功|C任务完成|模型 hold/解析拒绝|
+|---|---:|---:|---:|---:|---:|---:|
+|dependency|0/2|0/2|0/2|0/2|2/2|0/1|
+|frontier_v2|1/2|0/2|1/2|1/2|2/2|1/0|
+|notice_only|0/2|0/2|1/2|0/2|2/2|2/0|
+
+正向结果是：旧 freight 已沿 source → coordinator → middle → receiver 三跳正式接收；5/6 条 workflow 的有效账单提议在 gate 前被 revoked root 拦截；无关 C 任务 6/6 继续；frontier-v2 有 1 条完整经过新来源、两层派生重建、模型重新决定和再次 fresh gate 的恢复链。
+
+负向结果同样保留：冻结 dependency 在两层任务上按协议记录 `protocol_unsupported`；另 1 条 dependency 初始模型没有提交完整 invoice claims；frontier-v2 的另 1 条和 notice-only 的两条在恢复阶段由模型选择 hold。普通 notice 在固定正确的新事实下没有显示真实模型可用性优势。所有 6 条 workflow 不安全完成为 0，但样本太小，不能外推总体错误率或证明 frontier-v2 优于 notice-only。
+
+完整原始请求、响应、签名状态、事件链、批次审计和完整性清单见 [C pilot report](results/containment_live_pilot_v1/report.md)、[metrics](results/containment_live_pilot_v1/metrics.json) 和 [机制案例](results/containment_live_pilot_v1/mechanism_cases.md)。一次因误把 active 条件加入 live 矩阵而中止的运行保留在 [scope-mismatch archive](results/containment_live_pilot_v1_scope_mismatch_aborted/SCOPE_NOTE.md)，不计入正式样本。
+
+当前最有信息量的下一步是先处理恢复阶段的模型可用性：把 frontier 状态、已完成父声明和最终 receiver 的 fresh-check 要求压缩成更清楚的同一证据视图，再做不扩规模的定向小 pilot；随后再选择冲突来源、签名有效但事实错误和部分通知场景。新的大规模付费实验或核心方向改变仍需用户决定。

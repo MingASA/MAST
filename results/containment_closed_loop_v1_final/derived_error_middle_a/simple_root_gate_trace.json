@@ -1,0 +1,5247 @@
+{
+  "policy": "simple_root_gate",
+  "events": [
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 0,
+      "previous": null,
+      "message_id": 1,
+      "sender": "source",
+      "receiver": "coordinator",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": null,
+      "hop": 1
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 1,
+      "previous": "18718c44eec090597f5d82533e47f982d536459804528960a0d37927afb62514",
+      "message_id": 2,
+      "sender": "source",
+      "receiver": "coordinator",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": null,
+      "hop": 1
+    },
+    {
+      "kind": "delivery",
+      "tick": 0,
+      "sequence": 2,
+      "previous": "3f7cc4babdb85a9bab5b21a5580967f7431b611552a093731a49243e2e9e27e3",
+      "message_id": 1,
+      "sender": "source",
+      "receiver": "coordinator",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": null,
+      "hop": 1
+    },
+    {
+      "kind": "accepted",
+      "tick": 0,
+      "sequence": 3,
+      "previous": "13e8535697572bcca6a05f6ec9411bce2129d3a0f2117bc87903ea78f8389e41",
+      "owner": "coordinator",
+      "packet": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+      "order": "A",
+      "branch": null,
+      "hop": 1,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "1f3900cbdee12496656cfd6b1a586b3a124edf1c51cb38e051d986d799cb1bfb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "23181600f3d8ccef04aa38dd1e5e6444d2b00aaefa662e1ce3bd125047e22b4546a10a28a872941c78e0ca1d58fba886d9995d0559e0fc1cef04023a69d67005"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 0,
+      "sequence": 4,
+      "previous": "256d15474e4251cb3daeb3cf6e4831279f1c50b5b72e491fd7ef9f26ae352f11",
+      "message_id": 2,
+      "sender": "source",
+      "receiver": "coordinator",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": null,
+      "hop": 1
+    },
+    {
+      "kind": "accepted",
+      "tick": 0,
+      "sequence": 5,
+      "previous": "9a93c781753763eae0387e83787bfef172e8b78da8d89afbfad759d0ef9470c8",
+      "owner": "coordinator",
+      "packet": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+      "order": "C",
+      "branch": null,
+      "hop": 1,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "984ee4cb488464033a9ca661f89edcf8075d3d5d2a8120159d71e3f78f4c9577"
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "b5431e6a18e4ca8ba9d2e6d4146040158324e93e0f4e734f3c797364665389b0",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "7b1de489af0a2d76efe8cd8806b4345ffa0ff35f17a88d2bad4d180f252362fc070c897449c3ca8354abd7c46df00cd5b408e5c451a46502b957b3d5b16e560f"
+        }
+      }
+    },
+    {
+      "kind": "agent_input",
+      "tick": 0,
+      "sequence": 6,
+      "previous": "d3fcff5a519329237720e083b9a0274e62b168002e23e1fa9b03d22f5f644db4",
+      "owner": "coordinator",
+      "claims": [
+        "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+      ],
+      "order": "A",
+      "hop": 1,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 0,
+      "sequence": 7,
+      "previous": "0121b3dccc8f582918f7d5182ae7b015772467b3f09e351294ab66719a5dd915",
+      "owner": "coordinator",
+      "proposal": {
+        "id": "A:coord",
+        "operation": "forward",
+        "claims": [
+          "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+        ]
+      },
+      "order": "A",
+      "hop": 1
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 0,
+      "sequence": 8,
+      "previous": "bf35bfeaf037a22d4b5419a64b61dcaca0dfde5715949e4c8c0dd8b38ab3cd13",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "claim": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "operation": "forward",
+        "challenge": "a3e0c570a319a94021ff8b443513ab508a41a00152aeba2d"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+            "claim": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+            "operation": "forward",
+            "challenge": "a3e0c570a319a94021ff8b443513ab508a41a00152aeba2d"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "dfc7550e4716c7dcb0043f92feddc3877484293b972639a22494d29dd6817b57",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "073afc535aa87ad366481165b8f27bdd422c53ee2872285a70b30ffec3b5f5d0eaf4ab394c2831bfb2c06ea9d8d50041506ddf6157166cc877a842f6508fa40e"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 0,
+      "sequence": 9,
+      "previous": "9e71b7a5289e67ac4e577f024bf43ec73679956a0b6ff95d341a58811119741f",
+      "owner": "coordinator",
+      "order": "A",
+      "hop": 1,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+              "reasons": [
+                "c797cbae3941df88b3eff76f02d1dd2f2e91752a9b4c157e34d00952a175110c"
+              ],
+              "sequence": 3,
+              "previous": "2669da1e2baa1bb545b1b5e8a0f980768bd4e75c4e8877c9712c8292ebe4e543"
+            },
+            "signature": {
+              "issuer": "coordinator",
+              "version": 1,
+              "bundle_hash": "da7aaad22ee15041af460988ee2103cfbc5aa90e82a87ae832e07b2929527514",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "af680d446be28439baf6433e3c2fda7314ae4458a77fd99811fe37f982a8dd71ff06280769e0391fa0872a23bc121a32485c137db7eb9198068274c1057a8905"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 4,
+              "previous": "1081bee7b81e4dbb29cb59eec434442c0ed319069d504f0f77595161b4591074"
+            },
+            "signature": {
+              "issuer": "coordinator",
+              "version": 1,
+              "bundle_hash": "d1102c013e25862620a278b496e546f0ef0a23f347d2aaf88c180975f182581c",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "b96da936bcd247f01da2f6e5f9f10fbc0c15ce8eb414a043ce5b9916ab0ca2e820612fce50a389b13eadee01a613ee61eebb38250de17394c20669864abc5203"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "A:coord",
+              "operation": "forward",
+              "claims": [
+                "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "efb447df3e10ab7bf3590682f3725f529fdafa38c611222c8e0a60d6976607d3",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "66fd763d4af169b40a9e4980a96abe1e181846ff1dffb9f2d361dc457319af320579c1909ab49b4e069c9bde850aefc547184aa4a32eb509791072ccc19ba504"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 10,
+      "previous": "cc98bab01e3f420ac0254f9555c5247a7dd220bc490ce19d96581226e4407744",
+      "message_id": 3,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 11,
+      "previous": "89f998efa0c2aac13e32ab6bfebbef8c84f4164432e0fd0ddadea3ee08fb00e1",
+      "message_id": 4,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 12,
+      "previous": "9f39e81139cba815433ee08a77b786b09be3a61e919ab7e183be4d8a5888ce79",
+      "message_id": 5,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 13,
+      "previous": "d08de5f2646fb3498e0a3143b141522623e63c3a2d078c48f9681a3406c2160b",
+      "message_id": 6,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "agent_input",
+      "tick": 0,
+      "sequence": 14,
+      "previous": "562568505fa01435a1a6481eeaab5f861bc8a4d7cede8423716787576e68a813",
+      "owner": "coordinator",
+      "claims": [
+        "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+      ],
+      "order": "C",
+      "hop": 1,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 0,
+      "sequence": 15,
+      "previous": "cf609e34985fccb7a4d4fafecac615edb8ebd93af44c9bb9fd543f4dcfa7e18b",
+      "owner": "coordinator",
+      "proposal": {
+        "id": "C:coord",
+        "operation": "forward",
+        "claims": [
+          "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+        ]
+      },
+      "order": "C",
+      "hop": 1
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 0,
+      "sequence": 16,
+      "previous": "1c97a4c25d079c7ebedae3031042bf4222350e4d021a48004dfb1e19a3b9d36f",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "claim": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "operation": "forward",
+        "challenge": "7c6a89b5904e33bf75616a2b332797b0a4fbe2ef8f13ce0e"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "claim": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "operation": "forward",
+            "challenge": "7c6a89b5904e33bf75616a2b332797b0a4fbe2ef8f13ce0e"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "f6f6c89c05623bea2b0c991f0f6ce6ce5c3aeaa9bb748338b8f75882c78b1ee5",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "e602bd1058875426a93b6b7aa8370c7ae656721ac0fcb9479cbfc49fbc7351544c86c21ad6475e20e60dbacef20dd6b4628b8539a01dcf1ac636a1558eb6a600"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 0,
+      "sequence": 17,
+      "previous": "3694ac3893cf289b8bda7c8748854ea988c06820e96cf3f378c900aa562c88e5",
+      "owner": "coordinator",
+      "order": "C",
+      "hop": 1,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "2922269b2fed6193c87c9cbf24ad799f765764d699b9b7458aa1bbca43853978"
+              ],
+              "sequence": 6,
+              "previous": "36e06a05f64cec1e492f5b0dbf14cf4f62e833f8fe901293384fa207bf54814b"
+            },
+            "signature": {
+              "issuer": "coordinator",
+              "version": 1,
+              "bundle_hash": "775890249531116922d37bb58e4cb472169e635c1f807d300525af1d485cbb49",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "e972b8e7d6f069651f933ea7b42529230dfd048dcdc56b417896570649e94cd0d51787fffaaa9e1e6fdcff599f213e30943e7f1366dba746ac0be93213faf00f"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 7,
+              "previous": "4ae11a7321e492000954ae977bbd51ea61181244750cb61f3dcbc23319b098dd"
+            },
+            "signature": {
+              "issuer": "coordinator",
+              "version": 1,
+              "bundle_hash": "f13fb6ddd395eaaa7301ad7036b6e9529621890086c5c08fb9acce601fd31084",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "1e14dea3d10d681562c1a0d58f8448e0d17350783f09c0275201b8f44151b5be59cfa341e9c272a570f8fb6b0270dc56293755187a0bd72c98e10dc611e43a08"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "C:coord",
+              "operation": "forward",
+              "claims": [
+                "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "d9f2a1960d8cd0254354d19dfaa68f652e5a85ca7aeb5f20b9f68fc177cf46e9",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "03a383a5ed38b9ed43a37c196a89819c39b27422adec287feaebf686b2ef8ccb48099aa6c406a3ef1c05c01850e29941c2a351e985347e05cf72c783c9b8020d"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 18,
+      "previous": "bf8c5893bddeea330299b62af1a9a2482e6a2efac2846145ddd38999e52e1492",
+      "message_id": 7,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 19,
+      "previous": "de6df3c4ed67270a9ccfc814083d0ed364fd19d1f4c70babaa8d7f6b6341c038",
+      "message_id": 8,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 20,
+      "previous": "44626e84b6f0fb118c41961d6616262dda4f190c3e416087aefad506298f53e4",
+      "message_id": 9,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "send",
+      "tick": 0,
+      "sequence": 21,
+      "previous": "f69cd01a4cd2aba7e358bdf05a63ca391d296fde27e6a0623abebbf0d42d93e9",
+      "message_id": 10,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 22,
+      "previous": "50e01642added5c909d8bd16b0242186ff8432c2e6e96861d9158a2217aa85a8",
+      "message_id": 3,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 23,
+      "previous": "f56373c96880a9d53a8b2505ace86a921ae7cce08d447aad919144c8c098d72b",
+      "owner": "middle_a",
+      "packet": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+      "order": "A",
+      "branch": "a",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "1f3900cbdee12496656cfd6b1a586b3a124edf1c51cb38e051d986d799cb1bfb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "f4551f710fb70901b21f3db2658f3ceb26d85ef45d8660a0f809b379be6165c8e31ba3d9248a65ce2dda0e6814ab12dc830667abe3c6254eb4a6c29ef9220608"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 24,
+      "previous": "8d13447b953df11fca842002b16ea2d86e9da10a3bb3df7d27bfbdd02c1618a1",
+      "message_id": 4,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 25,
+      "previous": "25ca2cfb839e7b54571ec38bb57f3b28fa7b6f659f2832fce6f06f2eaf73ee9e",
+      "owner": "middle_a",
+      "packet": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+      "order": "A",
+      "branch": "a",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "7947146adb1a52de1deea3fca77fe5909cd6b51146f9cd18cb7efddf3c956e46"
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "edab9c76b1db8d5c291dd1b69cd20b66a6d82101334fa448f5e545f0f8f791fc",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ed83caf051a904a0d2abe4e867b433a526a70c1f5c09796974e05b6ec075cb8524b1181b3f2f713f387a82a3a1db9ba0559deb84e77cbd73f5ca0f6b081a7402"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 26,
+      "previous": "9a98ec9d9e27ccbae613e2754786925e4aeef03f6d493217829d5595e5e94cd1",
+      "message_id": 5,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 27,
+      "previous": "c8c5b44d16e90a031187a1e7fbba4cbdc5584f965e0b4fa446a97e1df95eba26",
+      "owner": "middle_b",
+      "packet": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+      "order": "A",
+      "branch": "b",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "1f3900cbdee12496656cfd6b1a586b3a124edf1c51cb38e051d986d799cb1bfb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "8bec126933987c8436e9feae1772f1f8097ed95aad0835ac3c49f5d70b5c6db6800f9f64aebb91759f8d03f5d0b74a2d89ecba56bb3212d7cfb3758d128cab05"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 28,
+      "previous": "25910d5a3d0c4bdb35fb6fd48cc58f389026bbba7fb4518a7e51597db2c36dcc",
+      "message_id": 6,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 29,
+      "previous": "ff50e66ed1a214c42986497e9dbaff06c8a9b90a3a7d9f997742c9939b19b819",
+      "owner": "middle_b",
+      "packet": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+      "order": "A",
+      "branch": "b",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "9b33453e2f9d8e5dab8254d1a489837a91532716b898010a14bd1ca9d0e89b56"
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "6ee8971af9678e1ddd117042381db009312ffbfd92a7c8d78e8f0d40d8fcc75b",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "5ede62152c39a2112fcfd5096d5e6219e53898fcb849080901e5d98da7a28072c3a6d2a1d86184cc1f9a1bc0550954b51849839513b2b3ef6a2a675bdd4e8903"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 30,
+      "previous": "2c849777042e4a3499c1911a0b39b76f234572bfa984582a3b0cf4a774c8158d",
+      "message_id": 7,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 31,
+      "previous": "806a9ba3f58cde162035b2369b1660dd21b216a0571cf994b4ece9aee6e6d416",
+      "owner": "middle_a",
+      "packet": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+      "order": "C",
+      "branch": "a",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+          "reasons": [],
+          "sequence": 3,
+          "previous": "c3af945703f9acc5d701c1faa97fdbfddbe9d03f14da9ba6abd16887f588c3dc"
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "7cb40f539540b6dd605301568eff8101bbc935b8c81a82bfdd72d8deef5e012e",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "464b42c76154f8759f9c24ff9bf4818e7b107b2ad0b3d25adb517570caeac16c481aeb6ac4bfcf3850bf36db812e4c5839cf6041cdf9b5bcdf19454f8516990d"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 32,
+      "previous": "c7255e25f61cdef1b432bb50fe03a89631b85e6cf8a15577067f6199d0c13e15",
+      "message_id": 8,
+      "sender": "coordinator",
+      "receiver": "middle_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 33,
+      "previous": "555479106e8154361eaba2f4c7d749b2ee44c3d88ec42400d4e9efcbe6819490",
+      "owner": "middle_a",
+      "packet": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+      "order": "C",
+      "branch": "a",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "7176536d92b8de16502c30f3ca87498a5bda45e30f5dac270769a2d174b27101"
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "d4c115cdaa166ee979088ccecff04317f5c8a77e547637ddca706f92c513bade",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "79047b9231a1d3b5f2507a5a81b71fafc6fa1d9bdacb51bbc66aea735e88666b7b091cb852610b299bf07ae16eb28e669bad1d2648a1b60ebf898508ddf94f0e"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 34,
+      "previous": "07eadeb4fac351fa574c9c3379c8c9e503df84210c6097868c1277976108806b",
+      "message_id": 9,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 35,
+      "previous": "079108ac6fd468a61b1bcffd84309a66951fbeb6bb6af947a4d3d30f5b1fd12f",
+      "owner": "middle_b",
+      "packet": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+      "order": "C",
+      "branch": "b",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+          "reasons": [],
+          "sequence": 3,
+          "previous": "5b7d6d95f59fe9ed7f1a8653bad4cd684fa799586e2f23a5b0040aee67ca004a"
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "c0d56c199063fe73dff2477b79fee7867bbca8a53037ce77b37823112e5e5733",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ec1f475daa0d7d712bdd114585833ca5d669b10d80c6ec28bf7d36b3314d5e92005458b3e5952842c65eac9c7635278391a94b24a5cd127e0f790959ea1c3a0c"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 1,
+      "sequence": 36,
+      "previous": "eadaa1ca45e5dde825b0acbce08e4f0ecef0423f0ae5af8cda40a18f40c95329",
+      "message_id": 10,
+      "sender": "coordinator",
+      "receiver": "middle_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "accepted",
+      "tick": 1,
+      "sequence": 37,
+      "previous": "fcb73ea52c0b1c4e7801cff60441f413d55aac765a1ed3c4866ff471d7151483",
+      "owner": "middle_b",
+      "packet": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+      "order": "C",
+      "branch": "b",
+      "hop": 2,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "3313efebee84da83d336be7f9780fc471bd0c5922a016a36a036b2f414010296"
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "17205d61333734bf492173941db29b53af9e453509dc1985c745cd169e605cc7",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d9d3058feaa6ae6b897243ae672028281ac2dc3636a283c0fc31bebaf4570e04bf98bca75947c45978b7e00118c52a9c5cc581072b57f01db0e1ce78f348a10c"
+        }
+      }
+    },
+    {
+      "kind": "agent_input",
+      "tick": 3,
+      "sequence": 38,
+      "previous": "9a9683427b06b07b052373077069d5703553b05ed56fcb845691a3b45a153879",
+      "owner": "middle_a",
+      "claims": [
+        "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+      ],
+      "order": "A",
+      "branch": "a",
+      "hop": 2,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 3,
+      "sequence": 39,
+      "previous": "4afc07857870ab51280b5d44783213425efcaffe2cabea8f1cb5400f7570046b",
+      "owner": "middle_a",
+      "proposal": {
+        "id": "A:middle_a",
+        "operation": "forward",
+        "claims": [
+          "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+        ]
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 3,
+      "sequence": 40,
+      "previous": "7a26df40dc30630c457d861c6d2fe05cdc09f4b1ffcfe624e9fb710d733c80f7",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "claim": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+        "operation": "forward",
+        "challenge": "78e1d19be25525dada97e4a79c4acb7833376329c7551a41"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+            "claim": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+            "operation": "forward",
+            "challenge": "78e1d19be25525dada97e4a79c4acb7833376329c7551a41"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "23fae36a430e294378a8dc079cfab2c4c64f3d9e32375626a05fb32d22610d15",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "fa70b24fb1628374f08d2a9718e8c133d97d9db5d6184b100a8616ba4f02e629e2b2ffb4a033b9be91e9c6f57eaddfb5e068ecb9107dcadae1e7e3fc92479d04"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 3,
+      "sequence": 41,
+      "previous": "6b85f11934250d225d6f5ce30fdf23e3ec1eccad8febfdb6b2dcc236d5d4fa3d",
+      "owner": "middle_a",
+      "order": "A",
+      "branch": "a",
+      "hop": 2,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+              "reasons": [
+                "95e0951aedced36a88b40b474e8a597517e00855693e56ec8f91860109840d72"
+              ],
+              "sequence": 5,
+              "previous": "20356e0422f259bb6ecb34bfada7297e922f5778120f85a55221add43be6e581"
+            },
+            "signature": {
+              "issuer": "middle_a",
+              "version": 1,
+              "bundle_hash": "9c69f8408d6841a7bb40feda3fe611593c19b38d52b389e1e8d14c5502962592",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "71b20c0b3c9410c1f84d55af035852f69203da835a45d9541209531e6347ad109271072f2e5c03e3718298e420ae8c8eab70618bfbac1ed9b45d0e8423969c0b"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 6,
+              "previous": "2dfdaec7c5e56975649cef228b1a95c3cadda2142a31653bc9494fea1530fc9c"
+            },
+            "signature": {
+              "issuer": "middle_a",
+              "version": 1,
+              "bundle_hash": "a9fc7756f121d9c5fb67b7cc7a8c90c5c16b61e79acf4db5d8ec1fcb7a139849",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "0216f5d403cd3a0cbf3e78e4361758615e692e1f7172411e59f190a4999dc326ed37d37644e192a844cfe56d3081a601465b5b717529e740f22ca9da43d6810a"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "A:middle_a",
+              "operation": "forward",
+              "claims": [
+                "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "middle_a",
+            "version": 1,
+            "bundle_hash": "621879796f64b67f97fd82e6aeb623be8895ae111175d9caa0e7854ed2487506",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "b444afaecd13a8edf796f945e24ceb1346e47f34b9d1eac1ae9d6c50e6077a2aed5d82c16b39ce15872e55511d6baa514718296f1981bd0fc1be54a848af5808"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 42,
+      "previous": "e13c86667ab6e12b080a04edbb3a20052d87fd63610999ceaeb4846aa194d9f3",
+      "message_id": 11,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 43,
+      "previous": "756e0c124f376cca8e9b12dc7efeb2064122f0c0e5769d01d3a1e1f0db810774",
+      "message_id": 12,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 44,
+      "previous": "425bb2f57ab06bf57f76cecad9c17470bd86396e4dee4a8ad9874a15b8960ac0",
+      "message_id": 13,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 101
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "450a30c3db3358b742ec2800ec7d7b7d0afdcf8bc74fb24e6fc81265ec403629",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "81a1eb82b99e473f5dd541ed90e2be6946ad4f020affbb548101e6fb8b9a1c24e2b7b9066119b99c98974eb221d32f6776697a77d44126604fdcde3010863902"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 45,
+      "previous": "6da5574b8b04015ad4a7714cba78827f90b575d6b24afa299d0ee1940d8e730c",
+      "message_id": 14,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "1cad1972904a78e11ddac1cea346073c372d2a2fda3737026fe4b31addca9b30",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "65770efae23aa9a18ffe748809224001cba7affd25b3fc3932220510ad850c27935feecb97abb07f9770c26749e20551be8fa53f916cf1d7ab6aeba6e3e6dd0e"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "agent_input",
+      "tick": 3,
+      "sequence": 46,
+      "previous": "cf876e0676ae35f5485a30e8a60bc8a8e1d8232feb62e52c669e60d40c9605b0",
+      "owner": "middle_a",
+      "claims": [
+        "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+      ],
+      "order": "C",
+      "branch": "a",
+      "hop": 2,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 3,
+      "sequence": 47,
+      "previous": "6b09459f2406f0ba9cee7f9a935602124a0c964a8fb07cd40b7c8cdefc0b2361",
+      "owner": "middle_a",
+      "proposal": {
+        "id": "C:middle_a",
+        "operation": "forward",
+        "claims": [
+          "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+        ]
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 2
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 3,
+      "sequence": 48,
+      "previous": "3f645a49a8087a4edc20f4170ae289c8bfc01a199ed9c6518d209519c55625d3",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "claim": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+        "operation": "forward",
+        "challenge": "1f1c9b72d704d8e33f5b741b4c4238f7bc2f2e7510ec0067"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "claim": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+            "operation": "forward",
+            "challenge": "1f1c9b72d704d8e33f5b741b4c4238f7bc2f2e7510ec0067"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "37563fea2f735d0a712248d5cf8fbd72efeab8036f8d70543a6cd044433e916e",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c09b0e7f50006b5c1d8370ffa11e424a1c7fae5183345df0084f4243895152c09f06cee4300701f88abc52936975d42c24bc5b28bcc953ac897f3db185555504"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 3,
+      "sequence": 49,
+      "previous": "92a1a2f789ddd49f1030081ba72dabd9304f6b058bbded1f9b3ca2ef7643277a",
+      "owner": "middle_a",
+      "order": "C",
+      "branch": "a",
+      "hop": 2,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "a9ac424cd19c5ffe4581de8d3b2fc7f30556494a5fe43892bcfee706e7cdf26c"
+              ],
+              "sequence": 8,
+              "previous": "b30fb0d80ce7b6d1bb99f37512836062e549eafe97c69962c14cd54056ddb8c2"
+            },
+            "signature": {
+              "issuer": "middle_a",
+              "version": 1,
+              "bundle_hash": "b7d466e232fa58c993ef3cab21fc9d8ad78826fb219404937d2fa86d2f177d81",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "c1778c3e9fc52be20db9616c90e49c70c8ab7faf41b33f2883153f86dc81bc1c8d56d597bbb7b0a3598a66b07617a18e92ac90d73202727ac11a8d8e02fc180e"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 9,
+              "previous": "1ee09a5a69ed4b969fc2bbc2ed02831b7f006bf6b25af55f0f7fb0e6e823df38"
+            },
+            "signature": {
+              "issuer": "middle_a",
+              "version": 1,
+              "bundle_hash": "bf9ba106d76cccd9172e216627baebadf15ddaa309d68c2d95e5cc204a1ac2fa",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "1c30d6b30a18117f9e2267ed32d254b7093bc4725ead5714cad965df6932c8b914dac40ccb10ca6205f660732e15d838b73a009dbcd0e39702ae60a388540403"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "C:middle_a",
+              "operation": "forward",
+              "claims": [
+                "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "middle_a",
+            "version": 1,
+            "bundle_hash": "728d1fe24dc868b73349c774dafa1f6699c45d3351ea7dcea567791b6b77d18e",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "fefad352063244d395f3b9f01bfc70ac45292ef14f355f9d8789fb5d7edcb7952fab47df3c84cc0dbf4d33744318bf0525737528d0e27fe2a2e9d57b01381009"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 50,
+      "previous": "b90e7d4e550f62cb010f7d1a6c9c8a18861be6f478959619a266619f289d044b",
+      "message_id": 15,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 51,
+      "previous": "fcf3b5f6f8b55e81e0c02206aef8bff79b2c61f477f76e83c62000c67d1e934c",
+      "message_id": 16,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 52,
+      "previous": "30af983e5c18381ead41d1eb218da742b4ed59ec32c7a4b06a35cea5919e61ce",
+      "message_id": 17,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "cae7b25b962fefdcc1ef597c6a0fbcedca88f646f889f7a8d45646f305e0d7e55c22eb856d8a801298f0f8954fc7f982294b73cd9c33919bd2bf0f15db2a0805"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 53,
+      "previous": "2f654288cade074158c5fbc6b9a4ba9d26cd9206a5c85dd84fa21c1ad7933167",
+      "message_id": 18,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "310322158a1c4c1f96114ccecd5ac82aa821452a108d3ee34e5a2e915c446b2c",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c6acf3a2b15dac78e3eb41b450fd39bf1f2ba1d2b535ef6255cb6ba7d9b365b2994c0b12ebff318d8374351264c5859f5be1413d42e5dcb5ccb5bae2af811301"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "agent_input",
+      "tick": 3,
+      "sequence": 54,
+      "previous": "43115d5e4fe5a2360d11436fbb2dad8436e47faa1e5299d4d0ed31c93f9e4ad3",
+      "owner": "middle_b",
+      "claims": [
+        "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+      ],
+      "order": "A",
+      "branch": "b",
+      "hop": 2,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 3,
+      "sequence": 55,
+      "previous": "724237016fe20f63622cc5847b6ee4bd489bd14479016f7412a9afad83d52d7e",
+      "owner": "middle_b",
+      "proposal": {
+        "id": "A:middle_b",
+        "operation": "forward",
+        "claims": [
+          "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+        ]
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 3,
+      "sequence": 56,
+      "previous": "14d67f04816095724d4e628c6ce6efbcd70e28201e5b692c9021468aaf92e10e",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "claim": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+        "operation": "forward",
+        "challenge": "e27116a57d7f08ea9879cbb0431077ff57efe52ce9b35fb5"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+            "claim": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+            "operation": "forward",
+            "challenge": "e27116a57d7f08ea9879cbb0431077ff57efe52ce9b35fb5"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7086c2751b9687a02ab5f516c793dd781879eae51518eadf36af13f23390ebca",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "fd02b9094fa2ee98d1082b6c042bd459742b83580e892e69dd4fe5ef7d861063a49b8fe5c7b856e4a447dd616e0d9ccf22ded9ea417fa95318e8a1c813bf540b"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 3,
+      "sequence": 57,
+      "previous": "b881aa1cb8c0a3f21c195c7ab32af6f1633c315acb21f4865f9faa3491aa5f5e",
+      "owner": "middle_b",
+      "order": "A",
+      "branch": "b",
+      "hop": 2,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+              "reasons": [
+                "8826ba15529ca9c741cb758ac3351bfd99947dd99834819318e96c5714f141a0"
+              ],
+              "sequence": 5,
+              "previous": "b95c5f8d995c855bf636f9d83c57d2aafb4e7f327add62dbe7e6ab85d3ae299e"
+            },
+            "signature": {
+              "issuer": "middle_b",
+              "version": 1,
+              "bundle_hash": "d06229fc7543d9eddc56654bee1ec5f4503262a699d61092b8b89310b24380f8",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ad5ebacaf06c41fe7bf562c3697a64bc3ca228a3ac66315c6174c653f43c14dcf441cb31abb83710febd6d74106697f680b40b1079a4fcfc197137a72efbe10f"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 6,
+              "previous": "32114c8e7714b5bf6d5a3c7a04a3a399fccc56fe51a1af05124d32055d429d46"
+            },
+            "signature": {
+              "issuer": "middle_b",
+              "version": 1,
+              "bundle_hash": "d10071ed5e92186b1791b76b1c9f7700fa13f73a1c165c2b3fd6cc24d2ae80be",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "bfbf89bb39303f0ce8aec2a272c9f31825b7a9c1ca3d0b8aac50549c2dce4b7804cc2c013050b7395b3dd52b533a613313d22bbca9db0a1b8b252cb1799c4e02"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "A:middle_b",
+              "operation": "forward",
+              "claims": [
+                "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "middle_b",
+            "version": 1,
+            "bundle_hash": "58ab61b6364785742f2134e7e00cc5686bf37bb543270519bff2de5ee41e5d5a",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "da77defa3a5a5bc3c9e2e9a10cca86a342f53fd15bd4289130c719182610bf91e938a2569f1d0266f1b8c36630b8db6c6c85fa48838ad9f3ccf6d6b85b7f9908"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 58,
+      "previous": "523aa3eb5f9e1f287f76addda7b6e4b1f86d23444bce19bd682f3b3a03deaa23",
+      "message_id": 19,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 59,
+      "previous": "4135ff7a599dc6ff58f66c276bf48d8b9d2a66775687ff7f07ba99065ee0f942",
+      "message_id": 20,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 60,
+      "previous": "9415d4be83ea3b132e01078aad31c8e992e9664d7f8adb26bcf4cb08256ccc21",
+      "message_id": 21,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "df2cbc10a70a9137790c1768713ee91af02ea4069994bd019eb55130bde89496",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "2654e769c2e415e217250751169e2657ec672703b8688246db4d2b44f4051521b5c477f82cbe4bc8c2fcd66498ef5cf966925b1774f41da6e87af9c29065810d"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 61,
+      "previous": "2c14c407712674231f49bd417a0dcee64a22e67633f390d80fd4e214fab7f221",
+      "message_id": 22,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "1cad1972904a78e11ddac1cea346073c372d2a2fda3737026fe4b31addca9b30",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "65770efae23aa9a18ffe748809224001cba7affd25b3fc3932220510ad850c27935feecb97abb07f9770c26749e20551be8fa53f916cf1d7ab6aeba6e3e6dd0e"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "agent_input",
+      "tick": 3,
+      "sequence": 62,
+      "previous": "54954f8209c9612cd7f4274b8148468a90bbb561ca87e0f8b2f0f077d4010fff",
+      "owner": "middle_b",
+      "claims": [
+        "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+      ],
+      "order": "C",
+      "branch": "b",
+      "hop": 2,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 3,
+      "sequence": 63,
+      "previous": "1a658ed5061ce66410d4ddaf525b6111b43437494f39b41367a3ac77ea5dcd7e",
+      "owner": "middle_b",
+      "proposal": {
+        "id": "C:middle_b",
+        "operation": "forward",
+        "claims": [
+          "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+        ]
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 2
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 3,
+      "sequence": 64,
+      "previous": "6b7bb25fb43903645c55aba05e32fd4e8f50eac99c953e7102d3cd9ddfe770fc",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "claim": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+        "operation": "forward",
+        "challenge": "6f5e59b4a99267eb694409360fed375cbaf04025fd168c81"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "claim": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+            "operation": "forward",
+            "challenge": "6f5e59b4a99267eb694409360fed375cbaf04025fd168c81"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "3a83041ca723bc9b5955a93cc9f363f921436665b580c4b6d12f78a276b63f7a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "0f81dc444134520b2ec2aa1010482565dc56da0a5c151bf8aa8025f3f48d2321039576067f302543fed4863eda243e735dcd1b8f290fe742fc08e7967c7f410a"
+        }
+      }
+    },
+    {
+      "kind": "gate",
+      "tick": 3,
+      "sequence": 65,
+      "previous": "470f0be0b53863ffe2f26ed7026828528f986bb90b0319ec29c86a4a56aed427",
+      "owner": "middle_b",
+      "order": "C",
+      "branch": "b",
+      "hop": 2,
+      "outcome": {
+        "action": "COMPLETED",
+        "result": true,
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "0b1f5d9bc5ba54d8885f61a9202474af4ba50c5eef41df72ea6e20dac776fc14"
+              ],
+              "sequence": 8,
+              "previous": "a84aa7243941c1af5a77e16446b9d3b5f10c5b43b3a78c74258cca16ff6a642c"
+            },
+            "signature": {
+              "issuer": "middle_b",
+              "version": 1,
+              "bundle_hash": "f6a8d70ac6680cabeb0fbe2b488b4eb34a056d3a4a2bfaaff0f38a7213018ee2",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "4845662884a9066aa82aba72b1c5bcc6c6328212cdd72eab640485049d3869e43307bc7f73dc398f9756210d8092a0f365308133a9d704822efd5d6784e04706"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+              "reasons": [
+                "forward"
+              ],
+              "sequence": 9,
+              "previous": "dc0e4e5c3d94da61f3abdd81be1f007c5c9d872a55477610917e07464aa27f2a"
+            },
+            "signature": {
+              "issuer": "middle_b",
+              "version": 1,
+              "bundle_hash": "a0b66cbb71c8333e1283424967a797486764bf79364a46acac3df0d8a8fb8a3e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "61d3aaa0ec01058a02bcfb8a5bddb99dfac12c61a16c7d35359df57a5ea5b87034afeb6b5a3aed596662b1c440753756b46e435deb1d9bc70e1c92a6b4522101"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "C:middle_b",
+              "operation": "forward",
+              "claims": [
+                "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "middle_b",
+            "version": 1,
+            "bundle_hash": "407699f9427bb19bc9b5297461d16b119cf0b7c6584bd08cfb43f39afb1cf835",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "c760f0549c0809e7cdfd860816d22837220631997190d762d578cfbfe38b1a6103a8529e477cb4d86641005f2ab9f4b52b4084b689f44c5fc9c6b51aa6448f0b"
+          }
+        }
+      }
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 66,
+      "previous": "c388d23bae985584f1cb66aee708421dd65137008f7ca757b91bfd5c3c65d5bf",
+      "message_id": 23,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 67,
+      "previous": "64153c558da8122bb42fad7b0f4b6271feaaf53d13cd49bb9ed94384218ada19",
+      "message_id": 24,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 68,
+      "previous": "702039ae9f22026d2d8c5182a469d1d8944595586116a4dfd328e7da0ebae093",
+      "message_id": 25,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "e4d7a4b8bb6ab5bdf5617325769a09d44162f0f57abe49bbb079971268c89c4254f4f8687b7e079bdd07ba8898a1f39f1796033d221e37c75ac85fc463a81408"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "send",
+      "tick": 3,
+      "sequence": 69,
+      "previous": "d960395076cddb37592ed282bf1f3f3ce71c9cfe0307beaa85e9e00a49e31ff8",
+      "message_id": 26,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "310322158a1c4c1f96114ccecd5ac82aa821452a108d3ee34e5a2e915c446b2c",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c6acf3a2b15dac78e3eb41b450fd39bf1f2ba1d2b535ef6255cb6ba7d9b365b2994c0b12ebff318d8374351264c5859f5be1413d42e5dcb5ccb5bae2af811301"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 70,
+      "previous": "d75f4ceb72a3d7fcb5c84046d3810bb863f5cb49e9dbd94a8ce9e4db6ebd26d0",
+      "message_id": 11,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 71,
+      "previous": "2a5a2fc52f3a002bdefab73f005c0622e8a8ae084f9baaaa39391cbe000df907",
+      "owner": "receiver_a",
+      "packet": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+      "order": "A",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "1f3900cbdee12496656cfd6b1a586b3a124edf1c51cb38e051d986d799cb1bfb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "50f747998a659571253ee8bbd8928baee589bdb4966827998b9c3bd710d40bb029b39d3f8bae6b8d8d19714d264492fb5aa184ef473ec90e4be4a1f35f80290a"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 72,
+      "previous": "577406955985f723f0eb660f0fdf0a4fa6c71c30d6e487d9a0a8aee117fa3509",
+      "message_id": 12,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 73,
+      "previous": "aef8d57b814f9a97cb3f7cee104983fccac9dadfbff7b701e9087782138ef242",
+      "owner": "receiver_a",
+      "packet": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+      "order": "A",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "d8a5ebfe65557b4add51f83a709945c5c5513bdaee1024638576c40f62b93ca7"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "5eb411d28416a88831919fe3aed5875b4864677554ae48fc6f1ff450f92a311a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "9304fea1d1c7705fe28de1965c69445e2b2be0c120071fa12e1c3db5a7af593ab2d67a7b5ea48339c3935c3b73933883286efcd033fb8889d2c402a7ff414300"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 74,
+      "previous": "8503aef7479ff272192577d5edb75a03a33d63c4a1e0b5b21ea0a8391b040e0b",
+      "message_id": 13,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 101
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "450a30c3db3358b742ec2800ec7d7b7d0afdcf8bc74fb24e6fc81265ec403629",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "81a1eb82b99e473f5dd541ed90e2be6946ad4f020affbb548101e6fb8b9a1c24e2b7b9066119b99c98974eb221d32f6776697a77d44126604fdcde3010863902"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "rejected",
+      "tick": 4,
+      "sequence": 75,
+      "previous": "6a3d8b723c7696431aa6d9872e784e6aae5f5b7065a39be4ac48b41d10879409",
+      "owner": "receiver_a",
+      "packet": "a491acee433e8661b0f4317f09a9178b4bac3647cc717318aeb36a731dd00ca3",
+      "order": "A",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "blocked",
+          "target": "a491acee433e8661b0f4317f09a9178b4bac3647cc717318aeb36a731dd00ca3",
+          "reasons": [
+            "unsupported_transformation"
+          ],
+          "sequence": 3,
+          "previous": "cd2d86f23d4fd1138b6da8cb018e3efc7df546806fb2e49c6ef95def47bc5f54"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "f2c2e59e2a9280b7033acbf73ec2c4b90ac0f942dc5ca85c8320a8aebdacfd5f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "4956109e82c82bc2ca8e706b556d0692048ef1428a760430498252707d855384c1144e05cff8544b2d1e2a27b2688a38c1bf1b94b57c78fa77983db97f274903"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 76,
+      "previous": "77e5bd8bae4931684fc79a96901601bf491d43997b505b90a3f80007703e1094",
+      "message_id": 14,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "1cad1972904a78e11ddac1cea346073c372d2a2fda3737026fe4b31addca9b30",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "65770efae23aa9a18ffe748809224001cba7affd25b3fc3932220510ad850c27935feecb97abb07f9770c26749e20551be8fa53f916cf1d7ab6aeba6e3e6dd0e"
+        }
+      },
+      "order": "A",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 77,
+      "previous": "76d60441a35b49627020fd43ce9f89bfeab9b337627b62d45b8915cac47ed50e",
+      "owner": "receiver_a",
+      "packet": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+      "order": "A",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "84eea0ed99aa3f839b9b3b70d1cc0f5ee46c84965ffde848d9ec1b6188435c7b"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "9167ba02e127d4f65b7595ce5e476aa675563bbd8b9cce906754b1ef37f782fb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "2e73ddf9fcc02d48bd3a66d6b50bec466fa8e006d84025bd5436fcddf00d0dc873a318f75278ba970e375d849e2924d32af2c220f764cfbc9f331d10d86ab509"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 78,
+      "previous": "b2287190ebd28402b0c7b2f1b2ef6666ea1f0bf5adb73b7b3082aa995139ab33",
+      "message_id": 15,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 79,
+      "previous": "1895f769a16b6a01e9b5d81d756f43c9532b85cadbafd4a2d1aea28c29168e18",
+      "owner": "receiver_a",
+      "packet": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+          "reasons": [],
+          "sequence": 5,
+          "previous": "03acb5f3a96a5359e9edf056c4fc4d20d9472993c97781849326b1038206bdf7"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "8b2806a5b18f55dc543c9957e33df45b5f80f6d717a9af24a2e3d791b7a63844",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "5f831e841869f6a9237d0bd5921d6142ca7e61fb30e4cce468d56afdc0846ad4f9b6a4369ce70f81d60fcdb7a08f89e34b9d4f764a53f91a8e2165392516bb05"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 80,
+      "previous": "5a05b16a266649b3659b4fb0c574f3b65ab5c8bf275db755c2f00017966a8e96",
+      "message_id": 16,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 81,
+      "previous": "9074fe08df6cf0ecf23244d39cd6b3001c6f361502dad1f782fd0df460782162",
+      "owner": "receiver_a",
+      "packet": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+          "reasons": [],
+          "sequence": 6,
+          "previous": "fbc66df1b311cdc1d24e2833269695608ab9e645d8f1c1dbd8aea16f529e55ee"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "9280b3e6f1fdd141a281a8599a6858c813a81e33a8bfb54ddc4e1a89dc6339fa",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "de1bec14c609becf6935865c760598ff8d552b53cd7b1e37c18c0aaad9eb4fdf311c99d16625c5a42024d4b45ae3bb7aa5fde78d461077058fc3f21f41c5d208"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 82,
+      "previous": "083ddba4f442074d3d99e80cf38dafa1e7d595c4d274b31ec091ab5f1a9f7823",
+      "message_id": 17,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_a",
+          "version": 1,
+          "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "cae7b25b962fefdcc1ef597c6a0fbcedca88f646f889f7a8d45646f305e0d7e55c22eb856d8a801298f0f8954fc7f982294b73cd9c33919bd2bf0f15db2a0805"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 83,
+      "previous": "240a6efcbb61007dc65c55f78c5cfd2ab1127add87d8cece69e610e05296ffd9",
+      "owner": "receiver_a",
+      "packet": "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+          "reasons": [],
+          "sequence": 7,
+          "previous": "177fda78a301d9c06e2e21c8e6e7e57bcf99e3f22a50dfe5993520de3505b8bd"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "cecf25d7cf8ba238bd810b54eeb19c65527928307d6a3c7a6da8735261ccfb13",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "8434ef535aadda159f69186fcda1a398e0602e8605cee97e22cf4c243d8965860be995e539f61381db39f5642e58dc12c53bca864c9145744d3ed0247623c70e"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 84,
+      "previous": "cb365ea9b4986da4984c75b63d9d6d764d75a3cc218bd75752dd841ee6b3891b",
+      "message_id": 18,
+      "sender": "middle_a",
+      "receiver": "receiver_a",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "310322158a1c4c1f96114ccecd5ac82aa821452a108d3ee34e5a2e915c446b2c",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c6acf3a2b15dac78e3eb41b450fd39bf1f2ba1d2b535ef6255cb6ba7d9b365b2994c0b12ebff318d8374351264c5859f5be1413d42e5dcb5ccb5bae2af811301"
+        }
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 85,
+      "previous": "ee2717557aa42857b8ffb97c5d52475bf2b50005ef2af7aef183ee1e1e77a0c5",
+      "owner": "receiver_a",
+      "packet": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+          "reasons": [],
+          "sequence": 8,
+          "previous": "901d6e22b69e45c31865a8126ec4453e5496e5c150e7eba810e26a8ffbd44682"
+        },
+        "signature": {
+          "issuer": "receiver_a",
+          "version": 1,
+          "bundle_hash": "21e886c34d51743b37062d5afee4f8a0b1cce79a4fab0e102edba208e616484a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "10fef5f66d1d281d6da9517a2ea7b6ed1438f0f59955303582555f4a7756de74d1bd208e7deaf3515a982cf29fae7984bc4012a9d7f031fd575f51600c3a4206"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 86,
+      "previous": "e381c84dee9c85e259b27b4f96d81a525c6af56620728714cc23c732e9b79844",
+      "message_id": 19,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 87,
+      "previous": "76384cba88a1c5559cae503c5533220f9e0c13bb07ce697acc967155fc5fd5ea",
+      "owner": "receiver_b",
+      "packet": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+          "reasons": [],
+          "sequence": 1,
+          "previous": null
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "1f3900cbdee12496656cfd6b1a586b3a124edf1c51cb38e051d986d799cb1bfb",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18f97a857e0096c9c72bd2e2bcd1678b94db64a502edf1115c61222cba1923a4742866ed90d2bdca451a7d621d2e79fcff46f42ee803477370e4a52e97052d0f"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 88,
+      "previous": "1ca0ec88763ffb664a2847d9dcb80489d4ffd6650d3e282607255808d5e7448d",
+      "message_id": 20,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 89,
+      "previous": "c045323a94ee05886a5c9c7edf27ceb3d979fd37548d6cec4ba4d688fcc6d623",
+      "owner": "receiver_b",
+      "packet": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+          "reasons": [],
+          "sequence": 2,
+          "previous": "fa2b56ae97d6a422fc6d68d370ad48f4cf38c8e373e8086ad53e898de241bba5"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "42dd1d4211bac75df5504af2cee12a618379b9003bae08b8475c15219ed12868",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "195bbcc3abb06a484f4bf3af615fcff2fcfd2b917b0af4dff445f6d003ad0b541f92e35747596114770b40f31d08283a8cf48a98be61009e5cd7590f4c61b806"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 90,
+      "previous": "6b3682915c5db2052d59e56cbd648f401f77368eb988a70de67fcb07e8dcee78",
+      "message_id": 21,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "df2cbc10a70a9137790c1768713ee91af02ea4069994bd019eb55130bde89496",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "2654e769c2e415e217250751169e2657ec672703b8688246db4d2b44f4051521b5c477f82cbe4bc8c2fcd66498ef5cf966925b1774f41da6e87af9c29065810d"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 91,
+      "previous": "c5c6ff1902192ffd05c661d075d3a8c01ce6dd167cee00e448a2b41ab50dbe45",
+      "owner": "receiver_b",
+      "packet": "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+          "reasons": [],
+          "sequence": 3,
+          "previous": "2417413addd7a3fc203a8c8c586b24e59b79afbad700296035dfdba9fdefa1ae"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "3ed621deb7a413adade114802e71cb48bb82dfdbc69b386ee3afd254db79fc6d",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "3feff4727cc61a7e4f7da900550dc457a584cb5e362cc145b4e090442510aa773c593ff3c708704df21f45bb9b39697c860d60093d82c273147089e8897ae404"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 92,
+      "previous": "5184c9aa78fa74fe1f7848b76b269862b509904fbb136128e7d5d7a5af3c4590",
+      "message_id": 22,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "A",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "1cad1972904a78e11ddac1cea346073c372d2a2fda3737026fe4b31addca9b30",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "65770efae23aa9a18ffe748809224001cba7affd25b3fc3932220510ad850c27935feecb97abb07f9770c26749e20551be8fa53f916cf1d7ab6aeba6e3e6dd0e"
+        }
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 93,
+      "previous": "ea6387392fba359f07aa1b64114bbf4bd5cd9c3def22780937d9e524097b356e",
+      "owner": "receiver_b",
+      "packet": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+          "reasons": [],
+          "sequence": 4,
+          "previous": "0489e3c6fabc3545f9f1e805ec1c0f13856d4ea719ae8c4f25d0d403010b229c"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "935b6bffb4cd56802363896bf4eceec975d49d0cd3b951d2558b64deb7df8b82",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d866fd2bfee4f4d5a3656ba4a0e7f297cbe1477f461640a70dffacd16679c28409f5bca84b03e700542aa41714a924736ccfbc35d5a8101ec4c25716ec3c1e03"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 94,
+      "previous": "bf8f796c4aa205c3ad6fc190e640f89c0c2ebe84f53fbed5512d60bd3b075d33",
+      "message_id": 23,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 95,
+      "previous": "421fa24085f6075e810e0793c7a408f01d510bf784e67256b04403a814a92dae",
+      "owner": "receiver_b",
+      "packet": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+          "reasons": [],
+          "sequence": 5,
+          "previous": "99a107778cb835bdfb577a3f6a2c5c7f418d3905eb764a3ac775503512a69f75"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "10b3d4e6abd4f992b3407dec1f1d0dee1096fab99087a5c5588f81d45ba7a41a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "2d29856000a620b8800d10852a88dbc931cde81987ae5a688c363b2d5d1c5b37862f4a06859fd1750c238ea10d23f72125bd12a7c81e948bc848536a909b8206"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 96,
+      "previous": "0478a87f7809f3a9c7220738c929595834974eb2cbb69eb4c72e486e6a4dbc38",
+      "message_id": 24,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "coordinator",
+          "version": 1,
+          "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 97,
+      "previous": "33488b269de1a12c0140d073f1910aaee5f2a32f520e127ddcc436cbeee71357",
+      "owner": "receiver_b",
+      "packet": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+          "reasons": [],
+          "sequence": 6,
+          "previous": "224ef445e60ae19246ba927dd7722bba0b8c7c4da7ac6a2ea18d325c9c69465f"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "8668a631c6938f8351c1cf7814a6f4e4d9f70c4c628791af18592293ec5887da",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "6c5240e1c7d8e5db0d16714c43fa3b2dcd36a9840cb4c2c764f4e7523b2139eaedad20f4ff8152770412b34cc79331f7ecd9d5faa87fbbeca03ffc86765fbf07"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 98,
+      "previous": "da47e68cde0f2c9277961bb3c811c7060c7cc1db04c629505fd73f014cd5219c",
+      "message_id": 25,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [
+            "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+          ],
+          "rule": "relay",
+          "fact": {
+            "predicate": "total_charge",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "cents": 100
+            }
+          }
+        },
+        "signature": {
+          "issuer": "middle_b",
+          "version": 1,
+          "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "e4d7a4b8bb6ab5bdf5617325769a09d44162f0f57abe49bbb079971268c89c4254f4f8687b7e079bdd07ba8898a1f39f1796033d221e37c75ac85fc463a81408"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 99,
+      "previous": "62a3945d426dbe7f364ab6eb5b12a481e8cdbb287b798686c13447764582f55b",
+      "owner": "receiver_b",
+      "packet": "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+          "reasons": [],
+          "sequence": 7,
+          "previous": "a39e75e1a7a52bacbccab184e59ca39463875bfe7f5999f1375e904ab7d2cbc1"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "57c49f88d95f0eaf4fe7a5bd986de5afd9a29afbce13949a4627100e88e08a3a",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ce3507c9fe0298c86a6d9eb057163adf41fc00f4adc9a8a551657ac0e0ffb39c80b85ac8d53ae3efa53ef79f94e41513760d17e6d921156f56d9bbd022aadb07"
+        }
+      }
+    },
+    {
+      "kind": "delivery",
+      "tick": 4,
+      "sequence": 100,
+      "previous": "7592980e0804eb0bcf8313effc83386f3f12d3d48116023b806fbebe872835fc",
+      "message_id": 26,
+      "sender": "middle_b",
+      "receiver": "receiver_b",
+      "payload": {
+        "body": {
+          "kind": "claim",
+          "workflow": "containment:0",
+          "parents": [],
+          "rule": "relay",
+          "fact": {
+            "predicate": "invoice_authorization",
+            "value": {
+              "order": "C",
+              "currency": "CNY",
+              "maximum_cents": 200,
+              "operation": "approve_invoice",
+              "approved": true
+            }
+          }
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "310322158a1c4c1f96114ccecd5ac82aa821452a108d3ee34e5a2e915c446b2c",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "c6acf3a2b15dac78e3eb41b450fd39bf1f2ba1d2b535ef6255cb6ba7d9b365b2994c0b12ebff318d8374351264c5859f5be1413d42e5dcb5ccb5bae2af811301"
+        }
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "accepted",
+      "tick": 4,
+      "sequence": 101,
+      "previous": "88b9027ece749b70de56b6536ff5a8273a008ba9e97d7b28831b9a2f27ec02fd",
+      "owner": "receiver_b",
+      "packet": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "receipt": {
+        "body": {
+          "kind": "gateway_event",
+          "workflow": "containment:0",
+          "action": "received",
+          "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+          "reasons": [],
+          "sequence": 8,
+          "previous": "8dcc33619672c1a7f1f7c04066b7748aea2dab77d9f3ae6d825d89efc832c8e9"
+        },
+        "signature": {
+          "issuer": "receiver_b",
+          "version": 1,
+          "bundle_hash": "66d8a905f55422a81167c2dac1c818fffaa801479723723d6764a79fad266e38",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "deed1d2f622deaa863bb7793d8f21fd5f84f7b5c96998abbb441d1d09ae0c87d7e38faa54be37290a9e95d8a5927b606e5f09f3142e23c9c8dffb291e0fa680d"
+        }
+      }
+    },
+    {
+      "kind": "task_end",
+      "tick": 5,
+      "sequence": 102,
+      "previous": "7423fe1f691498e00a1b194fc21a41bb87dcaf657d78f2f813fc10e2893da59c",
+      "owner": "receiver_a",
+      "order": "A",
+      "branch": "a",
+      "hop": 3,
+      "claims": [
+        "a491acee433e8661b0f4317f09a9178b4bac3647cc717318aeb36a731dd00ca3",
+        "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+      ],
+      "outcome": {
+        "action": "NOT_REACHED_OR_BLOCKED"
+      }
+    },
+    {
+      "kind": "agent_input",
+      "tick": 5,
+      "sequence": 103,
+      "previous": "0f2bdfbe719747359a7daccc608c4d7caaefbd5f6d7eafacf4c87b012a1cde06",
+      "owner": "receiver_a",
+      "claims": [
+        "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+        "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+      ],
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 5,
+      "sequence": 104,
+      "previous": "7c8aca4f18a147cf7812c9c9d41ca17b887728b1e2317642bd50f436859ea0fd",
+      "owner": "receiver_a",
+      "proposal": {
+        "id": "C:receiver_a",
+        "operation": "approve_invoice",
+        "order": "C",
+        "claims": [
+          "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+          "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+        ]
+      },
+      "order": "C",
+      "branch": "a",
+      "hop": 3
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 105,
+      "previous": "c58a5d31a8dbbbb1801550705472f760b95c79459bc1e78a1eb0bd7d72f45ccb",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "claim": "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+        "operation": "approve_invoice",
+        "challenge": "c3a61187da4b97af38f25d19e0fb3d521a1c0baeae608e34"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "claim": "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+            "operation": "approve_invoice",
+            "challenge": "c3a61187da4b97af38f25d19e0fb3d521a1c0baeae608e34"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "26222b703312e2e926cfe3455b792f545f50075d5b37ef9ae36ae221dfccfac4",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "ff65ab43ceb3ff081492d620e5361284562931ed3730816151880050445c1a6551fc4abe8a3fe20857c727dd938866a68c5a8b52ae82f3da5c2746699b305803"
+        }
+      }
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 106,
+      "previous": "bb32e6644ac2de67497d0480c189c0029e9b3e0c8aaa611d4a32c463c72a1b5f",
+      "owner": "buyer",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+        "claim": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+        "operation": "approve_invoice",
+        "challenge": "b0d33fc78bb4e5baab4c46fbc16286ad79d4914ee2be9017"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+            "claim": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+            "operation": "approve_invoice",
+            "challenge": "b0d33fc78bb4e5baab4c46fbc16286ad79d4914ee2be9017"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "5eea7a0c41ff4e69126429ffef6b4123845bc67dfc7af2498162dec97dfae096",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "400c8271a7d53e976262457bedf20c8f76e966b414cb97816bfc9298a1850fa3f105114f2dd95ff8f83c707e0a2632184fb348a96db43f0e6c3975f16ffa1b0e"
+        }
+      }
+    },
+    {
+      "kind": "task_end",
+      "tick": 5,
+      "sequence": 107,
+      "previous": "7682d9a7db32d72d96e3fd0aaa09ed778912f9916ed464af48b153cac07a2620",
+      "owner": "receiver_a",
+      "order": "C",
+      "branch": "a",
+      "hop": 3,
+      "claims": [
+        "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+        "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+      ],
+      "outcome": {
+        "action": "COMPLETED",
+        "result": {
+          "simulated": true
+        },
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "d0a3968fad3d9c019f55c7f26203ca1b204c0ed38e527592d238df464064d7df"
+              ],
+              "sequence": 9,
+              "previous": "783c37a621cd1cf2a4b6b45398a53b43b5ad09df553b176dc5a89c4584ace330"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "e99c86c114817ff9ce5382d0819848747db1480395e25d5353fce5e238e42956",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ee141f97aeed991a5c77dcc387b09377583dc3f622fb9bfb091b7103b8b513e2c2079c61911c6c94739c41236ac6c64f3c3a6f248f60c96023078ccbd2913b00"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 10,
+              "previous": "7d1546503457602e0b04046cac42215cebfd2528112ae33782c221d6977b5ca0"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "8e29f17921d8c719de923318ec3e642aba67527afb3176f87cd3abe90a1287ea",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "818c584c81bc0cdd93bb4ca0fd830d0c328b963ef677e70af86b8239f8bedaaec01c38602a694c7d21d05c4f5bc30ea455c71c0307fff13d1944e616e50e3e0e"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+              "reasons": [
+                "855601bd12abf4a3e89f57c9111d32f3ab251b30296615ee319883460561d3ef"
+              ],
+              "sequence": 11,
+              "previous": "ce43d57dab708a5779d94367255eb972a4ed77cb2f24018f9789fdabfcadacc3"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "665134daada6767cb207c9a2ddf4ddc80842934356ef745f03ea1d6f74aff4d5",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "5cba0bec8451656aeb37bf2acf09a0dd81968a4968ff69f45e04f5c30ec8e089989f5a51e18de9b1c74419df3c6e8fb6f4562e3fab8c94a6ca0cc890853e8a01"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 12,
+              "previous": "cdf84d826d61b567172cd1024f9c076541e80ab83d1b3ac57749be80e2ed25cd"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "ae1f5b55342ebe25e75a4931d8564f4adf89db3f7bf672986508f9e55c08f2a5",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "ea947eacc115a0ae80bbb0f0edf5be03cac6ca5798b06dc88decb7b037630a120a7de4089320cf082d2b66339fbcc6dcccc6976f7ebb9fded6636deec6662900"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_contract_allowed",
+              "target": "4bdc5efbc1c2c32e61c331d1b3a31be7610873b031a8275b5ff6b4a77cf188d2",
+              "reasons": [
+                "d15760c36288b55cd12386c4f0e3de845250628fd8717e38ef7fdcbf3c834d2b",
+                "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+                "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+              ],
+              "sequence": 13,
+              "previous": "02dba84e49d383bb76c98cfe9dc1493365f6a210cfcd8550c413fdea45b14fd4"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "f255a840db0978fd92cb237a410fce230f06346973ecf98218b2f3fe847d754d",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "d0ff29cbf7a2ed43d6bda5fc86035c5693c470ccdaf583e869835ef02bea923a62ea0faa0951bdc9ccff6290095bd7bd84b71ee212b8eb6c0a1091dd28a70307"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_effect_returned",
+              "target": "4bdc5efbc1c2c32e61c331d1b3a31be7610873b031a8275b5ff6b4a77cf188d2",
+              "reasons": [
+                "4b3d969985468b0bedf7cd6f4e796dfe2a8e08d226fe596ca9eb822ba84505cb"
+              ],
+              "sequence": 14,
+              "previous": "fb644a5e171c593ae349497356d02bc15891be2f90395b16876e951fd550e2bb"
+            },
+            "signature": {
+              "issuer": "receiver_a",
+              "version": 1,
+              "bundle_hash": "94d5d57288f8390e792452fa1b592f84f0a3cf8b0dde6d4d4fe62f9d2f54c73c",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "dc247a7c58e41d1bebd223a55834498352d03f904d3865203a145595595fa90eddd29006f0faa03585b64083d177dc011a6ae19582da6fed86c57b135da5c90d"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "C:receiver_a",
+              "operation": "approve_invoice",
+              "order": "C",
+              "claims": [
+                "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+                "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "receiver_a",
+            "version": 1,
+            "bundle_hash": "28e6a9b6d3b5dc6eca11ac13c15e12979264bbd15c46674a0100af152dafd1a2",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "9ea11d6181eb852048af9e2a88915bbcaedc2c246b6d88e49ba384eb0279d4055a81f436b101c406d3823d9d131f78e5405e19135fd0d35c0ca7340a56bcd402"
+          }
+        }
+      }
+    },
+    {
+      "kind": "agent_input",
+      "tick": 5,
+      "sequence": 108,
+      "previous": "d4cd7898e63dbff1b1c0ef54bb13d38c5cd770b74f450c7a48229fc1d0d3b311",
+      "owner": "receiver_b",
+      "claims": [
+        "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+        "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+      ],
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 5,
+      "sequence": 109,
+      "previous": "7a90661d672a76922ce1b33aac6b450f7ac842b273f95236e5ced6cb80ad26c1",
+      "owner": "receiver_b",
+      "proposal": {
+        "id": "A:receiver_b",
+        "operation": "approve_invoice",
+        "order": "A",
+        "claims": [
+          "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+          "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+        ]
+      },
+      "order": "A",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 110,
+      "previous": "7867a85b582ef2237ff942dae2aa6de8225771c3729baf18a90158c80491a9f2",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "claim": "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+        "operation": "approve_invoice",
+        "challenge": "1ec9b3895859a65943b13e112ffbae2938d8dbc9bcc5d1d3"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+            "claim": "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+            "operation": "approve_invoice",
+            "challenge": "1ec9b3895859a65943b13e112ffbae2938d8dbc9bcc5d1d3"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "9f584934b4e3fc33815c168016dfe0c06ad0f857fc61b5d771f028bbb939e6ba",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "0ec728d10306666ac27885ae69b72ca48d74f65cc70886f27407b9d488d048c71f3a441e77f371a8e479f4897c4f74b9901f582f92039586d1e7c587c0b75c03"
+        }
+      }
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 111,
+      "previous": "cc4b44f296a99b1dffeba9f39468ecabbeb704f0f9748ef1264d7ae61f3d0861",
+      "owner": "buyer",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+        "claim": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+        "operation": "approve_invoice",
+        "challenge": "c11a409c93202d2640730bc65484dbc4b70ca1d1641aa6f8"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+            "claim": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+            "operation": "approve_invoice",
+            "challenge": "c11a409c93202d2640730bc65484dbc4b70ca1d1641aa6f8"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "bbd8f1d4b8ebafc245e6224b8d9ea63cd2a65656556a6aa916b3698f0204fc27",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "4de7d50ca855fa5dbdee326487eeda7f277e9265e5aabdb4d0369b763577d97a0a99b38d037a4e152517b073401f5d1e2d667cee7b1f0264907971c3d8ad350d"
+        }
+      }
+    },
+    {
+      "kind": "task_end",
+      "tick": 5,
+      "sequence": 112,
+      "previous": "f0570a3f261e8917a5f1f255f108f21e7559c69433d02ff0dbbc0af2c276d786",
+      "owner": "receiver_b",
+      "order": "A",
+      "branch": "b",
+      "hop": 3,
+      "claims": [
+        "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+        "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+      ],
+      "outcome": {
+        "action": "COMPLETED",
+        "result": {
+          "simulated": true
+        },
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+              "reasons": [
+                "7f5f29876845892783364e60e569362ac5b84a1fcdf7a704b09f815ad8d62fb4"
+              ],
+              "sequence": 9,
+              "previous": "b94cede64b4a4675363cf21d5b773f7df8dbf5e6732a33e91d8e4a8d9f7f990b"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "81bc34b4bd1464afc4d9c6808510bcea60d4666e02c2e16512795e3aa3c6860e",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "741803f0e0294b6a2923b19f73f699b63fc6b008da581f8bdbfa46d97ba2fc4d10742b28950e138c5c6c87bbb5c52f3c1df36916b03e4466b36e093c811e0507"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 10,
+              "previous": "8ce7655c08b42afcbf18127665a67267c6647f69837b75c273d16b53860ef4bd"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "e741221056627bfd449d1b8a1600919fdda7c9470b01d76376c32374d813b6c7",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "c997a32e0c711028a7b77801b56054c9e524880dd4e5b70e0c2762611c548df2d64f1329893cab16b256b5de7c117f216999579e60b856824872463a093e620d"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+              "reasons": [
+                "eb6165b44e602e05b01568882447db33e416836147d5658f8c9d38612363dad1"
+              ],
+              "sequence": 11,
+              "previous": "9f8e5d436b8f445fb6e087c1b011ed96172b57730291c314e057abc18f0aacca"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "56586f4f57668df436202dbbcc712a8164baf1231f076fc10ccb1af99c9bd568",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "84abb60998ae19a464e2d3759adc15c53d7b38e2f3a3e3dc889e421b32d6f7626332afdd2d09cd69ffede58a3efc4bf26aea12390f0bed6a1ee6c02418598106"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 12,
+              "previous": "a847d067e6e083055d8d95d35514bfb39f92dee514ca1f503841903adf3453b8"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "2f5ec0507136e1f095b86ef84efd5aac3148bcd829f074fa147d3831627c2453",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "308f5b78f360c7507754560415dd9a3a438ee177ab2d1a568d35e8c5b0d74f733d5bb5b18d252c19ace538ccf0e0a1e6798b8ec908d168cb368469b6da51b30c"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_contract_allowed",
+              "target": "6f6f661f3fdb33c4ffcd71ef7f85419ab8e327dc4648d1e945e328abea81c443",
+              "reasons": [
+                "d15760c36288b55cd12386c4f0e3de845250628fd8717e38ef7fdcbf3c834d2b",
+                "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+                "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+              ],
+              "sequence": 13,
+              "previous": "7b5e0e49eebc65cffa1b4ab501c0d2463b18d9f5c4dd78725785ee3d213bafee"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "ea8b212266063f5c29713a78d244020706b4fa5a929b88c0158e6cf11c47b04b",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "fedda465415a9d9aaa86302a350422c6ec784330e927329704164b3ab6a4c3efa277c1cdc17f5646365b16a407818b2bc37f21d03050957909595692377aa80b"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_effect_returned",
+              "target": "6f6f661f3fdb33c4ffcd71ef7f85419ab8e327dc4648d1e945e328abea81c443",
+              "reasons": [
+                "4b3d969985468b0bedf7cd6f4e796dfe2a8e08d226fe596ca9eb822ba84505cb"
+              ],
+              "sequence": 14,
+              "previous": "35694e6492bc521731f6c4d76e77062b3b54e8553322535aaed7ee1e83e10ad2"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "7ce760289a03149ea001919bddc12a3ac9f17fd0b665b6b524c709f29ce8396f",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "86002d2da9944e90532677be708c1d9b5375ce508fb26089d9c7bf64c38557002ea8f34706cbfde6dbd85da01aaf211745e0281373998cb5673907f4782cb50f"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "A:receiver_b",
+              "operation": "approve_invoice",
+              "order": "A",
+              "claims": [
+                "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+                "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "receiver_b",
+            "version": 1,
+            "bundle_hash": "3d0e26ef32d221e5bcdd309a7fe33a9dddd5977c660219c6ca2da016b91df3d1",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "6fc70be08601bd1eccad20671aa3593619c1e3315f84337daf0580e813c73f7f73b5d82abb27a3c473a0195f98b98b9a7524be815488b43133c07e89ce21f709"
+          }
+        }
+      }
+    },
+    {
+      "kind": "agent_input",
+      "tick": 5,
+      "sequence": 113,
+      "previous": "f1e3894f589bfc9f377b859d3be31a881a08c1026c64c1c3c1933764252bfa3f",
+      "owner": "receiver_b",
+      "claims": [
+        "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+        "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+      ],
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "origin": "scripted"
+    },
+    {
+      "kind": "proposal",
+      "tick": 5,
+      "sequence": 114,
+      "previous": "2144b2b89d42e7dd54e8aefa8fa6291c95412c32fd7560c873e3e7614961af6c",
+      "owner": "receiver_b",
+      "proposal": {
+        "id": "C:receiver_b",
+        "operation": "approve_invoice",
+        "order": "C",
+        "claims": [
+          "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+          "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+        ]
+      },
+      "order": "C",
+      "branch": "b",
+      "hop": 3
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 115,
+      "previous": "108f967451a04ed51fe6ef44e68fcf842b7a3bdce1cbbccf268fbc955887cf5d",
+      "owner": "source",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+        "claim": "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+        "operation": "approve_invoice",
+        "challenge": "3d7ec291afdac1ffd5be7b45be6b8163e8fa9481bbb4c7d9"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+            "claim": "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+            "operation": "approve_invoice",
+            "challenge": "3d7ec291afdac1ffd5be7b45be6b8163e8fa9481bbb4c7d9"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "source",
+          "version": 1,
+          "bundle_hash": "892c5677355bd17a394cef569876d18f5783d2dd15cf1b616ff75d1c8b26a7ef",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "8f74542ba1c4c78fe732f65a0d51bb4ff7943ba6ad32165e945fb0098c699544b72f7ceaec02385ae4b7811de5d306fc80efc22d3ad60be1d167536bd2b5400f"
+        }
+      }
+    },
+    {
+      "kind": "authority_reply",
+      "tick": 5,
+      "sequence": 116,
+      "previous": "e31844c52963c79cb38e6374a8f0ead50501eec819af51ce98d1ee54c7c6ac0a",
+      "owner": "buyer",
+      "request": {
+        "kind": "status_query",
+        "workflow": "containment:0",
+        "root": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+        "claim": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+        "operation": "approve_invoice",
+        "challenge": "45b95e255b9ef54a992f1065a36ee0b1cae632745338ab5c"
+      },
+      "reply": {
+        "body": {
+          "kind": "status_reply",
+          "query": {
+            "kind": "status_query",
+            "workflow": "containment:0",
+            "root": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+            "claim": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+            "operation": "approve_invoice",
+            "challenge": "45b95e255b9ef54a992f1065a36ee0b1cae632745338ab5c"
+          },
+          "status": "active"
+        },
+        "signature": {
+          "issuer": "buyer",
+          "version": 1,
+          "bundle_hash": "601427fc13b41a55646b434409da792084abd79adb77ba32df0e56943f41966d",
+          "checks": [
+            "claim_channel"
+          ],
+          "findings": [],
+          "action": "pass",
+          "signature": "53ba3adea72dc308b1de5143dba06f7ba756f1dd691b1e2ca4bf1a7a77f512fa0aecba676b994827eea2fda9a1e77cffb8d50d3d275950fd1902dc869063d408"
+        }
+      }
+    },
+    {
+      "kind": "task_end",
+      "tick": 5,
+      "sequence": 117,
+      "previous": "290a1309fb262e2b7aa6fe671c719e0a2c9190bf484891552470e240ce4462d9",
+      "owner": "receiver_b",
+      "order": "C",
+      "branch": "b",
+      "hop": 3,
+      "claims": [
+        "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+        "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+      ],
+      "outcome": {
+        "action": "COMPLETED",
+        "result": {
+          "simulated": true
+        },
+        "gateway_events": [
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+              "reasons": [
+                "ce04f86bef451a95d299ca77d57551507d5288b9b974e7a0ef78c284a42857d1"
+              ],
+              "sequence": 15,
+              "previous": "8a909621e9d7439ced49b95c7e911752eece741f46a8692a5b8aa0e8557e7a84"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "b2c5292205f2ba063146610810b71dfa36b987ab1b0f4da9fc29a531fa4233d0",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "3091ba26d896d786cef348f4d46cc1bab2904b1787975ac4b78f5550db3c5e7b2f6f57ad8101cb34c8c3028b9d667f95509157cf22eb4eb73a242c51f7b69907"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 16,
+              "previous": "653ebd454331a6e126a8a647ffc504a2886489de1d3a2e4c90f5f0f9e970341e"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "db5401da759ac4cdddff4c4d5bd2805e113cf4a2a1e83ac35fd7af065364e357",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "228dbaba54dc6cc3072d61468334bf52d54df8acef54a168eba0917baea1b27ae0c91a65418ffc7742e4ba791b49b536a442f32170f0a2a8d08522420c275f0b"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "authority_status_received",
+              "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+              "reasons": [
+                "71e68c105fc6c6840cf2ab25e2c20d7001899994b48c86dbb45f392c8d9f9f90"
+              ],
+              "sequence": 17,
+              "previous": "90b3bc11ccf08404ed0b59e68366391312ec9e24381db65c7d8eaee68ca46362"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "f769aac4e57befdce558d7f1e5676beaadb7acfefeee141b3af938bf7ea9b570",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "68f2703c16f05473dcc5982bb6d80b78e7bb72711e7a9cf8a22523e9d7f1362b8919f10bfaee347cf2544100abbab580c1071a85a782a78907b8baa8fa133005"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "use_allowed",
+              "target": "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0",
+              "reasons": [
+                "approve_invoice"
+              ],
+              "sequence": 18,
+              "previous": "41c19de392e294a3ba010551ed79b494a463e4d0439b0de89fce451945d79f82"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "4f2fd2e215fc4a0c765d286ab020e510396b00ecf10d170e31364e2b511a50e8",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "4334c108d0b939d49d3a4c9c183d65a64ed8e82cf4b77a70a7d5ba1c530cb21b0151ef8c818e503ace0a65c3229cddf43a59baf4bb45364493fe4acd696b300d"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_contract_allowed",
+              "target": "d18acbe1831fe82ae9cc70d8887262c1859c49c6013a8a406fa28f95ee3b3a96",
+              "reasons": [
+                "d15760c36288b55cd12386c4f0e3de845250628fd8717e38ef7fdcbf3c834d2b",
+                "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+                "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+              ],
+              "sequence": 19,
+              "previous": "c6a4d52b86913bdb332861e65ec7d49cfe8cf5d75fc1adfe7851c114be85bd6b"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "edfaa092782cb636ee93f4c3b19521a570bed28e1d36fcee8c313bd0fff6ffe7",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "af2f1330888b2591492355c774165c8eb55b642dcb1b4d911fbdf9d3d8fa9fea9734d0191156eccc7833925c1110e71d4ed3b19c4e6cb8451aa4fb86ae0a3308"
+            }
+          },
+          {
+            "body": {
+              "kind": "gateway_event",
+              "workflow": "containment:0",
+              "action": "action_effect_returned",
+              "target": "d18acbe1831fe82ae9cc70d8887262c1859c49c6013a8a406fa28f95ee3b3a96",
+              "reasons": [
+                "4b3d969985468b0bedf7cd6f4e796dfe2a8e08d226fe596ca9eb822ba84505cb"
+              ],
+              "sequence": 20,
+              "previous": "c0e42be609507fcb323609ec02d77feb067e664ec503500f7a0aa58bb2369409"
+            },
+            "signature": {
+              "issuer": "receiver_b",
+              "version": 1,
+              "bundle_hash": "e0f1f8f6f03b41c58ff36a36aa8e227eb0287d5deba08253a4075d1c5d97859c",
+              "checks": [
+                "claim_channel"
+              ],
+              "findings": [],
+              "action": "pass",
+              "signature": "e82fb0fbae4e78355f2d7439df8892b884b5b4eacb57a1bca6aef25425f027c602d59115fccbb4a53085d7dadb8ccb189f1599e3849f85507abdb28f1c8a9b09"
+            }
+          }
+        ],
+        "use_receipt": {
+          "body": {
+            "kind": "benchmark_use",
+            "workflow": "containment:0",
+            "proposal": {
+              "id": "C:receiver_b",
+              "operation": "approve_invoice",
+              "order": "C",
+              "claims": [
+                "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+                "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+              ]
+            },
+            "action": "COMPLETED"
+          },
+          "signature": {
+            "issuer": "receiver_b",
+            "version": 1,
+            "bundle_hash": "e7bc3b15ff6db16e14e9e8da96f894a10d4232524cf4b5c2f831f8b870f27e16",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "7eee1ba886dd08370fa93f3d63c5136a0e8671ab468c18febee14e63704d7f6b7713f755d31bd2cd1ba32f2814c35ed5080c38041e1dcc53a500d7bfa4fbba04"
+          }
+        }
+      }
+    }
+  ],
+  "public_keys": {
+    "source": "ba5b5a47d13874ebd6e82af27e7a5f813e71208c9df399bc5a5e2bc81c459ed9",
+    "buyer": "d26ade02e5d36468a0ad3cf97d26a8172459e8363529378b61c2cd4ec6b71f1b",
+    "coordinator": "b682afe4ec2dad0b686188f431c473144af6fc1e4453a5daa70775e707576b8b",
+    "middle_a": "4aa9cd5ec91ddc10fe249dfe141007b5dce015959732acb3abb086822d4d9832",
+    "receiver_a": "9b5c3d0e3d35e559e30d767908b7e400833f549e7494a43d9273a11cb952e8d0",
+    "middle_b": "4bf5a1f3596c7d02e2beb5b4477bf7b5aa131e5cd194de86f79ffed2694678b7",
+    "receiver_b": "92cd6869999c77d8d004e75247e674a6ecd89d92c2c683f2572028001e81c1a3"
+  },
+  "packets": {
+    "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "source",
+        "version": 1,
+        "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+      }
+    },
+    "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "C",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "source",
+        "version": 1,
+        "bundle_hash": "7260b99ed0cbffaa8d101e1af65b6ea6ee2c8d383b330c47cd7176144c3bcc64",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "d86914a4b539016058196f1e286021d96aa2846aa59ca04f715af0450df29554a14ff5126b33f50663fa351e440d475a7ac6258820dd20dccb2c05bc242e5809"
+      }
+    },
+    "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [],
+        "rule": "relay",
+        "fact": {
+          "predicate": "invoice_authorization",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "maximum_cents": 200,
+            "operation": "approve_invoice",
+            "approved": true
+          }
+        }
+      },
+      "signature": {
+        "issuer": "buyer",
+        "version": 1,
+        "bundle_hash": "1cad1972904a78e11ddac1cea346073c372d2a2fda3737026fe4b31addca9b30",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "65770efae23aa9a18ffe748809224001cba7affd25b3fc3932220510ad850c27935feecb97abb07f9770c26749e20551be8fa53f916cf1d7ab6aeba6e3e6dd0e"
+      }
+    },
+    "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [],
+        "rule": "relay",
+        "fact": {
+          "predicate": "invoice_authorization",
+          "value": {
+            "order": "C",
+            "currency": "CNY",
+            "maximum_cents": 200,
+            "operation": "approve_invoice",
+            "approved": true
+          }
+        }
+      },
+      "signature": {
+        "issuer": "buyer",
+        "version": 1,
+        "bundle_hash": "310322158a1c4c1f96114ccecd5ac82aa821452a108d3ee34e5a2e915c446b2c",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "c6acf3a2b15dac78e3eb41b450fd39bf1f2ba1d2b535ef6255cb6ba7d9b365b2994c0b12ebff318d8374351264c5859f5be1413d42e5dcb5ccb5bae2af811301"
+      }
+    },
+    "87dd387771cea6aa3f9f75df0c4b511398eb013b96e340e4a9311ba62c029bf1": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 120
+          }
+        }
+      },
+      "signature": {
+        "issuer": "source",
+        "version": 1,
+        "bundle_hash": "876a43f4df86e018c705a598583423ff5eda7e5e665adc60a25f60e3d4b320a4",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "1f2b96b23d430170d36ba438699c846bb04a421ddde13b56714bcd1e2e586cb94a205ff4577bc168da086290863ff20b13d136ee7d8d758903f11abc7efca30b"
+      }
+    },
+    "a64a933f81f3c578c4b6ece114636fd0edeaa3a15cb515fd438dc7abb43bc923": {
+      "body": {
+        "kind": "revoke",
+        "workflow": "containment:0",
+        "target": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+        "original": {
+          "body": {
+            "kind": "claim",
+            "workflow": "containment:0",
+            "parents": [],
+            "rule": "relay",
+            "fact": {
+              "predicate": "total_charge",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "cents": 100
+              }
+            }
+          },
+          "signature": {
+            "issuer": "source",
+            "version": 1,
+            "bundle_hash": "e19b7af7cdba02ce467dc16fad6b8c05f10ce020681c78da2324b6041c1ae718",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "3601f9ae90a9ff3d731262235356338d23bfd6092ea9cb65f3a87f02e392279a3ce3fc03b34c852a90ea4f63ecb0e3c5fa5d6700e52fffa071f1733e3cf72306"
+          }
+        }
+      },
+      "signature": {
+        "issuer": "source",
+        "version": 1,
+        "bundle_hash": "da46c3950a5b4e63416467bc4bf20188a07c710ac08ea438b8254587705a29d9",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "f4c5829a2932c694015b475c10ef68c24f71784d1fb436c7f2d5609e4298db82e97673478d1cd9239bd5ecb09483941ebce32b3cd158793705449ef4bbb99a07"
+      }
+    },
+    "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "coordinator",
+        "version": 1,
+        "bundle_hash": "aa39be7ae4071fa49dab42ec32e0f00cd6501b5642888bd5a4ab3a421b343a6f",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "421e40ef68a6299deeb9f5cf8f24ba25b8a36d803c08cc2aaf55f22703453e9e4d5a3d9134b4bf7929e1878055b34f39b47d15e07ce2461a9802a133909a9d0a"
+      }
+    },
+    "a491acee433e8661b0f4317f09a9178b4bac3647cc717318aeb36a731dd00ca3": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 101
+          }
+        }
+      },
+      "signature": {
+        "issuer": "middle_a",
+        "version": 1,
+        "bundle_hash": "450a30c3db3358b742ec2800ec7d7b7d0afdcf8bc74fb24e6fc81265ec403629",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "81a1eb82b99e473f5dd541ed90e2be6946ad4f020affbb548101e6fb8b9a1c24e2b7b9066119b99c98974eb221d32f6776697a77d44126604fdcde3010863902"
+      }
+    },
+    "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "middle_b",
+        "version": 1,
+        "bundle_hash": "df2cbc10a70a9137790c1768713ee91af02ea4069994bd019eb55130bde89496",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "2654e769c2e415e217250751169e2657ec672703b8688246db4d2b44f4051521b5c477f82cbe4bc8c2fcd66498ef5cf966925b1774f41da6e87af9c29065810d"
+      }
+    },
+    "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "C",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "coordinator",
+        "version": 1,
+        "bundle_hash": "88fa37bd2ac39cc777194765f4d63c5167eda968c593228a3d9b3370f021e5dd",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "18200314267cbd6c8c0baae83ceb9be30c07140266769db6c2961ae5e9c6e47436af40d7fa7deb631c107b192cb40bb8a0349604408f93d6ea788fd271ab660c"
+      }
+    },
+    "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "C",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "middle_a",
+        "version": 1,
+        "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "cae7b25b962fefdcc1ef597c6a0fbcedca88f646f889f7a8d45646f305e0d7e55c22eb856d8a801298f0f8954fc7f982294b73cd9c33919bd2bf0f15db2a0805"
+      }
+    },
+    "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385": {
+      "body": {
+        "kind": "claim",
+        "workflow": "containment:0",
+        "parents": [
+          "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+        ],
+        "rule": "relay",
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "C",
+            "currency": "CNY",
+            "cents": 100
+          }
+        }
+      },
+      "signature": {
+        "issuer": "middle_b",
+        "version": 1,
+        "bundle_hash": "dbd4bcce090893409e2a8c836b17dd5bedde0278e343af751c901322919ec196",
+        "checks": [
+          "claim_channel"
+        ],
+        "findings": [],
+        "action": "pass",
+        "signature": "e4d7a4b8bb6ab5bdf5617325769a09d44162f0f57abe49bbb079971268c89c4254f4f8687b7e079bdd07ba8898a1f39f1796033d221e37c75ac85fc463a81408"
+      }
+    }
+  },
+  "verification_queries": 12,
+  "scripted_trace_hash": "54cce68040cf26553a6eb5635f7bc378155da72b5e8af649afb62e7f68779f68",
+  "model_calls": 0,
+  "tokens": 0,
+  "recovery_measured": true,
+  "recovery": [
+    {
+      "branch": "a",
+      "attempted": false,
+      "recovered": false,
+      "error": null,
+      "rebuilt": 0,
+      "reason": "no_automatic_recovery_in_arm"
+    },
+    {
+      "branch": "b",
+      "attempted": false,
+      "recovered": false,
+      "error": null,
+      "rebuilt": 0,
+      "reason": "completed_or_unknown_never_retried"
+    }
+  ]
+}

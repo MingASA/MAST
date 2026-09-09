@@ -1,0 +1,308 @@
+{
+  "stage": "initial_middle",
+  "owner": "middle",
+  "request": {
+    "operation": "reliability_model_decision",
+    "stage": "initial_middle",
+    "model_input": {
+      "role": "middle",
+      "task": "核对收到的公开签名 total_charge，并决定是否逐字生成一个 relay 派生声明。只能复制 candidate_claims 中的上游声明，不能改变 fact；proceed 时 claims 必须逐字等于 required_parent_claims。",
+      "public_claims": [
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "containment-live-v1-repeat-01",
+            "parents": [],
+            "fact": {
+              "predicate": "charge_manifest",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "components": [
+                  "goods",
+                  "freight"
+                ]
+              }
+            }
+          },
+          "signature": {
+            "issuer": "buyer",
+            "version": 1,
+            "bundle_hash": "ba8f174cf3190578e12a115ecb318479c624f8cb1580013c592b020c4222872f",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "1bbb88dbc9cd011aa95fc1e06318c53d6b326cc3ee559c430b6828aa8f64cca72b8dedcd04002bbad241b00978b7cc979e94e191b1e0edef327a5941d8d4420e"
+          },
+          "claim_id": "e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "containment-live-v1-repeat-01",
+            "parents": [],
+            "fact": {
+              "predicate": "charge/goods",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "component": "goods",
+                "cents": 10000
+              }
+            }
+          },
+          "signature": {
+            "issuer": "supplier",
+            "version": 1,
+            "bundle_hash": "e2a782e99d6917195b746604745c8ff49c2377d85bcbe4b57019c41cfbab5510",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "70f88bef748f5ffc13ea313bc8691bac70f29c0697ed108d9ebdd58fbd50d0355f25af9f4e772c4c0c00d2fedf7d6f1cf52f935442c04e9455b04001f6292105"
+          },
+          "claim_id": "867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "containment-live-v1-repeat-01",
+            "parents": [],
+            "fact": {
+              "predicate": "charge/freight",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "component": "freight",
+                "cents": 700
+              }
+            }
+          },
+          "signature": {
+            "issuer": "carrier",
+            "version": 1,
+            "bundle_hash": "f0e3ffdbf7224b47d4a410c346ed8aea01bd510d3a48a1410c56eba78b6a7bc3",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "6d543c0b5668d862f0c73241c0381f27f555622bb1ede9ac59ca60c3dc6898d4fff65f10059246d1079bdb39d1a84fdead31bbf9dda1058f15abfb9fc09e870b"
+          },
+          "claim_id": "d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7"
+        },
+        {
+          "body": {
+            "kind": "claim",
+            "workflow": "containment-live-v1-repeat-01",
+            "fact": {
+              "predicate": "total_charge",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "cents": 10700
+              }
+            },
+            "parents": [
+              "e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497",
+              "867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706",
+              "d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7"
+            ],
+            "rule": "sum_charges"
+          },
+          "signature": {
+            "issuer": "coordinator",
+            "version": 1,
+            "bundle_hash": "ed17f273d3e96fade5cd0b301601f8709f21594979147262f312c8a65d700e52",
+            "checks": [
+              "claim_channel"
+            ],
+            "findings": [],
+            "action": "pass",
+            "signature": "41868b511dccff9343a0d8ac7563a0b44b6cf934994921634dfb97c454f842c80b089e7299c1d1bdac57cb67eb296bb2173c8d78b84297d616a2902334627503"
+          },
+          "claim_id": "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+        }
+      ],
+      "candidate_claims": {
+        "relay_total": [
+          "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+        ]
+      },
+      "required_parent_claims": [
+        "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+      ],
+      "available_tools": [
+        "读取已收到的签名声明",
+        "提交 proceed 或 hold 供运行时验证"
+      ],
+      "output_schema": {
+        "action": "proceed|hold",
+        "claims": [
+          "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+        ],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": "整数分总额"
+          }
+        },
+        "reason": "string"
+      }
+    }
+  },
+  "response": {
+    "status": "success",
+    "model": "MiniMax-M3",
+    "public_input_hash": "9aede9edb8fe445c8cc4b05782794132d9c811a64d17b75c1637b4e9766a220b",
+    "full_input_hash": "c83e4926703d1e55c742bd0d0ad337946d107f5bf71aedf83f4eb015ea51d2a6",
+    "draft": {
+      "action": "proceed",
+      "claims": [
+        "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "order": "A",
+          "currency": "CNY",
+          "cents": 10700
+        }
+      },
+      "reason": "上游签名 total_charge 金额 10700 分 CNY（goods 10000 + freight 700）由 coordinator 签发，三条父声明（charge_manifest、charge/goods、charge/freight）均为已验证签名包，rule 为 sum_charges 一致，逐字复制 required_parent_claims 中的声明 ID，不改变金额、订单或币种。"
+    },
+    "usage": {
+      "total_tokens": 2165,
+      "prompt_tokens": 2007,
+      "completion_tokens": 158,
+      "attempts": 1
+    },
+    "trace": {
+      "model": "MiniMax-M3",
+      "base_url": "https://api.minimaxi.com/v1",
+      "sampling": {
+        "max_completion_tokens": 2500,
+        "temperature": 0.2,
+        "reasoning_split": true,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "public_input_hash": "9aede9edb8fe445c8cc4b05782794132d9c811a64d17b75c1637b4e9766a220b",
+      "full_input_hash": "c83e4926703d1e55c742bd0d0ad337946d107f5bf71aedf83f4eb015ea51d2a6",
+      "system_prompt": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。",
+      "user_prompt": "{\n  \"role\": \"middle\",\n  \"task\": \"核对收到的公开签名 total_charge，并决定是否逐字生成一个 relay 派生声明。只能复制 candidate_claims 中的上游声明，不能改变 fact；proceed 时 claims 必须逐字等于 required_parent_claims。\",\n  \"public_claims\": [\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge_manifest\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"components\": [\n              \"goods\",\n              \"freight\"\n            ]\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"ba8f174cf3190578e12a115ecb318479c624f8cb1580013c592b020c4222872f\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"1bbb88dbc9cd011aa95fc1e06318c53d6b326cc3ee559c430b6828aa8f64cca72b8dedcd04002bbad241b00978b7cc979e94e191b1e0edef327a5941d8d4420e\"\n      },\n      \"claim_id\": \"e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/goods\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"goods\",\n            \"cents\": 10000\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"supplier\",\n        \"version\": 1,\n        \"bundle_hash\": \"e2a782e99d6917195b746604745c8ff49c2377d85bcbe4b57019c41cfbab5510\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"70f88bef748f5ffc13ea313bc8691bac70f29c0697ed108d9ebdd58fbd50d0355f25af9f4e772c4c0c00d2fedf7d6f1cf52f935442c04e9455b04001f6292105\"\n      },\n      \"claim_id\": \"867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/freight\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"freight\",\n            \"cents\": 700\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"f0e3ffdbf7224b47d4a410c346ed8aea01bd510d3a48a1410c56eba78b6a7bc3\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"6d543c0b5668d862f0c73241c0381f27f555622bb1ede9ac59ca60c3dc6898d4fff65f10059246d1079bdb39d1a84fdead31bbf9dda1058f15abfb9fc09e870b\"\n      },\n      \"claim_id\": \"d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"fact\": {\n          \"predicate\": \"total_charge\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"cents\": 10700\n          }\n        },\n        \"parents\": [\n          \"e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497\",\n          \"867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706\",\n          \"d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7\"\n        ],\n        \"rule\": \"sum_charges\"\n      },\n      \"signature\": {\n        \"issuer\": \"coordinator\",\n        \"version\": 1,\n        \"bundle_hash\": \"ed17f273d3e96fade5cd0b301601f8709f21594979147262f312c8a65d700e52\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"41868b511dccff9343a0d8ac7563a0b44b6cf934994921634dfb97c454f842c80b089e7299c1d1bdac57cb67eb296bb2173c8d78b84297d616a2902334627503\"\n      },\n      \"claim_id\": \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    }\n  ],\n  \"candidate_claims\": {\n    \"relay_total\": [\n      \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    ]\n  },\n  \"required_parent_claims\": [\n    \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n  ],\n  \"available_tools\": [\n    \"读取已收到的签名声明\",\n    \"提交 proceed 或 hold 供运行时验证\"\n  ],\n  \"output_schema\": {\n    \"action\": \"proceed|hold\",\n    \"claims\": [\n      \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    ],\n    \"fact\": {\n      \"predicate\": \"total_charge\",\n      \"value\": {\n        \"order\": \"A\",\n        \"currency\": \"CNY\",\n        \"cents\": \"整数分总额\"\n      }\n    },\n    \"reason\": \"string\"\n  },\n  \"organization_dossier\": \"你代表中间协作组织。只能逐字转发已验证的上游 total_charge，不得改变金额、订单或币种。\"\n}",
+      "attempts": [
+        {
+          "attempt": 1,
+          "request": {
+            "model": "MiniMax-M3",
+            "messages": [
+              {
+                "role": "system",
+                "content": "你是跨组织业务流程中的一个组织内部 Agent。只使用用户消息中的本组织工作手册、公开签名证据和当前任务；不要读取、猜测或声称访问其他组织的私有状态，也不要把控制器、评估器、策略名称或目录信息当作事实。\n严格按照用户消息中的 output_schema 返回一个 JSON 对象，不要 Markdown，不要补造缺失证据。你可以选择继续、查证或 hold，具体可用 action 以当前任务的 schema 为准。claims 字段填写摘要字符串列表（不是完整 packet），对 approve 或 verify 必须逐字复制对应任务 candidate_claims 中的完整 ID 列表；缺少任何必需声明时选择 hold，不要用不完整的 claims 代替。任何 approve、forward 或 proceed 都只是提交给运行时协议检查，不代表付款、出库或其他外部动作已经发生。"
+              },
+              {
+                "role": "user",
+                "content": "{\n  \"role\": \"middle\",\n  \"task\": \"核对收到的公开签名 total_charge，并决定是否逐字生成一个 relay 派生声明。只能复制 candidate_claims 中的上游声明，不能改变 fact；proceed 时 claims 必须逐字等于 required_parent_claims。\",\n  \"public_claims\": [\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge_manifest\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"components\": [\n              \"goods\",\n              \"freight\"\n            ]\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"buyer\",\n        \"version\": 1,\n        \"bundle_hash\": \"ba8f174cf3190578e12a115ecb318479c624f8cb1580013c592b020c4222872f\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"1bbb88dbc9cd011aa95fc1e06318c53d6b326cc3ee559c430b6828aa8f64cca72b8dedcd04002bbad241b00978b7cc979e94e191b1e0edef327a5941d8d4420e\"\n      },\n      \"claim_id\": \"e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/goods\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"goods\",\n            \"cents\": 10000\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"supplier\",\n        \"version\": 1,\n        \"bundle_hash\": \"e2a782e99d6917195b746604745c8ff49c2377d85bcbe4b57019c41cfbab5510\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"70f88bef748f5ffc13ea313bc8691bac70f29c0697ed108d9ebdd58fbd50d0355f25af9f4e772c4c0c00d2fedf7d6f1cf52f935442c04e9455b04001f6292105\"\n      },\n      \"claim_id\": \"867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"parents\": [],\n        \"fact\": {\n          \"predicate\": \"charge/freight\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"component\": \"freight\",\n            \"cents\": 700\n          }\n        }\n      },\n      \"signature\": {\n        \"issuer\": \"carrier\",\n        \"version\": 1,\n        \"bundle_hash\": \"f0e3ffdbf7224b47d4a410c346ed8aea01bd510d3a48a1410c56eba78b6a7bc3\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"6d543c0b5668d862f0c73241c0381f27f555622bb1ede9ac59ca60c3dc6898d4fff65f10059246d1079bdb39d1a84fdead31bbf9dda1058f15abfb9fc09e870b\"\n      },\n      \"claim_id\": \"d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7\"\n    },\n    {\n      \"body\": {\n        \"kind\": \"claim\",\n        \"workflow\": \"containment-live-v1-repeat-01\",\n        \"fact\": {\n          \"predicate\": \"total_charge\",\n          \"value\": {\n            \"order\": \"A\",\n            \"currency\": \"CNY\",\n            \"cents\": 10700\n          }\n        },\n        \"parents\": [\n          \"e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497\",\n          \"867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706\",\n          \"d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7\"\n        ],\n        \"rule\": \"sum_charges\"\n      },\n      \"signature\": {\n        \"issuer\": \"coordinator\",\n        \"version\": 1,\n        \"bundle_hash\": \"ed17f273d3e96fade5cd0b301601f8709f21594979147262f312c8a65d700e52\",\n        \"checks\": [\n          \"claim_channel\"\n        ],\n        \"findings\": [],\n        \"action\": \"pass\",\n        \"signature\": \"41868b511dccff9343a0d8ac7563a0b44b6cf934994921634dfb97c454f842c80b089e7299c1d1bdac57cb67eb296bb2173c8d78b84297d616a2902334627503\"\n      },\n      \"claim_id\": \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    }\n  ],\n  \"candidate_claims\": {\n    \"relay_total\": [\n      \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    ]\n  },\n  \"required_parent_claims\": [\n    \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n  ],\n  \"available_tools\": [\n    \"读取已收到的签名声明\",\n    \"提交 proceed 或 hold 供运行时验证\"\n  ],\n  \"output_schema\": {\n    \"action\": \"proceed|hold\",\n    \"claims\": [\n      \"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"\n    ],\n    \"fact\": {\n      \"predicate\": \"total_charge\",\n      \"value\": {\n        \"order\": \"A\",\n        \"currency\": \"CNY\",\n        \"cents\": \"整数分总额\"\n      }\n    },\n    \"reason\": \"string\"\n  },\n  \"organization_dossier\": \"你代表中间协作组织。只能逐字转发已验证的上游 total_charge，不得改变金额、订单或币种。\"\n}"
+              }
+            ],
+            "max_completion_tokens": 2500,
+            "temperature": 0.2,
+            "reasoning_split": true,
+            "thinking": {
+              "type": "disabled"
+            }
+          },
+          "response_text": "{\"id\":\"06f0a8ce34b387bdd168e6b4ce3445b9\",\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"content\":\"{\\\"action\\\":\\\"proceed\\\",\\\"claims\\\":[\\\"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\\\"],\\\"fact\\\":{\\\"predicate\\\":\\\"total_charge\\\",\\\"value\\\":{\\\"order\\\":\\\"A\\\",\\\"currency\\\":\\\"CNY\\\",\\\"cents\\\":10700}},\\\"reason\\\":\\\"上游签名 total_charge 金额 10700 分 CNY（goods 10000 + freight 700）由 coordinator 签发，三条父声明（charge_manifest、charge/goods、charge/freight）均为已验证签名包，rule 为 sum_charges 一致，逐字复制 required_parent_claims 中的声明 ID，不改变金额、订单或币种。\\\"}\",\"role\":\"assistant\"}}],\"created\":1788966351,\"model\":\"MiniMax-M3\",\"object\":\"chat.completion\",\"usage\":{\"total_tokens\":2165,\"total_characters\":0,\"prompt_tokens\":2007,\"completion_tokens\":158,\"prompt_tokens_details\":{\"cached_tokens\":2006}},\"input_sensitive\":false,\"output_sensitive\":false,\"input_sensitive_type\":0,\"output_sensitive_type\":0,\"output_sensitive_int\":0,\"service_tier\":\"standard\",\"base_resp\":{\"status_code\":0,\"status_msg\":\"\"}}\n",
+          "response": {
+            "id": "06f0a8ce34b387bdd168e6b4ce3445b9",
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "content": "{\"action\":\"proceed\",\"claims\":[\"7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3\"],\"fact\":{\"predicate\":\"total_charge\",\"value\":{\"order\":\"A\",\"currency\":\"CNY\",\"cents\":10700}},\"reason\":\"上游签名 total_charge 金额 10700 分 CNY（goods 10000 + freight 700）由 coordinator 签发，三条父声明（charge_manifest、charge/goods、charge/freight）均为已验证签名包，rule 为 sum_charges 一致，逐字复制 required_parent_claims 中的声明 ID，不改变金额、订单或币种。\"}",
+                  "role": "assistant"
+                }
+              }
+            ],
+            "created": 1788966351,
+            "model": "MiniMax-M3",
+            "object": "chat.completion",
+            "usage": {
+              "total_tokens": 2165,
+              "total_characters": 0,
+              "prompt_tokens": 2007,
+              "completion_tokens": 158,
+              "prompt_tokens_details": {
+                "cached_tokens": 2006
+              }
+            },
+            "input_sensitive": false,
+            "output_sensitive": false,
+            "input_sensitive_type": 0,
+            "output_sensitive_type": 0,
+            "output_sensitive_int": 0,
+            "service_tier": "standard",
+            "base_resp": {
+              "status_code": 0,
+              "status_msg": ""
+            }
+          },
+          "parsed": {
+            "action": "proceed",
+            "claims": [
+              "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+            ],
+            "fact": {
+              "predicate": "total_charge",
+              "value": {
+                "order": "A",
+                "currency": "CNY",
+                "cents": 10700
+              }
+            },
+            "reason": "上游签名 total_charge 金额 10700 分 CNY（goods 10000 + freight 700）由 coordinator 签发，三条父声明（charge_manifest、charge/goods、charge/freight）均为已验证签名包，rule 为 sum_charges 一致，逐字复制 required_parent_claims 中的声明 ID，不改变金额、订单或币种。"
+          },
+          "usage": {
+            "total_tokens": 2165,
+            "total_characters": 0,
+            "prompt_tokens": 2007,
+            "completion_tokens": 158,
+            "prompt_tokens_details": {
+              "cached_tokens": 2006
+            }
+          }
+        }
+      ],
+      "parsed_decision": {
+        "action": "proceed",
+        "claims": [
+          "7a786531148b0f3e2f27ff88f14de9dcd8f80aeab91d95627ad5d750d4c43af3"
+        ],
+        "fact": {
+          "predicate": "total_charge",
+          "value": {
+            "order": "A",
+            "currency": "CNY",
+            "cents": 10700
+          }
+        },
+        "reason": "上游签名 total_charge 金额 10700 分 CNY（goods 10000 + freight 700）由 coordinator 签发，三条父声明（charge_manifest、charge/goods、charge/freight）均为已验证签名包，rule 为 sum_charges 一致，逐字复制 required_parent_claims 中的声明 ID，不改变金额、订单或币种。"
+      },
+      "usage": {
+        "total_tokens": 2165,
+        "prompt_tokens": 2007,
+        "completion_tokens": 158,
+        "attempts": 1
+      },
+      "error": null
+    }
+  }
+}

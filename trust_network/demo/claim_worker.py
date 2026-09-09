@@ -136,6 +136,14 @@ def handle(directory, request, env_file):
                                    lambda:{'simulated_invoice_approval':request['order']})
         except ValueError: pass
         response={'result':result,'event':gateway.events[-1],'events':gateway.events[initial_events:]}
+    elif operation in ('reliability_frontier','reliability_frontier_rebuild'):
+        from trust_network.demo.recovery_frontier import frontier,rebuild_frontier_claim
+        receiver=config['recovery_receiver']  # local trust config, not caller input
+        if operation=='reliability_frontier':
+            response={'frontier':frontier(gateway,request['envelope'],request['task_id'],request['completed'],receiver)}
+        else:
+            response=rebuild_frontier_claim(gateway,request['envelope'],request['task_id'],request['completed'],receiver,request['old'],request['fact'])
+        response['events']=gateway.events[initial_events:]
     elif operation=='reliability_recovery':
         from trust_network.demo.reliability_recovery import prepare_recovery
         response={'recovery':prepare_recovery(gateway,request['batch'],request['offers'])}

@@ -1,0 +1,46 @@
+{
+  "kind": "containment_live_fixture",
+  "condition": "active",
+  "repeat": 1,
+  "workflow": "containment-live-v1-repeat-01",
+  "organizations": [
+    "buyer",
+    "supplier",
+    "carrier",
+    "coordinator",
+    "middle",
+    "receiver"
+  ],
+  "public_keys": {
+    "buyer": "de27058f3b991730fdac1f9d1a98c5c9eb050aaf1f4e80152eed6402a69b4804",
+    "supplier": "8f05d48348f1e91a01b18d929be9ec463334edc4c1cda4456a6d7e27ba9a07b6",
+    "carrier": "c64184e4b39982aeee737e5ca634cb1498d39061c8b2c3fc96d16fc3aae13581",
+    "coordinator": "4220fb580627ccb2bf6eb40d1891c67b28bd1935d9e94bb8b1d62f7275de8749",
+    "middle": "2969f323cadf646e94c539f82ca0f693a71110e610a2e6df77c17499b5c8bd8c",
+    "receiver": "aeeba88b34b0defda669c6b1bfe937b2a5ef1214e2a044dda42b7dcb0ab93d06"
+  },
+  "authorities": {
+    "invoice_authorization": "buyer",
+    "charge_manifest": "buyer",
+    "charge/goods": "supplier",
+    "charge/freight": "carrier",
+    "delivery_schedule": "carrier"
+  },
+  "source_packets": {
+    "manifest": "e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497",
+    "authorization": "3f7c10798552911b7b00d56d660775092d8d8432b2791a3110e754c1310f70bb",
+    "goods": "867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706",
+    "freight": "d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7",
+    "schedule": "1e36550989a067f9050b2e7ceedb0503e388a5013d6c857197e4c87af1b77455"
+  },
+  "coordinator_parents": [
+    "e8f4eeae83c3e299facf7b9d7444a0462924a45f2d2efe26a9ddc5bf709ae497",
+    "867a5902eef60191eceb14ec44c31a6753eb582ddc014e75171fa03df4789706",
+    "d31ec71478bcb58f206fab0a8773aaf2ab04e48a61b032c7862b1fe8161dafe7"
+  ],
+  "receiver": "/home/cjy/wuxing/results/containment_live_pilot_v1/active/repeat_01/fixture/receiver",
+  "coordinator": "/home/cjy/wuxing/results/containment_live_pilot_v1/active/repeat_01/fixture/coordinator",
+  "middle": "/home/cjy/wuxing/results/containment_live_pilot_v1/active/repeat_01/fixture/middle",
+  "topology": "sources -> coordinator -> middle -> receiver; schedule -> receiver",
+  "recovery_receiver": "receiver"
+}
