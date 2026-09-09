@@ -80,7 +80,15 @@ def audit_with_authorities(packet, public, authorities):
             decision['action'] == 'REQUEST_EVIDENCE' or
             any(confirmed.get(r) in ('revoked','unknown') for r in decision['roots']) or
             (decision['action'] == 'VERIFY' and any(confirmed.get(r) != 'active' for r in decision['roots'])))
-        if outcome['action'] == 'COMPLETED':
+        if outcome['action']=='COMPLETED' and proposals[outcome['proposal']].get('intent')=='verify':
+            violates=True
+        if outcome['action']=='VERIFIED':
+            decision=decisions[outcome['proposal']]
+            if (proposals[outcome['proposal']].get('intent')!='verify' or
+                decision['action']!='VERIFY' or
+                any(confirmed.get(r)!='active' for r in decision['roots'])):
+                raise ValueError('verification result lacks required evidence')
+        if outcome['action'] in ('COMPLETED','VERIFIED'):
             proposal = proposals[outcome['proposal']]
             if proposal['operation'] == 'approve_invoice':
                 from trust_network.demo.claim_action_contract import approve_invoice

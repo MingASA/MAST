@@ -10,11 +10,19 @@ from trust_network.demo.provider import ProviderConfig, ProviderTraceError, comp
 from trust_network.demo.reliability_agent_protocol import COMMON_AGENT_SYSTEM
 
 
-def model_decision(directory, request, env_file):
+def model_decision(directory, request, env_file, gateway):
     config=json.loads((directory/'config.json').read_text())
     provider=ProviderConfig.load(env_file)
     public_input=json.loads(json.dumps(request['model_input']))
     model_input=json.loads(json.dumps(public_input))
+    from trust_network.demo.reliability_stage import stage_status
+    role=model_input.get('role')
+    if role in ('coordinator','middle','receiver'):
+        phase='derive' if role in ('coordinator','middle') else 'decide_action'
+        claims=model_input.get('required_parent_claims',[]) if phase=='derive' else [
+            c for group in model_input.get('candidate_claims',{}).values() for c in group]
+        model_input['runtime_stage_status']=stage_status(gateway,phase,claims,
+            model_input.pop('runtime_rebuild_scope',None),config.get('recovery_receiver'))
     model_input['organization_dossier']=(directory/'private.md').read_text()
     user_prompt=json.dumps(model_input,ensure_ascii=False,indent=2)
     error=None; decision=None; usage=None
@@ -50,8 +58,12 @@ def handle(directory, request, env_file):
     operation=request['operation']
     if operation=='receive':
         response={'event':gateway.receive(request['packet'])}
+    elif operation=='reliability_stage_status':
+        from trust_network.demo.reliability_stage import stage_status
+        response={'stage_status':stage_status(gateway,request['phase'],request['claims'],
+            request.get('rebuild_scope'),config.get('recovery_receiver'))}
     elif operation=='reliability_model_decision':
-        response={'model_decision':model_decision(directory,request,env_file)}
+        response={'model_decision':model_decision(directory,request,env_file,gateway)}
     elif operation=='reliability_sign_derived':
         parents=request['parents']; blockers=[b for p in parents for b in gateway.blockers(p)]
         if blockers:
@@ -170,16 +182,18 @@ def handle(directory, request, env_file):
         reliability_config=dict(config.get('reliability',{}))
         # A model may explicitly request freshness verification. This is a
         # shared tool available to every arm; it does not grant an action.
+        proposals=json.loads(json.dumps(request['proposals']))
         if operation=='reliability_batch' and request.get('force_verify'):
             reliability_config['policy']='verify_all'
+            for proposal in proposals: proposal['intent']='verify'
         policy=ReliabilityConfig(**reliability_config)
         if operation=='reliability_plan':
-            response={'plan':plan(gateway,request['proposals'],policy)}
+            response={'plan':plan(gateway,proposals,policy)}
         else:
             def query_reliability(owner,query):
                 print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
                 return json.loads(sys.stdin.readline())['reply']
-            response={'batch':run_batch(gateway,request['proposals'],query_reliability,
+            response={'batch':run_batch(gateway,proposals,query_reliability,
                 lambda p:{'simulated':True,'proposal':p['id'],'operation':p['operation']},
                 policy,config.get('verification_budget'))}
         response['events']=gateway.events[initial_events:]

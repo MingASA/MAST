@@ -8,7 +8,7 @@ import math
 import secrets
 
 from trust_network.demo.claim_channel import issue, read
-from trust_network.demo.claim_action_contract import approve_invoice
+from trust_network.demo.claim_action_contract import approve_invoice, validate_invoice
 from trust_network.demo.documents import digest
 
 
@@ -66,6 +66,8 @@ def plan(gateway, proposals, config=ReliabilityConfig()):
         raise ValueError('duplicate proposal id')
     decisions, checks = [], {}
     for proposal in proposals:
+        if proposal.get('intent','execute') not in ('verify','execute'):
+            raise ValueError('unknown action intent')
         if proposal['operation'] not in ('forward', 'approve_invoice'):
             raise ValueError('unregistered action contract')
         targets = proposal['claims']
@@ -84,6 +86,8 @@ def plan(gateway, proposals, config=ReliabilityConfig()):
             required = True
         if config.policy == 'autonomous':
             required = False
+        if proposal.get('intent')=='verify':
+            required = True
         action = 'REQUEST_EVIDENCE' if blocked else ('VERIFY' if required else 'PASS')
         # The autonomous arm still has the same structural channel contracts.
         # It means autonomous freshness selection, not an unprotected raw LLM.
@@ -192,11 +196,18 @@ def run_batch(gateway, proposals, query_authority, effect,
                     effect_started = True
                     return effect(proposal)
                 try:
-                    if proposal['operation'] == 'approve_invoice':
+                    if proposal.get('intent')=='verify':
+                        if proposal['operation']=='approve_invoice':
+                            validate_invoice(gateway,proposal['claims'],proposal['order'])
+                        outcome['action']='VERIFIED'
+                        outcome['requires_explicit_approval']=True
+                        gateway.record('verification_completed',digest(proposal),proposal['claims'])
+                    elif proposal['operation'] == 'approve_invoice':
                         outcome['result'] = approve_invoice(gateway, proposal['claims'], proposal['order'], invoke_effect)
                     else:
                         outcome['result'] = invoke_effect()
-                    outcome['action'] = 'COMPLETED'
+                    if proposal.get('intent')!='verify':
+                        outcome['action'] = 'COMPLETED'
                 except ValueError as exc:
                     outcome['action'] = 'EFFECT_UNKNOWN' if effect_started else 'BLOCKED'
                     outcome['reason'] = str(exc)
@@ -206,6 +217,7 @@ def run_batch(gateway, proposals, query_authority, effect,
         gateway.record('reliability_outcome', digest(proposal), [outcome['action']])
         outputs.append(outcome)
     report = {'kind': 'reliability_batch', 'workflow': gateway.workflow,
+              'action_semantics':'explicit-intent-v1',
               'plan': plan_packet, 'evidence': evidence, 'queries': queries, 'replies': replies,
               'status': status, 'outputs': outputs, 'verification_calls': calls,
               'effects_are_adapter_reports': True}

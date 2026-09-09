@@ -20,6 +20,7 @@ from trust_network.demo.documents import digest
 from trust_network.demo.evaluate_reliability_workflow import aggregate, evaluate_run
 from trust_network.demo.prepare_reliability_workflow import prepare
 from trust_network.demo.reliability_agent_protocol import COMMON_AGENT_SYSTEM
+from trust_network.demo.reliability_stage import STAGE_SEMANTICS
 from trust_network.demo.reliability_accountability import append_event
 from trust_network.demo.reliability_audit import audit_with_authorities
 
@@ -216,7 +217,7 @@ class WorkflowController:
 
 
 def _coordinator_input(packets,parent_ids,recovery_notice=None):
-    value={'role':'coordinator','task':'核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；proceed 时必须逐字复制 required_parent_claims 到 claims；不能漏掉组件、改变来源金额或声称账单已经批准。',
+    value={'stage_semantics':STAGE_SEMANTICS,'role':'coordinator','task':'核对公开签名费用清单是否完整，并决定是否生成订单A的 total_charge 派生声明。只有在所有清单组件都能由签名来源支持时才可以 proceed；proceed 时必须逐字复制 required_parent_claims 到 claims；不能漏掉组件、改变来源金额或声称账单已经批准。',
            'public_claims':[_packet_view(p) for p in packets],
            'candidate_claims':{'total_charge':list(parent_ids)},
            'required_parent_claims':parent_ids,
@@ -257,7 +258,7 @@ def _coordinator_input(packets,parent_ids,recovery_notice=None):
 
 
 def _receiver_input(packets,authorization_id,total_id,schedule_id,recovery_notice=None):
-    value={'role':'receiver','task':'分别处理两个任务：对订单A账单决定是否申请 approve_invoice；对交付时间参考决定是否 forward。approve_invoice 只申请账单确认，不付款、不出库；交付时间参考是独立的低风险转发任务。你可以对任一任务选择 verify 或 hold。',
+    value={'stage_semantics':STAGE_SEMANTICS,'role':'receiver','task':'分别处理两个任务：对订单A账单决定是否申请 approve_invoice；对交付时间参考决定是否 forward。approve_invoice 只申请账单确认，不付款、不出库；交付时间参考是独立的低风险转发任务。你可以对任一任务选择 verify 或 hold。',
            'public_claims':[_packet_view(p) for p in packets],
            'candidate_claims':{'invoice-A':[authorization_id,total_id] if total_id else [authorization_id],
                                'schedule-reference':[schedule_id]},
@@ -270,7 +271,7 @@ def _receiver_input(packets,authorization_id,total_id,schedule_id,recovery_notic
 
 
 def _recovery_receiver_input(packets,authorization_id,total_id,recovery_notice):
-    return {'role':'receiver','task':'补证和新的派生声明已经送达。只重新决定 invoice-A 是否申请 approve_invoice；旧来源仍保留为历史记录，必须依据当前有效的新派生声明，不付款、不出库。可以选择 verify 或 hold。',
+    return {'stage_semantics':STAGE_SEMANTICS,'role':'receiver','task':'补证和新的派生声明已经送达。只重新决定 invoice-A 是否申请 approve_invoice；旧来源仍保留为历史记录，必须依据当前有效的新派生声明，不付款、不出库。可以选择 verify 或 hold。',
             'public_claims':[_packet_view(p) for p in packets],
             'candidate_claims':{'invoice-A':[authorization_id,total_id]},
             'available_tools':['提交 approve、verify 或 hold','运行时可以查权威当前状态'],
@@ -317,6 +318,7 @@ def _parse_receiver(summary,specs):
         if item['id']=='invoice-A': proposal={'id':'invoice-A','operation':'approve_invoice',
                                              'order':'A','claims':claims}
         else: proposal={'id':'schedule-reference','operation':'forward','claims':claims}
+        proposal['intent']='verify' if action=='verify' else 'execute'
         proposals.append(proposal)
         if action=='verify': forced.append(proposal['id'])
     # Missing lanes are model omissions, but valid lanes remain independently
@@ -326,14 +328,8 @@ def _parse_receiver(summary,specs):
 
 
 def _apply_actions(controller,parsed,stage):
-    proposals,forced,parse_stats=parsed
-    forced_ids=set(forced)
-    normal=[p for p in proposals if p['id'] not in forced_ids]
-    forced_proposals=[p for p in proposals if p['id'] in forced_ids]
-    batches=[]
-    if normal: batches.append(controller.run_batch(normal,stage,False))
-    if forced_proposals: batches.append(controller.run_batch(forced_proposals,stage,True))
-    return batches,parse_stats
+    from trust_network.demo.reliability_dispatch import apply_actions
+    return apply_actions(controller,parsed,stage,_parse_receiver)
 
 
 def _find_blocked_invoice(batches,old_root):

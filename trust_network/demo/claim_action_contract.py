@@ -6,7 +6,8 @@ Those operations require separate contracts and resource execution receipts.
 from trust_network.demo.documents import digest
 
 
-def approve_invoice(gateway, claim_ids, order, effect):
+def validate_invoice(gateway, claim_ids, order):
+    """Check the business contract without authorizing or invoking an effect."""
     contract={'operation':'approve_invoice','version':1,
               'requires':['invoice_authorization','total_charge']}
     request={'contract':digest(contract),'order':order,'claims':list(claim_ids)}
@@ -35,7 +36,12 @@ def approve_invoice(gateway, claim_ids, order, effect):
     if (type(total['cents']) is not int or type(authorization['maximum_cents']) is not int or
             total['cents']<0 or total['cents']>authorization['maximum_cents']):
         block('amount_not_authorized')
-    gateway.record('action_contract_allowed',target,[digest(contract),*claim_ids])
+    return target,digest(contract)
+
+
+def approve_invoice(gateway, claim_ids, order, effect):
+    target,contract_id=validate_invoice(gateway,claim_ids,order)
+    gateway.record('action_contract_allowed',target,[contract_id,*claim_ids])
     result=effect()
     gateway.record('action_effect_returned',target,[digest(result)])
     return result
