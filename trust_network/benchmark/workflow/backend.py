@@ -1,4 +1,5 @@
 """Same worker-shaped public API, in-memory replay or isolated subprocesses."""
+from trust_network.demo.claim_derivation import proposed_fact
 import copy
 import json
 import os
@@ -39,7 +40,7 @@ class MemoryBackend:
             elif op=='reliability_public_view':response={'view':public_view(g)}
             elif op=='reliability_sign_derived':
                 packet=issue(g.owner,g.key,{'kind':'claim','workflow':g.workflow,'parents':request['parents'],
-                    'fact':request['fact'],'rule':request.get('rule','relay')})
+                    'fact':proposed_fact(g,request,request['parents']),'rule':request.get('rule','relay')})
                 event=g.receive(packet);response={'event':event}
                 if event['body']['action']=='received':response['packet']=packet
             elif op=='reliability_revoke':
@@ -66,8 +67,13 @@ class MemoryBackend:
                 receiver=request['envelope']['signature']['issuer']
                 if receiver not in self.configs[owner]['recovery_receivers']:raise ValueError('untrusted receiver')
                 args=(g,request['envelope'],request['task_id'],request['completed'],receiver)
-                response=({'frontier':frontier(*args)} if op=='reliability_frontier' else
-                    rebuild_frontier_claim(*args,request['old'],request['fact']))
+                state=frontier(*args)
+                if op=='reliability_frontier':response={'frontier':state}
+                else:
+                    node=next((n for n in state['ready'] if n['old']==request['old'] and n['issuer']==g.owner),None)
+                    if node is None:raise ValueError('rebuild node is not ready')
+                    fact=proposed_fact(g,{**request,'rule':node['rule']},node['parents'])
+                    response=rebuild_frontier_claim(*args,request['old'],fact)
             else:raise ValueError('unsupported replay operation')
         except (ValueError,KeyError) as exc:response={'error':type(exc).__name__,'message':str(exc)}
         response['events']=g.events[start:];response=copy.deepcopy(response)

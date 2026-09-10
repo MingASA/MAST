@@ -1,0 +1,68 @@
+{
+  "derive:coordinator:A": {
+    "action": "proceed",
+    "claims": [
+      "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd"
+    ],
+    "fact_ref": "d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd",
+    "reason": "本地父证据 d0cc249ca030d6f79faa1a262a634d47788c6c1ce917f3d78d2b83d35c2a4abd 可用且与 required_parent_claims 一致，公证签名有效，无撤销/阻塞，订单A的费用依据（total_charge=CNY 100分）充分；按 relay-reference-v1 通过 fact_ref 引用父声明请求 worker 原样转签，不输出 fact，未涉及订单C。"
+  },
+  "forward:coordinator:Aa": {
+    "action": "forward",
+    "claims": [
+      "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a333"
+    ],
+    "reason": "only hash present"
+  },
+  "forward:coordinator:Ab": {
+    "action": "hold",
+    "claims": [],
+    "reason": "任务要求决定是否继续转交证据，但本组织工作手册未提供转交（forward）的判定条件，且 known_revocations 与 known_blockers 为空、candidate_claims 仅有一个条目（订单 A 的 total_charge=100 CNY 派生证据，父证据为订单 A 的源声明）。按手册，没有明确批准不得把审核意见当作付款或转交动作；runtime_stage_status 中 task_binding_verified=false、business_execution_authorized=false、may_propose_derivation=false，亦不允许隐式执行 approve/forward。当前既无可核验的目标、也无明确转交依据，因此暂停等待人工指令。"
+  },
+  "derive:coordinator:C": {
+    "action": "proceed",
+    "claims": [
+      "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+    ],
+    "fact_ref": "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49",
+    "reason": "订单C的签名费用依据7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49已由source公开签发，predicate为total_charge，order=C，currency=CNY，cents=100，本地父证据检查通过，无缺失、无阻断、未在known_revocations中。订单A和C相互独立，A的证据不影响C。runtime_stage_status显示may_propose_derivation=true且local_parent_checks_passed=true，依据relay-reference-v1以fact_ref引用父声明，提议重建派生证据；本动作仅提议派生，不代表付款或出库。"
+  },
+  "forward:coordinator:Ca": {
+    "action": "hold",
+    "claims": [],
+    "reason": "task_binding_verified=false 且 may_propose_derivation=false，当前阶段无法安全 approve 或 forward；候选声明 a8c8e60d… 的父声明 7249c604… 来自 source，本地仅见公开签名证据，未见本组织私有核验记录，依据手册在缺失明确核验前应 hold；订单 A 与 C 独立，本暂停不牵连 A 的处理。"
+  },
+  "forward:coordinator:Cb": {
+    "action": "hold",
+    "claims": [],
+    "reason": "candidate_claims 仅包含订单 C 的协调员转签声明 a8c8e60d…；其唯一父声明 7249c604…（source 对订单 C 的 total_charge=100 CNY）虽存在于 evidence_index 并由 source 公开签名，但 coordinator 尚未对该父声明进行独立转签，证据链缺少 coordinator→source(C) 这一必要环节。本组织工作手册要求核对收到的证据并仅在资料充分时继续；当前链上证据不完整，需先核验父级 source 证据或补齐 coordinator 对 source(C) 的转签后再决定 forward/approve，故选择 hold。订单 A 与 C 相互独立，不因 A 的状态影响 C。"
+  },
+  "derive:middle_a:A": {
+    "action": "hold",
+    "claims": [],
+    "fact_ref": "",
+    "reason": "required_parent_claims声明缺失，当前阶段不得提议派生证据。"
+  },
+  "derive:middle_a:C": {
+    "action": "hold",
+    "claims": [
+      "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+    ],
+    "fact_ref": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+    "reason": "依据runtime_stage_status，本地父证据缺失（missing/blocked），local_parent_checks_passed=false，may_propose_derivation=false。本组织证据索引与公开声明中均无该声明的本地副本，无法以fact_ref发起relay-reference-v1派生重建；按手册规定，证据缺失时应暂停而非继续，待父证据可用后再议。"
+  },
+  "derive:middle_b:A": {
+    "action": "hold",
+    "claims": [],
+    "fact_ref": null,
+    "reason": "required_parent_claim 17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133 在本地缺失（runtime_stage_status.missing 与 blocked 均标记其缺失，local_parent_checks_passed=false、may_propose_derivation=false），无可据以派生签名费用意见的本地证据，按工作手册应暂停而非凭空提议。"
+  },
+  "derive:middle_b:C": {
+    "action": "hold",
+    "claims": [
+      "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+    ],
+    "fact_ref": "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0",
+    "reason": "本地父证据缺失：runtime_stage_status 显示 required_parent_claims 中的声明处于 missing 状态，local_parent_checks_passed=false 且 may_propose_derivation=false。在本地工作手册要求资料充分方可继续的前提下，依据 relay-reference-v1 协议无法对缺失的父证据进行原样转签，因此选择 hold，待来源方提供完整证据后再议。evaluate/billing 类的明确执行动作需在父证据就绪并重新通过本地检查后才可能讨论；当前不发起 verify，也不提交 approve/forward。"
+  }
+}

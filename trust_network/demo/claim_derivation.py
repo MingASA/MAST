@@ -26,3 +26,33 @@ def valid_derivation(rule, output, inputs):
         amounts[component]=value['cents']
     return output=={'predicate':'total_charge','value':{'order':manifest['order'],
                     'currency':manifest['currency'],'cents':sum(amounts.values())}}
+
+
+def relay_fact(gateway, parents, reference):
+    """Resolve an explicit relay reference from available owner-local evidence.
+
+    This is serialization, not fact discovery or an approval. Final signing or
+    rebuilding must still validate the rule, dependencies and recovery binding.
+    """
+    import copy
+    if (not isinstance(parents,list) or not parents or
+            any(not isinstance(p,str) for p in parents) or
+            len(set(parents))!=len(parents) or reference not in parents):
+        raise ValueError('relay reference must identify a required parent')
+    if any(gateway.blockers(p) for p in parents):
+        raise ValueError('relay parent unavailable')
+    facts=[gateway.claims[p]['body']['fact'] for p in parents]
+    result=gateway.claims[reference]['body']['fact']
+    if not valid_derivation('relay',result,facts):
+        raise ValueError('relay parents disagree')
+    return copy.deepcopy(result)
+
+
+def proposed_fact(gateway, request, parents):
+    """Legacy explicit fact or typed reference; never silently repair a draft."""
+    if ('fact' in request)==('fact_ref' in request):
+        raise ValueError('provide exactly one of fact or fact_ref')
+    if 'fact_ref' in request:
+        if request.get('rule','relay')!='relay':raise ValueError('reference requires relay')
+        return relay_fact(gateway,parents,request['fact_ref'])
+    return request['fact']

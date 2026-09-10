@@ -1,8 +1,10 @@
-> **当前状态：统一 workflow benchmark v1 已落地。** 请优先阅读 [设计与结果解释](BENCHMARK_WORKFLOW_V1.md)、[实验交接](TASK_EXPERIMENTS_WORKFLOW_V1.md)。已归档 11 条件 × 8 臂 = 88 条离线流程、2 条真实进程离线对照、v7 原始 151 文件校验和 6 批重放一致，并完成 3 条 live pilot workflow。接口修复后 180 项测试通过；离线新增付费调用为 0，live pilot 实际调用 54 次但三条受控故障均未实际注入，不能把零传播解释成机制成功，详见 [live pilot 审阅](results/workflow_v1_live_pilot_01/POSTMORTEM.md)。完整依赖优于仅根门禁，但默认与全部依赖简单强门禁等价；push 提早检测但仅省约 3% 查证，恢复绑定拒绝跨任务产物，未撤销事实错误仍未解决。以下较早阶段的“正式矩阵未运行”等描述保留为历史，当前以新 benchmark 报告为准。
+> **最新状态：** 首个 pilot 01 的 54 次调用全部未实现故障，历史归档不作效果比较。新增 `relay-reference-v1` 后，三条 active live 校准中的最新一条已实现 6 个派生阶段和 4 个中间转交；随后一次 [三臂中间撤销实验](results/workflow_reference_live_intermediate_02/POSTMORTEM.md) 真实注入故障。完整依赖拦截两条错误动作，push 提前 1 tick 发现，根门禁让错误中间证据传播到两个下游组织；最终错误账单均未完成，主要受模型 hold/无效后续动作影响，因此不能声称真实错误率下降。当前全量测试 185 项通过。
 
-> **最新机制进展：** 在closure v3之上新增本地交接反向索引、有签收的级联撤销通知，以及恢复证据二次失效的局部处理。见 [机制说明](MECHANISM_DEPENDENCY_NOTICES_V1.md) 和 [实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)。169项全量测试通过；不代表新的真实模型实验收益。
+> **当前状态：统一 workflow benchmark v1 已落地。** 请优先阅读 [设计与结果解释](BENCHMARK_WORKFLOW_V1.md)、[实验交接](TASK_EXPERIMENTS_WORKFLOW_V1.md)。已归档 11 条件 × 8 臂 = 88 条离线流程、2 条真实进程离线对照、v7 原始 151 文件校验和 6 批重放一致；首个 3 条 live pilot 因故障未实现而无效，修复后又完成 3 条 active 校准和 3 条中间撤销三臂实验。完整依赖在这次 live 运行中拦截了两个错误动作，push 提前发现，但模型行为使最终错误完成样本不足；未撤销事实错误仍未解决。以下较早阶段的“正式矩阵未运行”等描述保留为历史，当前以新 benchmark 报告为准。
 
-> **最新机制补充：** 当前 closure v3 已实现完整依赖查证、中间声明修订、受约束后代恢复与本地签名顺序追溯，158 项测试通过，正式矩阵尚未运行。请优先读 [机制说明](MECHANISM_CLOSURE_V3.md) 与 [实验交接](TASK_EXPERIMENTS_CLOSURE_V3.md)。本文下方各阶段结果保留历史口径；旧 C pilot 唯一完成案例存在 VERIFY 自动执行混淆，见 [复核](REVIEW_CONTAINMENT_LIVE_PILOT_V1.md)。
+> **上一阶段机制记录：** 在 closure v3 之上新增本地交接反向索引、有签收的级联撤销通知，以及恢复证据二次失效的局部处理。见 [机制说明](MECHANISM_DEPENDENCY_NOTICES_V1.md) 和 [实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)；当前 live 结论以 workflow v1 结果为准。
+
+> **上一阶段 closure v3 记录：** 已实现完整依赖查证、中间声明修订、受约束后代恢复与本地签名顺序追溯，158 项测试通过；其正式矩阵与旧 C pilot 的边界记录保留在下方。当前请优先读 workflow v1 的 [机制说明](BENCHMARK_WORKFLOW_V1.md) 与 [实验交接](TASK_EXPERIMENTS_WORKFLOW_V1.md)。
 
 # 当前项目总结：跨组织 Agent 网络的可靠性、传播控制与追溯
 
@@ -154,15 +156,14 @@ v7 是标准接口已经能被真实模型走通的正向信号，不是恢复�
 
 ## 下一步任务
 
-下一步不是继续单独扩大 v7，也不是马上扩大付费规模。当前 **causal containment-and-accountability benchmark v1** 已完成离线闭环和有界 live pilot；后续应先分析恢复阶段 hold 的原因，再在用户决定后扩大真实模型规模。
+下一步不是继续重复同一条静态 live 条件，也不是把本次零错误完成直接当成错误率结论。当前 **causal containment-and-accountability benchmark v1** 已完成离线闭环、进程核验、接口校准和一次有效性分层的三臂 live 实验。
 
 下一阶段的顺序是：
 
-1. 写清 benchmark protocol：拓扑、事件时序、故障位置、责任义务、策略臂、分母和停止规则。
-2. 实现零模型调用的虚拟网络和动态真值评估器。
-3. 用已有 v7 原始决定做 trace replay，确认新 harness 能重现已有的拦截和恢复结果。
-4. 对新拓扑先做离线矩阵测试，再做小规模 MiniMax pilot。
-5. 根据 pilot 是否显示机制增量，再决定是否进行新的大规模付费实验；扩大前由用户决定。
+1. 固定本次 live 结果的有效性口径，把“模型没有提出动作”和“机制阻断明确动作”分开作为 benchmark 分母。
+2. 围绕 `signed_false` 与 `conflicting_sources` 设计权威补证、冲突解决和责任义务条件，先在离线矩阵验证其可区分性。
+3. 分析恢复阶段和正常账单阶段的 hold/无效动作，必要时做定向小 pilot；不为得到完整率而自动重试同一场景。
+4. 只有新场景产生清楚的干预机会并显示机制增量时，再提出更大规模真实模型实验；扩大范围前保留用户决策点。
 
 ## Benchmark 的内容：它到底要模拟什么
 
@@ -334,4 +335,4 @@ benchmark 不能只有一个最终 `allowed=true/false` 标签。它需要像一
 
 完整原始请求、响应、签名状态、事件链、批次审计和完整性清单见 [C pilot report](results/containment_live_pilot_v1/report.md)、[metrics](results/containment_live_pilot_v1/metrics.json) 和 [机制案例](results/containment_live_pilot_v1/mechanism_cases.md)。一次因误把 active 条件加入 live 矩阵而中止的运行保留在 [scope-mismatch archive](results/containment_live_pilot_v1_scope_mismatch_aborted/SCOPE_NOTE.md)，不计入正式样本。
 
-当前最有信息量的下一步是先处理恢复阶段的模型可用性：把 frontier 状态、已完成父声明和最终 receiver 的 fresh-check 要求压缩成更清楚的同一证据视图，再做不扩规模的定向小 pilot；随后再选择冲突来源、签名有效但事实错误和部分通知场景。新的大规模付费实验或核心方向改变仍需用户决定。
+当前最有信息量的下一步是把“已撤销错误”与“尚未撤销但相互冲突的事实”分开实验：前者已经在真实三臂运行中显示了 dependency 的拦截信号，后者仍没有可用检测机制。恢复阶段的模型可用性也需要继续作为单独指标记录，不能用 hold 产生的低错误完成替代恢复成功。新的大规模付费实验或核心方向改变仍需用户决定。

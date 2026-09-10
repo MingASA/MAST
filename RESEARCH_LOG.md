@@ -139,3 +139,23 @@ v3 frontier额外区分签名有效与当前可用的完成证据。二次撤销
 三条运行都在 tick 10 尝试撤销 coordinator 的中间 claim，但模型没有产生可由 coordinator worker 登记的有效派生声明。旧调度路径用离线 fixture fallback 继续构造撤销目标，真实 worker 因本地不存在该 claim 而拒绝，三条都记录 `fault_not_realized`，`truth.faults=[]`。因此 0 unsafe、0 propagation、0 recovery 只说明故障没有发生，不能作为机制比较结果；模型高 hold 率和派生 fact 不符合 relay 精确复制规则也是可复现的接口发现。运行后审阅见 `results/workflow_v1_live_pilot_01/POSTMORTEM.md`。
 
 随后修复 live/fixed-tape 路径：未被真实 worker 接受的派生声明不再回退为 fixture，后续阶段明确记录未实现状态；统一模型接口补充 relay fact 必须逐字复制父声明的契约。修复后的全量测试为 180 passed。按照任务书，首次三条完成后不自动补跑；下一次付费运行需由用户决定。
+
+
+### 2026-09-09：pilot 01 的失败不是可靠性成功，先修执行接口
+
+复核原始模型回复发现：未提供明确 claim digest 索引，模型错把 bundle_hash 当 ID；自由派生 fact 出现串单和改字段，被共享 relay 检查拒绝，后续 hold 形成连锁停滞。前一代理已移除未登记 fixture fallback；本轮进一步加入证据索引和 relay-reference-v1，让明确 proceed 通过 fact_ref 选择父证据，程序在本地解析并再次验证。普通派生和受约束恢复共用接口，旧错误 fact 不自动修复。此改动是执行接口设计，不是事实真实性算法或已证实模型收益。
+
+评分新增故障实现和故障后动作机会，completed 不代表可比较；旧 pilot 独立复评分仍三臂 fault_not_realized。原 overfreeze 混入上游未完成，现分最终程序阻断与所有原因未完成；旧归档不改。下一步先交接 1 条 active live 校准，成功后再由用户决定是否开中间撤销三臂，不自动扩实验。本轮无新付费调用。见 REVIEW_WORKFLOW_PILOT01_REFERENCE_V1.md。
+
+本轮验收：183 tests passed；实际进程脚本核验故障发生、4/4 安全完成、2 次引用绑定恢复，worker error 0、付费调用 0。该结果不代表引用接口已提高真实模型成功率。
+
+
+### 2026-09-09：类型化声明引用校准与三臂中间撤销 live 结果
+
+active/root_gate 的第一条付费校准仍暴露长 digest 转抄错误：真实派生 A 已登记，但模型把后续 forward 的 ID 末位写错；第二条校准确认 forward 可以成功，却又暴露 derive 的 `claims` 没有按新接口解析。于是把 `claim_refs` 统一到 derive、forward、verify、approve，并允许 `fact_ref` 选择同一 `claim_id_index` 的本地 token。引用 token 是模型明确选择的 typed pointer；无效 token、重复 token、同时提交旧 claims 都拒绝，不由 worker 自动纠正。全量测试为 185 passed。
+
+第三条 active 校准完成 6 个派生阶段和 4 个中间转交，全部由真实 process worker 登记，worker error 0；有 22 次模型调用、22 次 provider attempt、106341 个已知 token。模型仍有 2 个 hold、1 个无效后续动作和 2 个 C 任务未完成，所以该校准只证明接口可用，不证明正常业务完成率。
+
+随后按已授权范围运行 `intermediate_retraction` 的 `root_gate`、`dependency`、`dependency_push` 各一条。三臂都在 tick 10 真实撤销 coordinator 的 A 中间声明，原始归档在 `results/workflow_reference_live_intermediate_02/`，运行后复核在其 `POSTMORTEM.md`。root_gate 的错误证据继续到两个下游组织、两个分支，最大相对距离 2；dependency 在 tick 12 拦住两条错误依赖动作；dependency_push 的通知在 tick 11 让两个消费者发现，提前于普通依赖一 tick。
+
+这次三臂均有真实故障；root_gate 与 dependency 都有故障后 execute 提议，containment 可评估。dependency_push 因通知到达后模型没有再形成故障后 execute 提议，标记 `no_post_fault_action_opportunity`，零错误完成不计作 containment 证据。三臂最终错误账单均为 0，但 root_gate 也没有错误完成，原因是模型 hold/无效动作造成的样本不足；因此结果支持“完整依赖能阻断已撤销中间证据”和“push 提前发现”，不支持真实模型错误率已下降。总计 57 次模型调用、58 次 provider attempt、232059 个已知 token，worker error 0，归档完整性核对通过。下一步停止重复该静态 live 条件，转向签名有效但事实错误的权威补证和冲突解决。

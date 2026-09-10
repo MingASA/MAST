@@ -28,21 +28,26 @@ class Decisions:
     def choose(self,owner,stage,claims,default,task,derive=False,extra=None):
         response=self.backend.call(owner,{'operation':'reliability_public_view'},sender='decision-input')
         view=response.get('view',{'claims':[],'revocations':[],'blocked':{}})
+        claim_id_index={f'task[{i}]':claim for i,claim in enumerate(claims)}
         prompt={'role':'coordinator' if derive else 'receiver','organization':owner,'task':task,
             'required_parent_claims':claims if derive else [],'candidate_claims':{'task':claims},
+            'claim_id_index':claim_id_index,
+            'evidence_index':{digest(p):{'fact':p['body']['fact'],'issuer':p['signature']['issuer'],
+                'parents':p['body']['parents']} for p in view['claims']},
             'public_claims':view['claims'],'known_revocations':view['revocations'],
             'known_blockers':view['blocked'],'stage_semantics':STAGE_SEMANTICS,
-            'output_schema':({'action':'proceed|hold','claims':claims,
-                              'fact':'relay规则要求逐字复制每个父声明的完整fact对象','reason':'string'} if derive else
-                             {'action':'approve|forward|verify|hold','claims':claims,'reason':'string'}),
+            'output_schema':({'action':'proceed|hold','claim_refs':['task[0]'],
+                              'fact_ref':'task[0]；由worker按relay原样复制事实，不输出fact','reason':'string'} if derive else
+                             {'action':'approve|forward|verify|hold','claim_refs':['task[0]'],'reason':'string'}),
             **(extra or {})}
         if derive:
             # The worker's relay rule is exact equality, not a semantic claim
             # that merely sounds supported. Keep this contract public and
             # identical across all policy arms so a live model can reproduce
             # the packet that the real owner gateway will accept.
+            prompt['decision_protocol']='relay-reference-v1'
             prompt['derivation_rule']='relay'
-            prompt['derivation_contract']='fact must be an exact JSON copy of each parent claim fact; do not rename, add, remove, or recompute fields'
+            prompt['derivation_contract']='Use claim_refs and fact_ref to select exact entries from claim_id_index; worker requests an exact JSON copy from owner-local parent evidence and does not accept a repaired ID or fact. Legacy explicit fact is accepted only unchanged, never repaired.'
         row={'owner':owner,'stage':stage,'input_hash':digest(prompt),'public_input':prompt,'origin':'live' if self.mode=='live' else 'fixed_tape' if self.tape is not None else 'scripted'}
         if len(self.records)>=self.max_decisions:
             draft={'action':'hold','reason':'decision_budget_exhausted'};row['status']='budget_exhausted'
@@ -124,19 +129,28 @@ class Workflow:
         self.queue_notices()
 
     def derive(self,owner,parents,fact,stage,order,recovery=None):
-        default={'action':'proceed','claims':parents,'fact':fact,'reason':'依据收到的父证据形成核验意见'}
+        default={'action':'proceed','claims':parents,'fact_ref':parents[0],'reason':'依据收到的父证据形成核验意见'}
         draft=self.decisions.choose(owner,stage,parents,default,'审核签名费用依据；有充分依据则提议派生意见，否则hold。',True,
             {'runtime_rebuild_scope':{'envelope':recovery['envelope'],'task_id':recovery['task_id'],
                 'completed':recovery['completed'],'old':recovery['node']['old']}} if recovery else None)
         self.bus.record('agent_decision',owner=owner,stage=stage,claims=parents,draft=draft,phase='recovery' if recovery else 'work')
-        if draft.get('action')!='proceed' or draft.get('claims')!=parents or not isinstance(draft.get('fact'),dict):
+        resolved=self.resolve_claims(draft,parents)
+        fact_ref=draft.get('fact_ref')
+        claim_index={f'task[{i}]':p for i,p in enumerate(parents)}
+        if isinstance(fact_ref,str) and fact_ref in claim_index:
+            fact_ref=claim_index[fact_ref]
+        if (draft.get('action')!='proceed' or resolved!=parents or
+                ('fact' in draft)==('fact_ref' in draft) or
+                ('fact' in draft and not isinstance(draft['fact'],dict)) or
+                ('fact_ref' in draft and fact_ref not in parents)):
             self.bus.record('stage_not_realized',owner=owner,stage=stage,order=order,
                 phase='recovery' if recovery else 'work',reason='model_hold_or_invalid_derived_proposal')
             return None
+        fact_args={'fact_ref':fact_ref} if 'fact_ref' in draft else {'fact':draft['fact']}
         if recovery:
-            return draft['fact']
+            return fact_args
         if owner=='coordinator' and order=='A' and self.case in ('derived_error','missing_dependency'):
-            body={'kind':'claim','workflow':self.f['workflow'],'parents':parents,'rule':'relay','fact':copy.deepcopy(draft['fact'])}
+            body={'kind':'claim','workflow':self.f['workflow'],'parents':parents,'rule':'relay','fact':copy.deepcopy(draft.get('fact',fact))}
             if self.case=='derived_error':body['fact']['value']['cents']+=7
             else:body['parents']=[]
             # Explicit faulty signing boundary, outside the protected worker.
@@ -144,11 +158,20 @@ class Workflow:
             self.fault(digest(packet),owner,self.case)
             response=self.rpc(owner,'receive',packet=packet)
             return packet if response.get('event',{}).get('body',{}).get('action')=='received' else None
-        packet=self.rpc(owner,'reliability_sign_derived',parents=parents,fact=draft['fact'],rule='relay').get('packet')
+        packet=self.rpc(owner,'reliability_sign_derived',parents=parents,rule='relay',**fact_args).get('packet')
         if packet is None:
             self.bus.record('stage_not_realized',owner=owner,stage=stage,order=order,
                 phase='work',reason='worker_rejected_derived_proposal')
         return packet
+
+    def resolve_claims(self,draft,claims):
+        if 'claim_refs' in draft:
+            refs=draft.get('claim_refs');index={f'task[{i}]':claim for i,claim in enumerate(claims)}
+            if ('claims' in draft or not isinstance(refs,list) or not refs or
+                    any(ref not in index for ref in refs) or len(set(refs))!=len(refs)):
+                return None
+            return [index[ref] for ref in refs]
+        return claims if draft.get('claims')==claims else None
 
     def fixture_or_none(self,packet,fallback):
         """Use a fixture only for scripted replay, never for live state.
@@ -186,7 +209,8 @@ class Workflow:
                 extra={'verification_evidence':evidence} if evidence else None)
             self.bus.record('agent_decision',owner=owner,stage=name,claims=claims,draft=draft,phase=phase)
             if draft.get('action')=='hold':return {'action':'MODEL_HOLD','batch':None}
-            if draft.get('action') not in (desired,'verify') or draft.get('claims')!=claims:
+            resolved=self.resolve_claims(draft,claims)
+            if draft.get('action') not in (desired,'verify') or resolved!=claims:
                 return {'action':'MODEL_INVALID','batch':None}
             proposal={'id':stage,'operation':'forward' if recipient else 'approve_invoice',
                 'claims':claims,'intent':'verify' if draft['action']=='verify' else 'execute'}
@@ -246,11 +270,11 @@ class Workflow:
                     {'envelope':envelope,'task_id':task['stage'],'completed':completed,'node':node})
                 if fact is None:error='recovery_model_hold_or_invalid';break
                 if self.arm.bound_recovery:
-                    result=self.rpc(actor,'reliability_frontier_rebuild',envelope=envelope,task_id=task['stage'],completed=completed,old=node['old'],fact=fact)
+                    result=self.rpc(actor,'reliability_frontier_rebuild',envelope=envelope,task_id=task['stage'],completed=completed,old=node['old'],**fact)
                     packet=result.get('packet')
                 else:
                     # Same structural worker checks, but no recovery task validation.
-                    packet=self.rpc(actor,'reliability_sign_derived',parents=parents,fact=fact,rule=node['rule']).get('packet')
+                    packet=self.rpc(actor,'reliability_sign_derived',parents=parents,rule=node['rule'],**fact).get('packet')
                 if packet is None:error='rebuild_rejected';break
                 if self.case=='bad_recovery_binding' and not self.corrupted:
                     body={**packet['body'],'supersedes':node['old'],

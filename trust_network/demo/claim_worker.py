@@ -1,4 +1,5 @@
 """Owner-local persistent claim gateway and real Agent handoff decisions."""
+from trust_network.demo.claim_derivation import proposed_fact
 import argparse
 import json
 import os
@@ -124,7 +125,7 @@ def handle(directory, request, env_file):
             response={'event':gateway.record('derived_sign_blocked',parents,blockers)}
         else:
             packet=issue(config['owner'],key,{'kind':'claim','workflow':config['workflow'],
-                'fact':request['fact'],'parents':parents,'rule':request.get('rule','relay')})
+                'fact':proposed_fact(gateway,request,parents),'parents':parents,'rule':request.get('rule','relay')})
             checked=gateway.receive(packet)
             response={'event':checked}
             if checked['body']['action']=='received': response['packet']=packet
@@ -208,7 +209,11 @@ def handle(directory, request, env_file):
         if operation=='reliability_frontier':
             response={'frontier':frontier(gateway,request['envelope'],request['task_id'],request['completed'],receiver)}
         else:
-            response=rebuild_frontier_claim(gateway,request['envelope'],request['task_id'],request['completed'],receiver,request['old'],request['fact'])
+            state=frontier(gateway,request['envelope'],request['task_id'],request['completed'],receiver)
+            node=next((n for n in state['ready'] if n['old']==request['old'] and n['issuer']==gateway.owner),None)
+            if node is None:raise ValueError('rebuild node is not ready')
+            fact=proposed_fact(gateway,{**request,'rule':node['rule']},node['parents'])
+            response=rebuild_frontier_claim(gateway,request['envelope'],request['task_id'],request['completed'],receiver,request['old'],fact)
         response['events']=gateway.events[initial_events:]
     elif operation=='reliability_claim_revision':
         from trust_network.demo.recovery_closure import revision_offer

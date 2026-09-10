@@ -1,6 +1,6 @@
 # 统一跨组织工作流 benchmark v1
 
-2026-09-09。实现入口：`trust_network/benchmark/workflow/`。这是受控业务工作流 benchmark，不是完整网络故障模拟器。第一版已完成离线运行、独立进程校准和首个有界 live pilot；离线阶段新增付费模型调用为 0，live pilot 另行归档。
+2026-09-09。实现入口：`trust_network/benchmark/workflow/`。这是受控业务工作流 benchmark，不是完整网络故障模拟器。第一版已完成离线运行、独立进程校准、relay-reference-v1 接口校准和一次有界三臂 live 实验；离线阶段新增付费模型调用为 0，所有 live 结果另行归档。
 
 ## 当前证据与结论
 
@@ -8,7 +8,9 @@
 - [独立进程重放](results/unified_workflow_v1_process_replay/report.md)：中间声明撤销，root_gate 与 dependency_push 两条工作流，真实持久化组织 worker，模型决定仍用固定脚本。
 - [历史 v7 真实提议重放](results/unified_workflow_v1_v7_replay.json)：151 个原始文件校验、4 条历史流程的 6 个动作批次一致；不把历史样本并入新矩阵。
 - [首个 workflow v1 live pilot](results/workflow_v1_live_pilot_01/report.md)：`intermediate_retraction` 下三条真实进程 workflow 共 54 次模型调用，均有已知用量；三条均出现 `fault_not_realized`，因此不能作三臂机制比较，运行后审阅见 [POSTMORTEM](results/workflow_v1_live_pilot_01/POSTMORTEM.md)。
-- 全量测试 **180 passed**；其中统一 benchmark 新增测试覆盖 live 状态不使用未登记 fixture，以及 relay 派生契约，验签、通知、本地顺序和恢复底层测试继续复用。
+- [relay-reference-v1 active 校准](results/workflow_reference_live_active_03/report.md)：真实进程中 6 个派生阶段和 4 个中间转交均完成登记，worker error 为 0；这是接口校准，不是错误控制样本。
+- [修复后的三臂 live 实验](results/workflow_reference_live_intermediate_02/POSTMORTEM.md)：三臂都真实注入中间撤销；dependency 阻断两条错误动作，dependency_push 比普通 dependency 提前 1 tick 发现，root_gate 让撤销中间证据继续到两个下游组织。三臂没有最终错误账单完成，但部分臂没有充分的故障后 execute 提议，详见各自 metrics。
+- 全量测试 **185 passed**；其中统一 benchmark 新增测试覆盖 live 状态不使用未登记 fixture、relay 派生契约和类型化 claim reference，验签、通知、本地顺序和恢复底层测试继续复用。
 
 以下汇总是人为构造条件的等权描述，不是现实错误率估计。每臂 11 条工作流、44 项任务；同一任务曾错误完成、后来恢复，错误记录也不清零。
 
@@ -56,7 +58,7 @@ A、C 两个订单分别经过 source → coordinator → middle → receiver，
 
 `Workflow` 只经统一 worker 形状的 API 运行。`MemoryBackend` 调用现有签名/门禁/恢复实现；`ProcessBackend` 启动真正的 `claim_worker`，跨组织查证通过公开 RPC 路由，不能直接读对端状态。
 
-1. 模型/脚本提交提议。derive 的父声明必须精确匹配本阶段；派生由原发行者结构验证后签名。
+1. 模型/脚本提交提议。模型可用 `claim_refs` 选择 `claim_id_index` 中的本地证据位置，运行时解析成精确声明 ID；旧式完整 `claims` 仍需逐字匹配本阶段。derive 的派生由原发行者结构验证后签名，`fact_ref` 只允许引用本地父证据。
 2. forward 进入 `reliability_handoff_prepare`，approve 进入 `reliability_batch`。实际 `run_batch` 可以阻止原本明确准备执行的提议。
 3. verify 只产生 VERIFIED；后续必须得到另一个明确动作提议，否则 hold。固定 tape 缺失后续决定也不会补造批准。
 4. 已准备的签名交接在 message bus 中延迟投递，由收方签收；签收不授权付款。push 通过本地已登记交接反向索引转发原始撤销证明，有独立 ACK。
@@ -117,4 +119,6 @@ simple_dependency_gate 和 verify_all 故意复用同一底层 policy；它们�
 
 live 与 replay 共用阶段、故障和机制代码，但 live 会重新询问模型，公开信息因已发生的机制干预而不同。两类结果严格分开。恢复信封包含具体批次摘要，跨臂恢复 claim ID 不一定相同；不能自动替换真实 tape 的 ID 来伪装为“同一条真实决定”。历史 v7 也继续由专用适配器做原策略校准，未伪装为新七组织 trace。
 
-首个 live pilot 已验证调用、process worker、签名交接和审计归档可以端到端运行，但因真实模型没有产出可登记的中间声明，受控撤销没有实际生效；零传播不能当作 containment 成功。已修复 live/fixed-tape 不应复用未登记 fallback 的接口边界；再次付费运行需另行决定，不自动补跑。更值得研究的机制缺口是：**发行者没有主动撤销时，怎样从相互独立的证据中发现事实冲突并触发有范围的补证？** 当前 freshness 只是证明“还没撤销”，无法回答“事实是否真的正确”。先围绕此缺口定义可证伪实验，再决定新增机制，避免把完整依赖强门禁改名当作算法创新。
+首个 live pilot 已验证调用、process worker、签名交接和审计归档可以端到端运行，但因真实模型没有产出可登记的中间声明，受控撤销没有实际生效；零传播不能当作 containment 成功。随后加入 `claim_id_index`、`claim_refs` 和 `fact_ref`，active 校准确认 6 个派生阶段及 4 个中间转交可由真实 worker 登记。修复后的三臂实验真实实现了中间撤销：dependency 阻断两条错误动作，dependency_push 提前一个 tick 发现，root_gate 仍让错误中间证据继续传播；由于 live 模型后续 hold/无效动作，三臂没有形成足够的最终错误完成样本，不能声称真实错误率已下降。完整记录见 [三臂复核](results/workflow_reference_live_intermediate_02/POSTMORTEM.md)。
+
+当前不再自动重复同一付费矩阵。更值得研究的机制缺口是：**发行者没有主动撤销时，怎样从相互独立的证据中发现事实冲突并触发有范围的补证？** 当前 freshness 只是证明“还没撤销”，无法回答“事实是否真的正确”。先围绕此缺口定义可证伪实验，再决定新增机制，避免把完整依赖强门禁改名当作算法创新。

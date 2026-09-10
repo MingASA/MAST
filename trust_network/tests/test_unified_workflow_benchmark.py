@@ -87,6 +87,16 @@ def test_derive_prompt_exposes_exact_relay_contract():
     prompt=next(d['public_input'] for d in raw['decisions'] if d['stage']=='derive:coordinator:A')
     assert prompt['derivation_rule']=='relay'
     assert 'exact JSON copy' in prompt['derivation_contract']
+    assert prompt['output_schema']['claim_refs']==['task[0]']
+
+
+def test_action_prompt_uses_typed_claim_references():
+    raw,_,_=run('active','dependency')
+    decision=next(d for d in raw['decisions'] if d['stage']=='invoice:A:a')
+    prompt=decision['public_input']
+    assert list(prompt['claim_id_index'])==['task[0]','task[1]']
+    assert [prompt['claim_id_index'][key] for key in prompt['claim_id_index']]==prompt['candidate_claims']['task']
+    assert 'claim_refs' in prompt['output_schema']
 
 
 def test_route_receipt_tampering_is_rejected():
@@ -114,3 +124,10 @@ def test_paid_calls_require_explicit_guard_and_small_matrix(tmp_path):
     assert not (tmp_path/'no').exists()
     with pytest.raises(ValueError):execute(tmp_path/'large',['active'],list(ARMS),backend='process',mode='live',allow_paid=True,env_file='unused.env')
     assert not (tmp_path/'large').exists()
+
+
+def test_integrity_manifest_excludes_runtime_secrets_and_state(tmp_path):
+    out=tmp_path/'archive'
+    execute(out,['active'],['dependency'],backend='process',mode='replay')
+    manifest=__import__('json').loads((out/'integrity.json').read_text())
+    assert not any(path.endswith(('/signing.key','/channel_state.json')) for path in manifest)

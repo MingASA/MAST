@@ -1,0 +1,86 @@
+{
+  "cases": [
+    {
+      "case": "own_notice_then_use",
+      "expected": "use_after_own_notice",
+      "actual": "use_after_own_notice",
+      "matched": true
+    },
+    {
+      "case": "other_notice_then_use",
+      "expected": "no_proven_notice_violation",
+      "actual": "no_proven_notice_violation",
+      "matched": true
+    },
+    {
+      "case": "notice_after_use",
+      "expected": "no_proven_notice_violation",
+      "actual": "no_proven_notice_violation",
+      "matched": true
+    },
+    {
+      "case": "missing_notice",
+      "expected": "no_proven_notice_violation",
+      "actual": "no_proven_notice_violation",
+      "matched": true
+    },
+    {
+      "case": "tampered_use_signature",
+      "expected": "invalid_evidence",
+      "actual": "invalid_evidence",
+      "matched": true
+    },
+    {
+      "case": "missing_middle_event",
+      "expected": "invalid_evidence",
+      "actual": "invalid_evidence",
+      "matched": true
+    }
+  ],
+  "localization": [
+    {
+      "case": "signed_false:coordinator",
+      "expected": "source",
+      "actual": "source",
+      "matched": true
+    },
+    {
+      "case": "derived_error:coordinator",
+      "expected": "coordinator",
+      "actual": "coordinator",
+      "matched": true
+    },
+    {
+      "case": "derived_error:middle_a",
+      "expected": "middle_a",
+      "actual": "middle_a",
+      "matched": true
+    }
+  ],
+  "duty_detection": {
+    "detected": 1,
+    "positive_cases": 1
+  },
+  "false_accusations": {
+    "count": 0,
+    "negative_cases": 3
+  },
+  "evidence_limited_abstention": {
+    "correct": 3,
+    "eligible_cases": 3
+  },
+  "corruption_detection": {
+    "detected": 2,
+    "corrupt_cases": 2
+  },
+  "localization_accuracy": {
+    "correct": 3,
+    "cases": 3
+  },
+  "limits": [
+    "tiny_constructed_label_suite_not_population_accuracy",
+    "source_identity_is_not_proof_of_source_factual_error",
+    "controller_record_deletion_is_detected_against_existing_chain_not_against_rewritten_history"
+  ],
+  "new_model_calls": 0
+}

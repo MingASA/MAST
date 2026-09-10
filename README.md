@@ -1,8 +1,10 @@
-> **当前 benchmark 入口（2026-09-09）：** [统一跨组织 workflow v1](BENCHMARK_WORKFLOW_V1.md) 已实现并完成 [88 条离线工作流](results/unified_workflow_v1_offline/report.md)、[2 条实际进程重放](results/unified_workflow_v1_process_replay/report.md)、[v7 历史校准](results/unified_workflow_v1_v7_replay.json) 和 [3 条 live pilot workflow](results/workflow_v1_live_pilot_01/report.md)。当前全量测试 180 项通过；离线新增付费调用 0，live pilot 实际调用 54 次。live pilot 的受控故障均未实际注入，不能据 0 传播宣称机制成功，详见 [运行后审阅](results/workflow_v1_live_pilot_01/POSTMORTEM.md)。离线结果显示中间撤销控制优于根门禁，但与全部依赖强门禁等价；签名事实错误仍漏过。下方为历史阶段记录。
+> **最新 workflow v1 状态：** 已修复声明 ID/事实转抄接口，并完成三条 active live 校准及一次 [三臂中间撤销实验](results/workflow_reference_live_intermediate_02/POSTMORTEM.md)。最新校准中 6 个派生阶段和 4 个中间转交均在真实 worker 登记，三臂均真实注入撤销；完整依赖阻断了两条错误动作，主动通知提前 1 tick 发现，根门禁仍让错误中间证据继续传播。最终错误账单均未完成，但模型 hold 使部分臂缺少完整动作机会，不能据此估计真实错误率。当前全量测试 185 项通过；不再自动重复同一付费矩阵，下一重点是未撤销事实错误的权威补证与冲突解决。
 
-> **新增机制：** [沿交接路径主动通知与恢复二次失效处理](MECHANISM_DEPENDENCY_NOTICES_V1.md)，[实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)。已接入持久化 worker；全量169项测试通过，随后事件导出相关11项通过；未运行新付费实验。
+> **当前 benchmark 入口（2026-09-09）：** [统一跨组织 workflow v1](BENCHMARK_WORKFLOW_V1.md) 已实现并完成 [88 条离线工作流](results/unified_workflow_v1_offline/report.md)、[2 条实际进程重放](results/unified_workflow_v1_process_replay/report.md)、[v7 历史校准](results/unified_workflow_v1_v7_replay.json)、首个无效的 [3 条 live pilot](results/workflow_v1_live_pilot_01/report.md) 和修复后的 [3 条三臂 live 实验](results/workflow_reference_live_intermediate_02/report.md)。最新三臂结果支持完整依赖拦截撤销中间证据、push 提前发现，但没有形成真实模型最终错误率差异；签名事实错误仍漏过。下方为历史阶段记录。
 
-> **当前新增机制（尚未运行正式实验）：** [closure v3 机制与边界](MECHANISM_CLOSURE_V3.md)、[离线实验交接](TASK_EXPERIMENTS_CLOSURE_V3.md)。完整依赖查证、中间声明修订与局部恢复、签名本地顺序追溯已接入；158 项测试通过。旧 live pilot 的 VERIFY 自动执行混淆见 [复核](REVIEW_CONTAINMENT_LIVE_PILOT_V1.md)，下方历史结果不代表新语义下的实验结论。
+> **此前机制阶段（历史记录）：** [沿交接路径主动通知与恢复二次失效处理](MECHANISM_DEPENDENCY_NOTICES_V1.md)，[实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)。该阶段已接入持久化 worker；当前 live 结果和 185 项测试以上方 workflow v1 记录为准。
+
+> **此前 closure v3 阶段（历史记录）：** [closure v3 机制与边界](MECHANISM_CLOSURE_V3.md)、[离线实验交接](TASK_EXPERIMENTS_CLOSURE_V3.md)。完整依赖查证、中间声明修订与局部恢复、签名本地顺序追溯已接入；该阶段的 158 项测试和旧 live pilot 复核保留在下方，不替代当前 workflow v1 结论。
 
 > **统一离线闭环：** [36条流程与追溯评分结果](results/containment_closed_loop_v1_final/report.md)，[协议与边界](BENCHMARK_PROTOCOL_V1.md)。沿用原组织状态串联传播、冻结、恢复；真实模型 pilot 另存于下方新目录。
 

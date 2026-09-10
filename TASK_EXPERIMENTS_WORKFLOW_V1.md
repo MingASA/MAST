@@ -1,10 +1,15 @@
+> **当前状态（2026-09-09）：relay-reference-v1 已完成 live 校准和一次三臂实验。** 首个 pilot 01 的 54 次调用全部 `fault_not_realized`，历史结果仍保留，不能作效果比较。随后完成三条 active 校准；最新一条确认 6 个派生阶段、4 个中间转交均由真实 worker 登记，且 worker error 为 0。
+>
+>
+> 最新三臂归档为 [workflow_reference_live_intermediate_02](results/workflow_reference_live_intermediate_02/POSTMORTEM.md)：三臂都真实实现了 tick 10 的中间撤销。`dependency` 拦截两条错误依赖动作，`dependency_push` 比普通依赖提前 1 tick 发现；`root_gate` 仍让撤销中间证据到达两个下游组织。三臂都没有最终错误账单完成，但其中 `dependency_push` 没有故障后的 execute 提议，不能把零错误完成当作效果样本。此后不自动扩大同一 live 矩阵；下一研究重点是签名有效但事实错误的补证与冲突解决。下文旧 pilot 计划仅作历史记录。
+
 # 无历史上下文的实验执行交接：统一 workflow v1
 
 2026-09-09。本任务接替早期 closure/notice 分散实验入口。先读 [设计、结果与边界](BENCHMARK_WORKFLOW_V1.md)。当前目标是控制跨组织 Agent 的错误传播，并基于可信公开证据追溯来源、路径和协议违规；不是只证明模型听从 prompt。
 
 ## 已完成，不必重跑大矩阵
 
-`results/unified_workflow_v1_offline/` 有 88 条脚本工作流；`results/unified_workflow_v1_process_replay/` 有 2 条实际进程离线校准。交接时全量 178 tests passed，live pilot 接口修复后为 180 passed。旧 v7 校准另存 `results/unified_workflow_v1_v7_replay.json`。离线矩阵新增模型调用为 0。
+`results/unified_workflow_v1_offline/` 有 88 条脚本工作流；`results/unified_workflow_v1_process_replay/` 有 2 条实际进程离线校准。旧 v7 校准另存 `results/unified_workflow_v1_v7_replay.json`。离线矩阵新增模型调用为 0；当前 relay-reference-v1 代码全量 **185 tests passed**，active 校准和修复后的三臂 live 结果分别见 `results/workflow_reference_live_active_03/` 与 `results/workflow_reference_live_intermediate_02/`。
 
 已见：root_gate 漏中间撤销；完整依赖能阻断并恢复。与简单全部依赖 gate 等价；push 只带来较早检测和小额查证节省。签名事实错误和冲突仍漏放。不可改场景、删除失败例或自动给模型补批准来改善结果。
 
@@ -50,4 +55,4 @@ live 提议按原文保存到 decision_tape.json。后续可以固定 tape 做�
 
 提供完整 results 目录、manifest/integrity、逐例 report、metrics、mechanism_cases，解释每个失败/拦截/恢复的证据。输出目录已存在时另起名字，不覆盖；错误中止目录保留 partial 数据并标明不完整。若模型调用异常，先报告实际尝试和未知费用，不猜测为零。
 
-本次 pilot 后交回用户决定：是否在修复后的 live 接线基础上重新运行同范围小 pilot，或另测 bad_recovery_binding 的 dependency_push/recovery_ablation 两臂，或优先研究 signed_false/conflicting_sources 的权威补证机制。不要扩大到全部 88 条付费矩阵。当前最重要的研究缺口是未撤销但事实错误，不是更多强门禁重复比较。
+本轮已按用户授权完成修复后的 active 校准和一次三臂中间撤销实验。后续不自动重复同一 live 矩阵，也不扩大到全部 88 条付费矩阵；下一研究重点是 `signed_false/conflicting_sources` 的权威补证和冲突解决，并先设计可区分“模型没有动作机会”和“机制真正拦截”的实验分母。当前最重要的研究缺口是未撤销但事实错误，不是更多强门禁重复比较。

@@ -1,0 +1,23 @@
+# 跨组织工作流 benchmark v1
+
+模式：replay；后端：process；决定来源：scripted。共1条workflow，每条4项业务任务。
+运行完成不代表有效性实验成功；故障未发生或没有故障后动作提议时不能比较containment。
+签名和私有事实正确性分别评估。跨任务恢复绑定失败另列，不伪装成已发生金额错误。
+
+|条件|机制|有效性状态|错误完成/4|业务安全完成/4|恢复成功|错误接收组织|无关误冻|查证|跨任务绑定完成|
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|
+|intermediate_retraction|dependency_push|fault_and_action_observed|0|4|2|0|0|36|0|
+
+## 运行有效性计数
+
+|条件|机制|实际注入故障|模型 hold|模型无效动作|worker error|未实现阶段|上游未实现任务|
+|---|---|---:|---:|---:|---:|---:|---:|
+|intermediate_retraction|dependency_push|1|0|0|0|0|0|
+
+## 必须保留的解释边界
+
+- simple_dependency_gate / dependency / verify_all 在默认配置下有相同检查覆盖，是等价校准，不应虚构机制差异。
+- dependency_push 的通知按虚拟时钟投递；late_notice 不保证在动作前到达。
+- scripted决定不是LLM能力结果；fixed_tape缺失阶段会hold，不补造批准。live样本单独归档。
+- 来源身份匹配不等于事实责任；无本地签名顺序证明，不指控通知后违规使用。
+- 冲突与签名事实错误可能被所有当前策略漏过；这是检测边界，不删除失败案例。

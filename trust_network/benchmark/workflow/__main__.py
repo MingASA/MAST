@@ -14,7 +14,7 @@ def write(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent
 
 
 def preflight(cases,arms,backend,mode,max_decisions,max_attempts):
-    return {'benchmark':'cross-org-workflow-v1','mode':mode,'backend':backend,'cases':cases,'arms':arms,
+    return {'benchmark':'cross-org-workflow-v1','decision_protocol':'relay-reference-v1','mode':mode,'backend':backend,'cases':cases,'arms':arms,
         'arm_factors':factors(),'organizations':list(OWNERS),'workflows':len(cases)*len(arms),'tasks_per_workflow':4,
         'max_model_decisions':len(cases)*len(arms)*max_decisions if mode=='live' else 0,
         'max_provider_attempts':len(cases)*len(arms)*max_attempts if mode=='live' else 0,
@@ -67,10 +67,11 @@ def execute(out,cases,arms,backend='memory',mode='replay',env_file=None,allow_pa
             if len({r['workload_hash'] for r in rows if r['case']==case})!=1:raise ValueError('unpaired public workload')
         lines=['# 跨组织工作流 benchmark v1','',
             f'模式：{mode}；后端：{backend}；决定来源：{manifest["decision_source"]}。共{len(rows)}条workflow，每条4项业务任务。',
+            '运行完成不代表有效性实验成功；故障未发生或没有故障后动作提议时不能比较containment。',
             '签名和私有事实正确性分别评估。跨任务恢复绑定失败另列，不伪装成已发生金额错误。','',
-            '|条件|机制|错误完成/4|业务安全完成/4|恢复成功|错误接收组织|无关误冻|查证|跨任务绑定完成|',
-            '|---|---|---:|---:|---:|---:|---:|---:|---:|']
-        for r in rows:lines.append(f"|{r['case']}|{r['arm']}|{r['unsafe_completed']}|{r['safe_completed']}|{r['recovery_successes']}|{r['error_accepting_organizations']}|{r['unrelated_overfreeze']}|{r['verification_queries']}|{r['invalid_binding_completed']}|")
+            '|条件|机制|有效性状态|错误完成/4|业务安全完成/4|恢复成功|错误接收组织|无关误冻|查证|跨任务绑定完成|',
+            '|---|---|---|---:|---:|---:|---:|---:|---:|---:|']
+        for r in rows:lines.append(f"|{r['case']}|{r['arm']}|{r['validity_reason']}|{r['unsafe_completed']}|{r['safe_completed']}|{r['recovery_successes']}|{r['error_accepting_organizations']}|{r['unrelated_overfreeze']}|{r['verification_queries']}|{r['invalid_binding_completed']}|")
         lines += ['', '## 运行有效性计数', '',
             '|条件|机制|实际注入故障|模型 hold|模型无效动作|worker error|未实现阶段|上游未实现任务|',
             '|---|---|---:|---:|---:|---:|---:|---:|']
@@ -100,7 +101,7 @@ def execute(out,cases,arms,backend='memory',mode='replay',env_file=None,allow_pa
     finally:
         manifest['paid_calls_started']=paid_started
         write(out/'manifest.json',manifest)
-        hashes={str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name not in ('signing.key','integrity.json')}
+        hashes={str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.rglob('*')) if p.is_file() and p.name not in ('signing.key','channel_state.json','integrity.json')}
         write(out/'integrity.json',hashes)
     return rows
 
