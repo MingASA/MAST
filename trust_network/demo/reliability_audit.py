@@ -1,7 +1,7 @@
 """Independent public evidence replay, never financial blame percentages."""
 from trust_network.demo.claim_channel import ClaimGateway, read
 from trust_network.demo.documents import digest, keypair
-from trust_network.demo.network_reliability import plan, ReliabilityConfig
+from trust_network.demo.network_reliability import plan, ReliabilityConfig, verification_targets, apply_status_evidence
 
 
 def audit_batch(packet, public):
@@ -61,11 +61,7 @@ def audit_with_authorities(packet, public, authorities):
         if root in confirmed or value['status'] not in ('active','revoked','unknown'):
             raise ValueError('duplicate or invalid reply')
         confirmed[root] = value['status']
-        if value['status']=='revoked' and value.get('revocation') is not None:
-            revoker,revocation=read(value['revocation'],public)
-            if revoker!=signer or revocation.get('kind')!='revoke' or revocation.get('target')!=root:
-                raise ValueError('revocation proof scope mismatch')
-            gateway.receive(value['revocation'])
+        apply_status_evidence(gateway,value)
     for root, status in body['status'].items():
         if status in ('active','revoked','unknown') and confirmed.get(root) != status:
             raise ValueError('unsupported authority observation')
@@ -78,22 +74,22 @@ def audit_with_authorities(packet, public, authorities):
         decision = decisions[outcome['proposal']]
         violates = outcome['action'] == 'COMPLETED' and (
             decision['action'] == 'REQUEST_EVIDENCE' or
-            any(confirmed.get(r) in ('revoked','unknown') for r in decision['roots']) or
-            (decision['action'] == 'VERIFY' and any(confirmed.get(r) != 'active' for r in decision['roots'])))
+            any(confirmed.get(r) in ('revoked','unknown') for r in verification_targets(decision)) or
+            (decision['action'] == 'VERIFY' and any(confirmed.get(r) != 'active' for r in verification_targets(decision))))
         if outcome['action']=='COMPLETED' and proposals[outcome['proposal']].get('intent')=='verify':
             violates=True
         if outcome['action']=='VERIFIED':
             decision=decisions[outcome['proposal']]
             if (proposals[outcome['proposal']].get('intent')!='verify' or
                 decision['action']!='VERIFY' or
-                any(confirmed.get(r)!='active' for r in decision['roots'])):
+                any(confirmed.get(r)!='active' for r in verification_targets(decision))):
                 raise ValueError('verification result lacks required evidence')
         if outcome['action'] in ('COMPLETED','VERIFIED'):
             proposal = proposals[outcome['proposal']]
             if proposal['operation'] == 'approve_invoice':
-                from trust_network.demo.claim_action_contract import approve_invoice
+                from trust_network.demo.claim_action_contract import validate_invoice
                 try:
-                    approve_invoice(gateway,proposal['claims'],proposal['order'],lambda:None)
+                    validate_invoice(gateway,proposal['claims'],proposal['order'])
                 except ValueError:
                     violates = True
         findings.append({'proposal': outcome['proposal'],

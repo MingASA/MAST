@@ -1,3 +1,9 @@
+> **当前状态：统一 workflow benchmark v1 已落地。** 请优先阅读 [设计与结果解释](BENCHMARK_WORKFLOW_V1.md)、[实验交接](TASK_EXPERIMENTS_WORKFLOW_V1.md)。已归档 11 条件 × 8 臂 = 88 条离线流程、2 条真实进程离线对照、v7 原始 151 文件校验和 6 批重放一致，并完成 3 条 live pilot workflow。接口修复后 180 项测试通过；离线新增付费调用为 0，live pilot 实际调用 54 次但三条受控故障均未实际注入，不能把零传播解释成机制成功，详见 [live pilot 审阅](results/workflow_v1_live_pilot_01/POSTMORTEM.md)。完整依赖优于仅根门禁，但默认与全部依赖简单强门禁等价；push 提早检测但仅省约 3% 查证，恢复绑定拒绝跨任务产物，未撤销事实错误仍未解决。以下较早阶段的“正式矩阵未运行”等描述保留为历史，当前以新 benchmark 报告为准。
+
+> **最新机制进展：** 在closure v3之上新增本地交接反向索引、有签收的级联撤销通知，以及恢复证据二次失效的局部处理。见 [机制说明](MECHANISM_DEPENDENCY_NOTICES_V1.md) 和 [实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)。169项全量测试通过；不代表新的真实模型实验收益。
+
+> **最新机制补充：** 当前 closure v3 已实现完整依赖查证、中间声明修订、受约束后代恢复与本地签名顺序追溯，158 项测试通过，正式矩阵尚未运行。请优先读 [机制说明](MECHANISM_CLOSURE_V3.md) 与 [实验交接](TASK_EXPERIMENTS_CLOSURE_V3.md)。本文下方各阶段结果保留历史口径；旧 C pilot 唯一完成案例存在 VERIFY 自动执行混淆，见 [复核](REVIEW_CONTAINMENT_LIVE_PILOT_V1.md)。
+
 # 当前项目总结：跨组织 Agent 网络的可靠性、传播控制与追溯
 
 更新时间：2026-09-09

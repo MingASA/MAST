@@ -1,6 +1,8 @@
 """Owner-local persistent claim gateway and real Agent handoff decisions."""
 import argparse
 import json
+import os
+import tempfile
 from pathlib import Path
 import sys
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -10,9 +12,28 @@ from trust_network.demo.provider import ProviderConfig, ProviderTraceError, comp
 from trust_network.demo.reliability_agent_protocol import COMMON_AGENT_SYSTEM
 
 
+def recovery_receiver(config,gateway,envelope=None):
+    """Issuer-local allowlist, supporting shared issuers and two receivers."""
+    allowed=config.get('recovery_receivers')
+    if allowed is None: allowed=[config.get('recovery_receiver')]
+    if not isinstance(allowed,list) or not allowed or not all(isinstance(o,str) for o in allowed):
+        raise ValueError('missing local recovery receiver configuration')
+    if envelope is None:
+        if len(allowed)!=1: raise ValueError('recovery envelope required for multiple receivers')
+        return allowed[0]
+    signer,_=read(envelope,gateway.public)
+    if signer not in allowed: raise ValueError('untrusted recovery receiver')
+    return signer
+
+
 def model_decision(directory, request, env_file, gateway):
     config=json.loads((directory/'config.json').read_text())
     provider=ProviderConfig.load(env_file)
+    if 'model_max_tokens' in config:
+        from dataclasses import replace
+        limit=config['model_max_tokens']
+        if type(limit) is not int or limit<=0: raise ValueError('invalid model token limit')
+        provider=replace(provider,max_tokens=limit)
     public_input=json.loads(json.dumps(request['model_input']))
     model_input=json.loads(json.dumps(public_input))
     from trust_network.demo.reliability_stage import stage_status
@@ -22,7 +43,10 @@ def model_decision(directory, request, env_file, gateway):
         claims=model_input.get('required_parent_claims',[]) if phase=='derive' else [
             c for group in model_input.get('candidate_claims',{}).values() for c in group]
         model_input['runtime_stage_status']=stage_status(gateway,phase,claims,
-            model_input.pop('runtime_rebuild_scope',None),config.get('recovery_receiver'))
+            model_input.get('runtime_rebuild_scope'),
+            recovery_receiver(config,gateway,model_input['runtime_rebuild_scope']['envelope'])
+            if model_input.get('runtime_rebuild_scope') else None)
+        model_input.pop('runtime_rebuild_scope',None)
     model_input['organization_dossier']=(directory/'private.md').read_text()
     user_prompt=json.dumps(model_input,ensure_ascii=False,indent=2)
     error=None; decision=None; usage=None
@@ -53,15 +77,45 @@ def handle(directory, request, env_file):
     gateway=ClaimGateway(config['owner'],key,config['public_keys'],config['workflow'],config['authorities'])
     path=directory/'channel_state.json'
     if path.exists():
-        saved=json.loads(path.read_text()); gateway.claims=saved['claims']; gateway.revoked=saved['revoked']; gateway.events=saved['events']
+        gateway.restore(json.loads(path.read_text()))
     initial_events=len(gateway.events)
     operation=request['operation']
     if operation=='receive':
         response={'event':gateway.receive(request['packet'])}
+    elif operation=='reliability_public_view':
+        response={'view':{'claims':list(gateway.claims.values()),'revocations':list(gateway.revoked.values()),
+            'blocked':{c:gateway.blockers(c) for c in gateway.claims if gateway.blockers(c)}}}
+    elif operation=='reliability_handoff_prepare':
+        from trust_network.demo.propagation_notice import prepare_handoff
+        from trust_network.demo.network_reliability import ReliabilityConfig,run_batch
+        proposal={'id':request['id'],'operation':'forward','intent':'execute','claims':request['claims']}
+        def query(owner,query):
+            if owner==gateway.owner:
+                from trust_network.demo.network_reliability import authority_status
+                return authority_status(gateway,query)
+            print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
+            return json.loads(sys.stdin.readline())['reply']
+        response={'batch':run_batch(gateway,[proposal],query,
+            lambda p:{'handoff':prepare_handoff(gateway,request['recipient'],p['claims'])},
+            ReliabilityConfig(**config.get('reliability',{})),config.get('verification_budget')),
+            'events':gateway.events[initial_events:]}
+    elif operation in ('reliability_handoff_accept','reliability_handoff_ack',
+                       'reliability_notification_accept','reliability_notification_ack'):
+        from trust_network.demo.propagation_notice import (accept_handoff,acknowledge_handoff,
+                                                          accept_notice,acknowledge_notice)
+        handlers={'reliability_handoff_accept':accept_handoff,'reliability_handoff_ack':acknowledge_handoff,
+                  'reliability_notification_accept':accept_notice,'reliability_notification_ack':acknowledge_notice}
+        response={'result':handlers[operation](gateway,request['packet']),
+                  'events':gateway.events[initial_events:]}
+    elif operation=='reliability_notifications':
+        from trust_network.demo.propagation_notice import pending_notifications,notification_audit
+        response={'pending':pending_notifications(gateway),'audit':notification_audit(gateway)}
     elif operation=='reliability_stage_status':
         from trust_network.demo.reliability_stage import stage_status
         response={'stage_status':stage_status(gateway,request['phase'],request['claims'],
-            request.get('rebuild_scope'),config.get('recovery_receiver'))}
+            request.get('rebuild_scope'),
+            recovery_receiver(config,gateway,request['rebuild_scope']['envelope'])
+            if request.get('rebuild_scope') else None)}
     elif operation=='reliability_model_decision':
         response={'model_decision':model_decision(directory,request,env_file,gateway)}
     elif operation=='reliability_sign_derived':
@@ -150,11 +204,19 @@ def handle(directory, request, env_file):
         response={'result':result,'event':gateway.events[-1],'events':gateway.events[initial_events:]}
     elif operation in ('reliability_frontier','reliability_frontier_rebuild'):
         from trust_network.demo.recovery_frontier import frontier,rebuild_frontier_claim
-        receiver=config['recovery_receiver']  # local trust config, not caller input
+        receiver=recovery_receiver(config,gateway,request['envelope'])
         if operation=='reliability_frontier':
             response={'frontier':frontier(gateway,request['envelope'],request['task_id'],request['completed'],receiver)}
         else:
             response=rebuild_frontier_claim(gateway,request['envelope'],request['task_id'],request['completed'],receiver,request['old'],request['fact'])
+        response['events']=gateway.events[initial_events:]
+    elif operation=='reliability_claim_revision':
+        from trust_network.demo.recovery_closure import revision_offer
+        response={'offer':revision_offer(gateway,request['old'],request['fact']),
+                  'events':gateway.events[initial_events:]}
+    elif operation=='reliability_closure_recovery':
+        from trust_network.demo.recovery_closure import prepare_closure_recovery
+        response={'recovery':prepare_closure_recovery(gateway,request['batch'],request['offers'])}
         response['events']=gateway.events[initial_events:]
     elif operation=='reliability_recovery':
         from trust_network.demo.reliability_recovery import prepare_recovery
@@ -184,13 +246,16 @@ def handle(directory, request, env_file):
         # shared tool available to every arm; it does not grant an action.
         proposals=json.loads(json.dumps(request['proposals']))
         if operation=='reliability_batch' and request.get('force_verify'):
-            reliability_config['policy']='verify_all'
+            reliability_config['policy']=('verify_all_closure' if reliability_config.get('policy') in ('dependency_closure','verify_all_closure') else 'verify_all')
             for proposal in proposals: proposal['intent']='verify'
         policy=ReliabilityConfig(**reliability_config)
         if operation=='reliability_plan':
             response={'plan':plan(gateway,proposals,policy)}
         else:
             def query_reliability(owner,query):
+                if owner==gateway.owner:
+                    from trust_network.demo.network_reliability import authority_status
+                    return authority_status(gateway,query)
                 print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
                 return json.loads(sys.stdin.readline())['reply']
             response={'batch':run_batch(gateway,proposals,query_reliability,
@@ -220,9 +285,23 @@ def handle(directory, request, env_file):
         response={'executed':bool(effect),'event':gateway.events[-1],
                   'events':gateway.events[initial_events:] if operation=='execute_checked' else []}
     else: raise ValueError('unsupported operation')
-    saved={'claims':gateway.claims,'revoked':gateway.revoked,'events':gateway.events}
+    # Export every emitted signed event, including cascaded outbox entries, so
+    # the auditor can follow local predecessor links without artificial gaps.
+    response['events']=gateway.events[initial_events:]
+    saved=gateway.snapshot()
     # Serial subprocess protocol. This is not a concurrent database service.
-    path.write_text(json.dumps(saved)); path.chmod(0o600)
+    # Publish a packet/ACK only after the same local state (including routes
+    # and outbox) is persisted. Atomic replacement survives interrupted writes.
+    temporary=None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w',dir=directory,prefix='.channel-',delete=False) as stream:
+            temporary=stream.name;json.dump(saved,stream);stream.flush();os.fsync(stream.fileno())
+        os.replace(temporary,path);temporary=None
+        directory_fd=os.open(directory,os.O_RDONLY)
+        try:os.fsync(directory_fd)
+        finally:os.close(directory_fd)
+    finally:
+        if temporary is not None:os.unlink(temporary)
     return response
 
 

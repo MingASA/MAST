@@ -106,6 +106,8 @@ def audit_accountability(run_record, events, fixture_manifest, control_event):
                        if event.get('kind')=='claim_delivery' and
                        event.get('packet_kind')=='revoke' and event.get('action')=='received']
     gateway_events=_gateway_events(events,public_keys)
+    from trust_network.demo.evidence_order import local_index,precedes
+    local=local_index([item['packet'] for item in gateway_events],public_keys)
     revocation_receipts=[item for item in gateway_events
                          if item['body'].get('action')=='revocation_received' and
                          item['body'].get('target')==old_root]
@@ -128,15 +130,27 @@ def audit_accountability(run_record, events, fixture_manifest, control_event):
     transformation_mismatches=[]
     for batch in run_record.get('batches',[]):
         stage=batch.get('stage')
-        for proposal in batch.get('proposals',[]):
+        signed=batch.get('packet')
+        signed_owner=None;signed_workflow=None
+        proposals=batch.get('proposals',[]);outputs=batch.get('outputs',[])
+        if signed:
+            signed_owner,signed_body=read(signed,public_keys)
+            if signed_body.get('kind')!='reliability_batch':raise ValueError('invalid batch evidence')
+            planner,planning=read(signed_body['plan'],public_keys)
+            if planner!=signed_owner:raise ValueError('foreign batch plan')
+            signed_workflow=signed_body['workflow']
+            proposals=planning['proposals'];outputs=signed_body['outputs']
+        for proposal in proposals:
             claims=proposal.get('claims',[])
             if not isinstance(claims,list): continue
             includes_old=any(_contains_root(claim,old_root,packets) for claim in claims)
             if includes_old:
-                for output in batch.get('outputs',[]):
+                for output in outputs:
                     if output.get('proposal')==proposal.get('id') and output.get('action')=='COMPLETED':
                         completed_uses.append({'stage':stage,'proposal':proposal.get('id'),
-                            'claims':claims,'batch_event_indices':batch_indices.get(stage,[])})
+                            'claims':claims,'batch_event_indices':batch_indices.get(stage,[]),
+                            'issuer':signed_owner,'workflow':signed_workflow,
+                            'proposal_digest':digest(proposal),'local_head':output.get('local_head') if signed else None})
     for claim_id,packet in packets.items():
         body=packet.get('body',{})
         parents=body.get('parents',[])
@@ -159,7 +173,13 @@ def audit_accountability(run_record, events, fixture_manifest, control_event):
     for use in completed_uses:
         indices=use['batch_event_indices']
         use_index=min(indices) if indices else None
-        if notice_index is not None and use_index is not None and use_index>notice_index:
+        head=use.get('local_head');entry=local.get(head)
+        action_bound=bool(entry and entry[0]==use['issuer'] and
+            entry[1].get('action')=='reliability_outcome' and
+            entry[1].get('target')==use['proposal_digest'] and entry[1].get('reasons')==['COMPLETED'])
+        own_notice=action_bound and any(item['issuer']==use['issuer'] and
+            precedes(local,digest(item['packet']),head,use['issuer'],use['workflow']) for item in consumer_receipts)
+        if own_notice:
             use_after_notice.append(use)
         elif control_index is not None and use_index is not None and use_index>control_index:
             use_without_notice.append(use)
@@ -176,7 +196,7 @@ def audit_accountability(run_record, events, fixture_manifest, control_event):
                          'reason':'available signed/runtime evidence does not establish a protocol duty violation'})
     if use_after_notice:
         responsibility_status='protocol_duty_violation_proven'
-        responsibility_reason='signed event order shows use after the receiver recorded the revocation notice; intent and loss remain unproven'
+        responsibility_reason='the receiver signed predecessor chain binds its notice to its reported completed action; intent and loss remain unproven'
     else:
         responsibility_status='undetermined'
         responsibility_reason='signatures establish provenance and event order, but notification duties, intent and physical loss are not established'
@@ -206,5 +226,6 @@ def audit_accountability(run_record, events, fixture_manifest, control_event):
                           'numeric_attribution':None},
         'limits':['runtime event log does not prove physical side effects',
                   'signed source change does not prove original issuer fault',
+                  'missing signed local action binding cannot prove notice-before-use',
                   'missing notification duty or loss model prevents numeric blame']
     }

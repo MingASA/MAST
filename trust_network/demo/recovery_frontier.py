@@ -18,11 +18,15 @@ def frontier(gateway,envelope_packet,task_id,completed,receiver):
         envelope.get('workflow')!=gateway.workflow or envelope.get('action_authorized') is not False or
         envelope.get('fresh_status_check_still_required') is not True):
         raise ValueError('wrong recovery authority/scope')
+    closure=envelope.get('protocol')=='recovery-frontier-v3'
+    if closure:
+        from trust_network.demo.recovery_closure import validate_envelope
+        validate_envelope(gateway,envelope_packet,receiver)
     tasks=[t for t in envelope['tasks'] if t['proposal']['id']==task_id]
     if len(tasks)!=1 or tasks[0].get('requires_new_model_decision') is not True:
         raise ValueError('task not uniquely authorized')
     task=tasks[0]; graph={r['old']:r for r in task['rebuild_required']}
-    if len(graph)!=len(task['rebuild_required']) or not graph:
+    if len(graph)!=len(task['rebuild_required']) or (not graph and not closure):
         raise ValueError('invalid rebuild graph')
     for old_id,node in graph.items():
         original=gateway.claims.get(old_id)
@@ -39,6 +43,13 @@ def frontier(gateway,envelope_packet,task_id,completed,receiver):
         old_id=offer['old']
         if old_id not in required: continue
         if old_id in mapping: raise ValueError('duplicate source replacement')
+        if closure:
+            from trust_network.demo.recovery_closure import validate_offer
+            _,new_packet=validate_offer(gateway,offer_packet)
+            new_id=digest(new_packet)
+            if required[old_id]!=new_id: raise ValueError('revision mapping mismatch')
+            mapping[old_id]=new_id; available[new_id]=new_packet
+            continue
         original=gateway.claims.get(old_id)
         if original is None: raise ValueError('old root unavailable')
         old_owner,old=read(original,gateway.public)
@@ -67,16 +78,47 @@ def frontier(gateway,envelope_packet,task_id,completed,receiver):
                 any(p not in available for p in parents) or
                 not valid_derivation(node['rule'],new['fact'],[available[p]['body']['fact'] for p in parents])):
                 raise ValueError('invalid completed derivation')
+            if closure and (new.get('supersedes')!=old_id or
+                new.get('recovery_binding')!={'envelope':digest(envelope_packet),'task_id':task_id}):
+                raise ValueError('completed revision not bound to this task')
+            if digest(packet)==old_id: raise ValueError('rebuild reused old identity')
             mapping[old_id]=digest(packet); available[digest(packet)]=packet
+    invalidated={};suspended={};usable_mapping=dict(mapping)
+    if closure:
+        # Signatures prove how a completion was built, not that it remains
+        # usable after a subsequent local retraction. Preserve unaffected work.
+        def negatives(cid,seen=None):
+            seen=set() if seen is None else seen
+            if cid in seen: raise ValueError('cyclic replacement evidence')
+            if cid in gateway.revoked:return [cid]
+            packet=available.get(cid)
+            if packet is None:return ['missing:'+cid]
+            found=[]
+            for parent in packet['body']['parents']:
+                found.extend(negatives(parent,seen|{cid}))
+            return sorted(set(found))
+        for old_id,new_id in mapping.items():
+            reasons=negatives(new_id)
+            if reasons:invalidated[old_id]=reasons;usable_mapping.pop(old_id,None)
+        for old_id,node in graph.items():
+            reasons=list(invalidated.get(old_id,[]))
+            for parent in node['parents']:
+                reasons.extend(negatives(mapping.get(parent,parent)))
+            if reasons:suspended[old_id]=sorted(set(reasons))
     ready=[]
     for old_id,node in graph.items():
-        if old_id not in mapping and all(p not in graph or p in mapping for p in node['parents']):
+        if old_id not in mapping and old_id not in suspended and all(p not in graph or p in usable_mapping for p in node['parents']):
             ready.append({'old':old_id,'issuer':node['issuer'],'rule':node['rule'],
                           'parents':[mapping.get(p,p) for p in node['parents']]})
-    return {'protocol':'recovery-frontier-v2','envelope':digest(envelope_packet),'task_id':task_id,
+    return {'protocol':'recovery-frontier-v3' if closure else 'recovery-frontier-v2','envelope':digest(envelope_packet),'task_id':task_id,
             'completed':{old:digest(packet) for old,packet in completed.items()},
             'ready':sorted(ready,key=lambda x:(x['issuer'],x['old'])),
-            'remaining':len(graph)-len(completed),'action_authorized':False}
+            'remaining':len(graph)-len(completed)+(len(invalidated) if closure else 0),'action_authorized':False,
+            **({'replacement_map':usable_mapping,
+                'usable_completed':{old:digest(p) for old,p in completed.items() if old in usable_mapping},
+                'invalidated_replacements':invalidated,'suspended':suspended,
+                'requires_replan':bool(invalidated),
+                'recovery_complete':len(graph)==len(completed) and not invalidated} if closure else {})}
 
 
 def rebuild_frontier_claim(gateway,envelope_packet,task_id,completed,receiver,old_id,fact):
@@ -96,7 +138,9 @@ def rebuild_frontier_claim(gateway,envelope_packet,task_id,completed,receiver,ol
     if not valid_derivation(node['rule'],fact,inputs): raise ValueError('model fact violates derivation')
     proof={'state':state,'old':old_id,'registrations':registrations,
            'completed_packets':copy.deepcopy(completed),'envelope_packet':copy.deepcopy(envelope_packet)}
-    packet=issue(gateway.owner,gateway.key,{'kind':'claim','workflow':gateway.workflow,
+    revision=({'supersedes':old_id,'recovery_binding':{'envelope':digest(envelope_packet),'task_id':task_id}}
+              if state['protocol']=='recovery-frontier-v3' else {})
+    packet=issue(gateway.owner,gateway.key,{**revision,'kind':'claim','workflow':gateway.workflow,
         'parents':node['parents'],'rule':node['rule'],'fact':copy.deepcopy(fact)})
     if gateway.receive(packet)['body']['action']!='received': raise ValueError('rebuilt claim rejected')
     event=gateway.record('frontier_claim_rebuilt',digest(packet),[old_id,digest(proof)])

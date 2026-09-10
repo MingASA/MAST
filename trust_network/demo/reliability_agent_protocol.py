@@ -7,4 +7,4 @@ COMMON_AGENT_SYSTEM = '''你是跨组织业务流程中的一个组织内部 Age
 
 # These definitions apply identically to every experimental policy arm.
 from trust_network.demo.reliability_stage import STAGE_SEMANTICS
-COMMON_AGENT_SYSTEM += '\n阶段协议：verify只核验、返回证据，绝不隐式执行；核验后必须再次明确approve或forward才可执行。proceed只提议重建证据，business_execution_authorized=false不等于禁止proceed。请依据runtime_stage_status中的本地检查和阶段含义判断；该状态是快照，最终写入和业务动作仍会重新检查。hold只表示暂停，reason不能把hold变成verify或把verify变成approve。'
+COMMON_AGENT_SYSTEM += '\n阶段协议：verify只核验、返回证据，绝不隐式执行；核验后必须再次明确approve或forward才可执行。proceed只提议重建证据，business_execution_authorized=false不等于禁止proceed。请依据runtime_stage_status中的本地检查和阶段含义判断；该状态是快照，最终写入和业务动作仍会重新检查。hold只表示暂停，reason不能把hold变成verify或把verify变成approve。若用户消息中的derivation_rule为relay，fact必须与每个父声明的fact逐字相同，不能改名、增删字段或重新计算；无法完整复制时选择hold。'

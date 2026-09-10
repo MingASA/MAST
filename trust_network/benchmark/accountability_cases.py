@@ -26,15 +26,18 @@ def evaluate_cases():
             e={'kind':kind,'tick':15+len(raw['events']),'sequence':len(raw['events']),
                'previous':digest(raw['events'][-1]),**fields}
             raw['events'].append(e);return e['sequence']
+        local_gateways={}
         def notice(branch):
             owner='receiver_'+branch
             g=ClaimGateway(owner,f['keys'][owner],f['public'],f['workflow'],AUTHORITIES)
+            local_gateways[owner]=g
             receipt=g.receive(f['revoke'])
             append('notice',owner=owner,root=root,receipt=receipt)
         if when=='before':notice(notified)
         owner='receiver_'+actor;proposal={'id':'duty-case','operation':'forward','claims':[root]}
         receipt=issue(owner,f['keys'][owner],{'kind':'benchmark_use','workflow':f['workflow'],
-                                            'proposal':proposal,'action':'COMPLETED'})
+                                            'proposal':proposal,'action':'COMPLETED',
+                                            'local_head':digest(local_gateways[owner].events[-1]) if owner in local_gateways else None})
         target=append('gate',owner=owner,order='A',outcome={'action':'COMPLETED','use_receipt':receipt})
         if when=='after':notice(notified)
         if name=='tampered_use_signature':raw['events'][target]['outcome']['use_receipt']['body']['proposal']['id']='changed'

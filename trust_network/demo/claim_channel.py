@@ -3,6 +3,7 @@
 Authority is configured per predicate. This initial rule supports exact relay,
 not arbitrary semantic inference from prose. Each gateway owns its local view.
 """
+import copy
 from dataclasses import asdict
 import secrets
 from trust_network.demo.documents import Certificate, Decision, digest
@@ -27,6 +28,28 @@ class ClaimGateway:
         self.owner, self.key, self.public = owner, key, public
         self.workflow, self.authorities = workflow, authorities
         self.claims, self.revoked, self.events = {}, {}, []
+        for field in self.PROTOCOL_STATE: setattr(self,field,{})
+
+    PROTOCOL_STATE=('handoffs','handoff_index','incoming_handoffs','handoff_receipts',
+                    'notification_outbox','notification_acks','notification_receipts')
+
+    def snapshot(self):
+        return copy.deepcopy({field:getattr(self,field) for field in
+                              ('claims','revoked','events',*self.PROTOCOL_STATE)})
+
+    def restore(self,state):
+        for field in ('claims','revoked','events',*self.PROTOCOL_STATE):
+            setattr(self,field,copy.deepcopy(state.get(field,[] if field=='events' else {})))
+        if 'handoff_index' not in state:
+            for hid,packet in self.handoffs.items():
+                for claim in packet['body']['evidence']:
+                    self.handoff_index.setdefault(digest(claim),[]).append(hid)
+
+    def fork(self):
+        result=copy.copy(self);result.restore(self.snapshot());return result
+
+    def adopt(self,staged):
+        self.restore(staged.snapshot())
 
     def record(self, action, target, reasons=()):
         body = {'kind': 'gateway_event', 'workflow': self.workflow, 'action': action,
@@ -56,7 +79,11 @@ class ClaimGateway:
                 raise ValueError('unauthorized revocation')
             self.revoked[target] = packet
             impacted = [c for c in self.claims if self.blockers(c)]
-            return self.record('revocation_received', target, impacted)
+            event=self.record('revocation_received', target, impacted)
+            if self.handoffs:
+                from trust_network.demo.propagation_notice import enqueue_revocation
+                enqueue_revocation(self,packet)
+            return event
         if body['kind'] != 'claim': raise ValueError('unsupported packet')
         claim_id = digest(packet); parents = body['parents']
         if not isinstance(parents, list) or len(parents) > 16 or len(set(parents)) != len(parents):

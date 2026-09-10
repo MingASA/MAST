@@ -71,7 +71,8 @@ class Adapter:
         initial_event_count=len(g.events)
         def seal(outcome):
             outcome['gateway_events']=copy.deepcopy(g.events[initial_event_count:])
-            outcome['use_receipt']=issue(g.owner,g.key,{'kind':'benchmark_use','workflow':g.workflow,'proposal':proposal,'action':outcome['action']})
+            outcome['use_receipt']=issue(g.owner,g.key,{'kind':'benchmark_use','workflow':g.workflow,'proposal':proposal,'action':outcome['action'],
+                'local_head':digest(self.gateway.events[-1]) if self.gateway.events else None})
             return outcome
         if self.policy=='simple_root_gate':
             # Same structural channel and business contract. Query roots using
@@ -88,7 +89,7 @@ class Adapter:
                 return seal({'action':'COMPLETED','result':result})
             except ValueError:
                 return seal({'action':'REQUEST_EVIDENCE','result':None})
-        config=ReliabilityConfig(policy={'unmediated':'autonomous','verify_all':'verify_all'}.get(self.policy,'dependency'))
+        config=ReliabilityConfig(policy={'unmediated':'autonomous','verify_all':'verify_all','dependency_closure':'dependency_closure','verify_all_closure':'verify_all_closure'}.get(self.policy,'dependency'))
         packet=run_batch(g,[proposal],lambda o,q:query(o,q,'batch'),effect,config)
         self.queries+=packet['body']['verification_calls']
         outcome=seal(copy.deepcopy(packet['body']['outputs'][0]))
@@ -97,7 +98,7 @@ class Adapter:
 
 
 def run(f,policy,lifecycle=False):
-    if policy not in (*POLICIES,'frontier_v2'): raise ValueError('unknown policy')
+    if policy not in (*POLICIES,'frontier_v2','dependency_closure','verify_all_closure'): raise ValueError('unknown policy')
     nodes={o:Adapter(o,f['keys'][o],f['public'],f['workflow'],policy) for o in OWNERS}; bus=MessageBus(); packets={}
     for packet in [*f['roots'].values(),*f['auth'].values(),f['conflict'],f['revoke'],*[p for t in f['trace'].values() for p in t.values()]]:
         packets[digest(packet)]=packet
@@ -206,6 +207,7 @@ def evaluate(result,truth):
     # Evaluator alone knows conflict resolution/business truth. Receiving a
     # packet is not synonymous with accepting or citing an invalid claim.
     def wrong(e):
+        if e.get('phase')=='recovery_evidence': return False
         if e['tick']<truth['invalid_from']: return False
         ids=e.get('claims',e.get('proposal',{}).get('claims',[]))
         if 'packet' in e: ids=[e['packet']]

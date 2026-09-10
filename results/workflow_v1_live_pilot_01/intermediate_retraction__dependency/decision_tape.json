@@ -1,0 +1,136 @@
+{
+  "derive:coordinator:A": {
+    "action": "hold",
+    "claims": [],
+    "fact": "",
+    "reason": "required_parent_claims(d0cc249...)未出现在public_claims或私有状态中，无法核对签名费用依据；本组织私有业务状态为空，没有订单A或C的关联信息，缺少明确批准不得将审核意见当作付款。"
+  },
+  "forward:coordinator:Aa": {
+    "action": "hold",
+    "claims": [],
+    "reason": "候选声明17be570b…在runtime_stage_status中被列为missing且blocked，task_binding_verified=false、local_parent_checks_passed=false，且may_submit_explicit_action=false；在缺失状态解除前不应提交approve/forward/proceed。按手册要求选择暂停，等待所需证据到位后再决定转交。"
+  },
+  "forward:coordinator:Ab": {
+    "action": "hold",
+    "claims": [],
+    "reason": "候选声明 ID 17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133 在本组织可见的公开证据中尚未找到对应签发条目，runtime_stage_status 也将其标记为缺失且本地父检查未通过，当前阶段既不可提交显式 approve/forward，也未具备生成派生证据所需的本地父证据，按手册要求暂先 hold，待该声明以可核验的公开签名证据形式补齐后再决定继续转交。"
+  },
+  "derive:coordinator:C": {
+    "action": "proceed",
+    "claims": [
+      "7249c60480ef309f34d1fc1a861e6bee4a3e0cbbe5d7f7bf35b9922d8abc2d49"
+    ],
+    "fact": {
+      "predicate": "signature_fee_basis",
+      "value": {
+        "order_refs": [
+          "A",
+          "C"
+        ],
+        "currency": "CNY",
+        "total_cents": 200,
+        "basis": "source-signed total_charge claims for order A (100 CNY) and order C (100 CNY)"
+      }
+    },
+    "reason": "本地父证据可用：source 签发的两条 total_charge 声明分别对应订单 A（100 CNY 分）和订单 C（100 CNY 分），签名 action 为 pass，且 known_revocations 为空；订单 A 与 C 相互独立，无任一相互阻塞。runtime_stage_status 显示 local_parent_checks_passed=true 且 may_propose_derivation=true，因此按手册与阶段语义提议派生意见；business_execution_authorized=false 不阻止 proceed，账单批准等显式动作仍由运行时在后续阶段重新检查。"
+  },
+  "forward:coordinator:Ca": {
+    "action": "hold",
+    "claims": [
+      "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+    ],
+    "reason": "runtime_stage_status 显示目标声明本地缺失（missing/blocked），task_binding_verified=false、local_parent_checks_passed=false、may_submit_explicit_action=false，当前无法继续转交证据；按手册需先补齐证据后再决定，不能以缺失 claims 提交 approve/forward。"
+  },
+  "forward:coordinator:Cb": {
+    "action": "hold",
+    "claims": [],
+    "reason": "任务所需的候选声明 a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0 缺失于公共声明池，无法基于本地合法证据进行 verify、approve 或 forward；runtime_stage_status 也确认 may_submit_explicit_action=false 且本地父证据检查未通过，故保持 hold，等待核验或新证据到位。"
+  },
+  "derive:middle_a:A": {
+    "action": "hold",
+    "claims": [],
+    "fact": "父证据 17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133 不可用，无法派生签名费用审核意见。",
+    "reason": "runtime_stage_status 显示该候选声明在 derive 阶段被列为 missing 且 blocked（missing:17be570b...），local_parent_checks_passed=false、task_binding_verified=false、may_propose_derivation=false；本组织私有业务状态亦为空，未持有该父证据。在缺乏充分依据的情况下，按手册要求应 hold，不得凭不完整证据提议 proceed 或隐式核验/批准。"
+  },
+  "derive:middle_a:C": {
+    "action": "hold",
+    "claims": [
+      "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+    ],
+    "fact": "因签名费用依据 a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0 在本组织视角下处于 missing 状态，无法基于本地合法父证据形成派生审核意见。",
+    "reason": "runtime_stage_status 报告该父证据处于 missing 且 blocked 状态，local_parent_checks_passed=false、task_binding_verified=false、may_propose_derivation=false，缺少生成派生意见所需的本组织合法父证据，且已知撤销与阻止列表中也未提供替代依据，无法满足审核签名费用依据所需的事实支撑。按本组织工作手册，证据缺失时应暂停而非继续，因此选择 hold，而不是在依据不足时提议 proceed 派生。"
+  },
+  "derive:middle_b:A": {
+    "action": "hold",
+    "claims": [
+      "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133"
+    ],
+    "fact": "无",
+    "reason": "本地父证据 17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133 在 runtime_stage_status 中标记为 missing 且 local_parent_checks_passed=false、task_binding_verified=false、may_propose_derivation=false，依据签名费用依据审核所需的父证据尚不可用，无法构成充分依据，按工作手册要求暂停。"
+  },
+  "derive:middle_b:C": {
+    "action": "hold",
+    "claims": [
+      "a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0"
+    ],
+    "fact": "本地尚未持有签名费用依据 a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0 的可用证据，派生意见缺乏充分依据。",
+    "reason": "依据当前 runtime_stage_status 快照，所需父证据 a8c8e60d2c508ef2bf8bbbfd675fc6141361f00890384e767cfcfb7a2bd396e0 处于 missing 状态，local_parent_checks_passed=false、task_binding_verified=false、may_propose_derivation=false、may_submit_explicit_action=false，且 public_claims 中亦无该声明，本组织私有业务状态为空。依据手册，在签名费用依据缺失的情况下不应进行 approve 或提出派生意见，按 schema 选择 hold，暂停以等待核验或证据补齐；此 hold 不构成核验动作，亦不构成付款或出库等业务执行。"
+  },
+  "forward:middle_a:A": {
+    "action": "hold",
+    "claims": [
+      "60a2403c78be1bcac7eb376afa0d067be8c496ec217253136530ffba2fc20e02"
+    ],
+    "reason": "依据 runtime_stage_status，phase=decide_action；该候选声明在 missing 与 blocked 中均列出（missing:60a2403c…），local_parent_checks_passed=false、task_binding_verified=false、may_propose_derivation=false、may_request_verification=true、may_submit_explicit_action=false。在缺乏本组织本地可用的合法父证据且任务绑定尚未通过核验的情况下，无法满足 forward/approve 所需的依赖，亦无法执行 proceed。保留 verify 通道以便后续在证据就绪后由上游权威核验；当前仅作 hold 暂停，不发起隐式核验，也不将审核意见视为付款。"
+  },
+  "forward:middle_a:C": {
+    "action": "hold",
+    "claims": [],
+    "reason": "runtime_stage_status 表明 task 声明 301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135 处于缺失且被阻止状态，local_parent_checks_passed=false、task_binding_verified=false、may_submit_explicit_action=false，且无 known_revocations/known_blockers 替代证据可用；缺少所需证据，不能转交。"
+  },
+  "forward:middle_b:A": {
+    "action": "hold",
+    "claims": [
+      "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a"
+    ],
+    "reason": "The required candidate claim cc9a84c2 is not present in public_claims and runtime_stage_status reports it as missing with local_parent_checks_passed=false, task_binding_verified=false, may_propose_derivation=false, and may_submit_explicit_action=false. The evidence needed to decide on forwarding is unavailable locally, so I hold pending verification or provision of the claim; no approve or forward is implied."
+  },
+  "forward:middle_b:C": {
+    "action": "hold",
+    "claims": [
+      "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385"
+    ],
+    "reason": "本地父证据缺失且核验/显式动作尚未授权，转交前先暂停以补齐证据。"
+  },
+  "invoice:A:a": {
+    "action": "verify",
+    "claims": [
+      "60a2403c78be1bcac7eb376afa0d067be8c496ec217253136530ffba2fc20e02"
+    ],
+    "reason": "账单批准所需的两条任务声明中，60a2403c…对应订单A的 invoice_authorization 在当前 runtime_stage_status 中仍处于 missing 状态，缺少本地合法父证据；7da4d6a0…对应订单C的父证据已可用。订单A与C相互独立，故仅就缺失的订单A声明发起 verify 请求权威核验以补齐证据，订单C留待核验通过后再行评估；verify 仅核验、不批准，也不隐式执行。"
+  },
+  "invoice:C:a": {
+    "action": "hold",
+    "claims": [
+      "301e5317896cebaddb96be3725c9780917071d677c551dea53973390e49cd135",
+      "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+    ],
+    "reason": "订单A的所需声明在runtime_stage_status中被标记为missing，且may_submit_explicit_action=false、business_execution_authorized=false，本地检查未通过；按工作手册在证据缺失时应暂停而非批准或核验替代。订单C独立处理，互不影响。"
+  },
+  "invoice:A:b": {
+    "action": "verify",
+    "claims": [
+      "cc9a84c20d043ebac765942c30d843b26d40bdd61537b271fedaf14aed94544a",
+      "7da4d6a01c05650ad615f79c30dafba5860c4560bba8f0f4997e5ee015aa24c5"
+    ],
+    "reason": "任务要求只查证、不批准。当前本地缺少订单A对应的候选人声明 cc9a84c2...，订单C的声明 7da4d6a0... 已可见但本地父证据检查未通过；订单A与C相互独立，不能以A缺失连带暂停C的核验。对两份发票授权声明分别请求核验以确认签发、有效期及未撤销状态；核验完成后仍需后续显式 approve 才执行批准，本阶段不隐式执行。"
+  },
+  "invoice:C:b": {
+    "action": "hold",
+    "claims": [
+      "bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385",
+      "1a7b4cbbf1bf50e987bb731f5f57a0f7b60894b8c52ae04a8d8ca1023bd35cf0"
+    ],
+    "reason": "本地检查显示任务A所需声明bcac4ee08a94ae95cd8253fc26fa1204fc6a0d7f047813b6bc5e82ec4ec41385缺失，runtime_stage_status明确local_parent_checks_passed=false且may_submit_explicit_action=false，不满足approve条件；任务C虽已具备公开证据且与A相互独立不应被牵连，但本轮仍处于decide_action阶段且本地父证据未通过检查，缺少approve所需核验流程的明确结果，故选择hold而非隐式批准，等待按手册补充缺失证据或完成核验后再行决定。"
+  }
+}

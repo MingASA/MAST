@@ -182,8 +182,7 @@ def prepare_recovery(gateway, batch_packet, offers):
     retry_ids={o['proposal'] for o in batch['outputs'] if o['action'] in ('REQUEST_EVIDENCE','ESCALATE','BLOCKED')}
     # Never retry COMPLETED or EFFECT_UNKNOWN: retrying may duplicate effects.
     relevant=set().union(*(ancestors(gateway,c) for pid in retry_ids for c in proposals[pid]['claims']))
-    staged=copy.copy(gateway)
-    staged.claims=copy.deepcopy(gateway.claims); staged.revoked=copy.deepcopy(gateway.revoked); staged.events=list(gateway.events)
+    staged=gateway.fork()
     replacements={}; packets=[]
     for offer in offers:
         signer,body=read(offer,gateway.public)
@@ -220,7 +219,7 @@ def prepare_recovery(gateway, batch_packet, offers):
         tasks.append({'proposal':proposal,'replacement_sources':{o:n for o,n in replacements.items() if o in nodes},
                       'rebuild_required':rebuild,'requires_new_model_decision':True})
     # Publish only after every offer validates. Old statements/revocations stay.
-    gateway.claims=staged.claims; gateway.events=staged.events
+    gateway.adopt(staged)
     body={'kind':'recovery_envelope','workflow':gateway.workflow,'batch':digest(batch_packet),
           'offers':offers,'new_source_packets':packets,'tasks':tasks,
           'excluded_proposals':[o['proposal'] for o in batch['outputs'] if o['proposal'] not in retry_ids],

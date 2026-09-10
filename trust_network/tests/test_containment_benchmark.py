@@ -81,10 +81,11 @@ def test_audit_detects_signed_use_after_own_notice_without_assigning_legal_blame
     from trust_network.demo.claim_channel import issue
     from trust_network.demo.documents import digest
     f=fixture('delayed_revoke');raw=run(f,'unmediated')
-    # Deliberately faulty actor reports use after its own signed notice receipt.
+    # The use receipt explicitly binds the actor's signed local notice.
+    notice=next(e['receipt'] for e in raw['events'] if e['kind']=='notice' and e['owner']=='receiver_a')
     proposal={'id':'fault-injection','operation':'forward','claims':[digest(f['roots']['A'])]}
     receipt=issue('receiver_a',f['keys']['receiver_a'],{'kind':'benchmark_use','workflow':f['workflow'],
-        'proposal':proposal,'action':'COMPLETED'})
+        'proposal':proposal,'action':'COMPLETED','local_head':digest(notice)})
     raw['events'].append({'kind':'gate','tick':13,'sequence':len(raw['events']),
         'previous':digest(raw['events'][-1]),'owner':'receiver_a','order':'A',
         'outcome':{'action':'COMPLETED','use_receipt':receipt}})

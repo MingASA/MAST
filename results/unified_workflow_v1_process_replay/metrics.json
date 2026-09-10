@@ -1,0 +1,222 @@
+[
+  {
+    "case": "intermediate_retraction",
+    "arm": "root_gate",
+    "mode": "replay",
+    "workload_hash": "07706700069f5bcd0209e069c47172ef6e03f272f8de6835e1fc62ffc7d18c49",
+    "error_route_registration_matches": 2,
+    "error_route_registration_eligible": 2,
+    "error_route_recall": 1.0,
+    "task_count": 4,
+    "unsafe_completed": 2,
+    "unsafe_completion_rate": 0.5,
+    "safe_completed": 2,
+    "error_accepting_organizations": 2,
+    "error_exposed_organizations": 4,
+    "max_error_acceptance_hop": 3,
+    "max_error_propagation_distance": 2,
+    "affected_branches": [
+      "a",
+      "b"
+    ],
+    "error_forward_actions": 2,
+    "program_blocks": 0,
+    "error_actions_blocked": 0,
+    "unrelated_overfreeze": 0,
+    "recovery_successes": 0,
+    "recovery_stops": [],
+    "invalid_binding_completed": 0,
+    "verification_queries": 22,
+    "protocol_rpc_calls": 92,
+    "message_counts": {
+      "handoff": 14,
+      "handoff_ack": 14,
+      "notice": 0,
+      "notice_ack": 0
+    },
+    "model_calls": 0,
+    "provider_attempts": 0,
+    "known_tokens": 0,
+    "unknown_usage_attempts": 0,
+    "model_holds": 0,
+    "model_invalid_actions": 0,
+    "worker_errors": 0,
+    "fault_detection": [
+      {
+        "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+        "kind": "retraction",
+        "origin": "coordinator",
+        "first_consumer_detection_delay": null,
+        "issuer_detected_tick": 10,
+        "consumer_detection_ticks": {}
+      }
+    ],
+    "agents": {
+      "source": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "buyer": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "coordinator": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "middle_a": {
+        "error_exposures": 2,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 0
+      },
+      "receiver_a": {
+        "error_exposures": 2,
+        "error_acceptances": 1,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 0
+      },
+      "middle_b": {
+        "error_exposures": 2,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 0
+      },
+      "receiver_b": {
+        "error_exposures": 2,
+        "error_acceptances": 1,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 0
+      }
+    },
+    "origin_identity_matches": 1,
+    "origin_identity_eligible": 1,
+    "proven_notice_violations": 0,
+    "faults_realized": 1,
+    "provenance_is_not_factual_blame": true
+  },
+  {
+    "case": "intermediate_retraction",
+    "arm": "dependency_push",
+    "mode": "replay",
+    "workload_hash": "07706700069f5bcd0209e069c47172ef6e03f272f8de6835e1fc62ffc7d18c49",
+    "error_route_registration_matches": 0,
+    "error_route_registration_eligible": 0,
+    "error_route_recall": null,
+    "task_count": 4,
+    "unsafe_completed": 0,
+    "unsafe_completion_rate": 0.0,
+    "safe_completed": 4,
+    "error_accepting_organizations": 0,
+    "error_exposed_organizations": 2,
+    "max_error_acceptance_hop": 0,
+    "max_error_propagation_distance": 0,
+    "affected_branches": [],
+    "error_forward_actions": 0,
+    "program_blocks": 4,
+    "error_actions_blocked": 4,
+    "unrelated_overfreeze": 0,
+    "recovery_successes": 2,
+    "recovery_stops": [],
+    "invalid_binding_completed": 0,
+    "verification_queries": 36,
+    "protocol_rpc_calls": 507,
+    "message_counts": {
+      "handoff": 12,
+      "handoff_ack": 12,
+      "notice": 2,
+      "notice_ack": 2
+    },
+    "model_calls": 0,
+    "provider_attempts": 0,
+    "known_tokens": 0,
+    "unknown_usage_attempts": 0,
+    "model_holds": 0,
+    "model_invalid_actions": 0,
+    "worker_errors": 0,
+    "fault_detection": [
+      {
+        "target": "17be570b9358bb979fcfa1ef845c24e4981f0076d4cb2b1ded7d61d589c9a133",
+        "kind": "retraction",
+        "origin": "coordinator",
+        "first_consumer_detection_delay": 1,
+        "issuer_detected_tick": 10,
+        "consumer_detection_ticks": {
+          "middle_a": 11,
+          "middle_b": 11,
+          "receiver_a": 20,
+          "receiver_b": 20
+        }
+      }
+    ],
+    "agents": {
+      "source": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "buyer": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "coordinator": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 0,
+        "error_action_proposals": 0,
+        "actions_blocked": 0
+      },
+      "middle_a": {
+        "error_exposures": 2,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 1
+      },
+      "receiver_a": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 1
+      },
+      "middle_b": {
+        "error_exposures": 2,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 1
+      },
+      "receiver_b": {
+        "error_exposures": 0,
+        "error_acceptances": 0,
+        "error_citations": 1,
+        "error_action_proposals": 1,
+        "actions_blocked": 1
+      }
+    },
+    "origin_identity_matches": 1,
+    "origin_identity_eligible": 1,
+    "proven_notice_violations": 0,
+    "faults_realized": 1,
+    "provenance_is_not_factual_blame": true
+  }
+]

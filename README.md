@@ -1,3 +1,9 @@
+> **当前 benchmark 入口（2026-09-09）：** [统一跨组织 workflow v1](BENCHMARK_WORKFLOW_V1.md) 已实现并完成 [88 条离线工作流](results/unified_workflow_v1_offline/report.md)、[2 条实际进程重放](results/unified_workflow_v1_process_replay/report.md)、[v7 历史校准](results/unified_workflow_v1_v7_replay.json) 和 [3 条 live pilot workflow](results/workflow_v1_live_pilot_01/report.md)。当前全量测试 180 项通过；离线新增付费调用 0，live pilot 实际调用 54 次。live pilot 的受控故障均未实际注入，不能据 0 传播宣称机制成功，详见 [运行后审阅](results/workflow_v1_live_pilot_01/POSTMORTEM.md)。离线结果显示中间撤销控制优于根门禁，但与全部依赖强门禁等价；签名事实错误仍漏过。下方为历史阶段记录。
+
+> **新增机制：** [沿交接路径主动通知与恢复二次失效处理](MECHANISM_DEPENDENCY_NOTICES_V1.md)，[实验交接](TASK_EXPERIMENTS_DEPENDENCY_NOTICES_V1.md)。已接入持久化 worker；全量169项测试通过，随后事件导出相关11项通过；未运行新付费实验。
+
+> **当前新增机制（尚未运行正式实验）：** [closure v3 机制与边界](MECHANISM_CLOSURE_V3.md)、[离线实验交接](TASK_EXPERIMENTS_CLOSURE_V3.md)。完整依赖查证、中间声明修订与局部恢复、签名本地顺序追溯已接入；158 项测试通过。旧 live pilot 的 VERIFY 自动执行混淆见 [复核](REVIEW_CONTAINMENT_LIVE_PILOT_V1.md)，下方历史结果不代表新语义下的实验结论。
+
 > **统一离线闭环：** [36条流程与追溯评分结果](results/containment_closed_loop_v1_final/report.md)，[协议与边界](BENCHMARK_PROTOCOL_V1.md)。沿用原组织状态串联传播、冻结、恢复；真实模型 pilot 另存于下方新目录。
 
 > **最新离线机制对照：** [Benchmark协议与frontier-v2](BENCHMARK_PROTOCOL_V1.md)，[结果](results/containment_benchmark_v1_frontier/report.md)。多跳恢复候选已实现，离线结果不与 live 样本混合。

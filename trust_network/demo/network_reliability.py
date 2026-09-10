@@ -21,7 +21,7 @@ class ReliabilityConfig:
     authority_cost: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.policy not in ('autonomous', 'verify_all', 'dependency'):
+        if self.policy not in ('autonomous', 'verify_all', 'dependency', 'dependency_closure', 'verify_all_closure'):
             raise ValueError('unknown policy')
         for value in (self.propagation_threshold, self.omission_weight):
             if not math.isfinite(value) or value < 0:
@@ -54,11 +54,16 @@ def ancestors(gateway, target):
     return result
 
 
-def plan(gateway, proposals, config=ReliabilityConfig()):
-    """Batch root cut: deduplicate shared evidence, order by exposed loss.
+def verification_targets(decision):
+    """Legacy plans check roots; closure plans bind every required issuer claim."""
+    return decision.get('verification_targets', decision['roots'])
 
-    Invoice execution always requires current confirmation of every root in
-    protected policies. Selectivity applies to propagation and shared evidence;
+
+def plan(gateway, proposals, config=ReliabilityConfig()):
+    """Deduplicate required issuer checks, ordered by exposed loss.
+
+    Protected invoice execution confirms roots; closure policies additionally
+    confirm every intermediate and target claim with its own issuer. Selectivity applies to propagation and shared evidence;
     a small budget never silently removes execution checks.
     """
     ids = [p['id'] for p in proposals]
@@ -82,7 +87,7 @@ def plan(gateway, proposals, config=ReliabilityConfig()):
         roots = sorted(n for n in nodes if n in gateway.claims and not gateway.claims[n]['body']['parents'])
         blocked = missing or revoked
         required = proposal['operation'] == 'approve_invoice' or loss * (1 + config.omission_weight) >= config.propagation_threshold
-        if config.policy == 'verify_all':
+        if config.policy in ('verify_all', 'verify_all_closure'):
             required = True
         if config.policy == 'autonomous':
             required = False
@@ -96,8 +101,13 @@ def plan(gateway, proposals, config=ReliabilityConfig()):
                           'rebuild': sorted(n for n in nodes if n in gateway.claims and
                               gateway.claims[n]['body']['parents'] and
                               ancestors(gateway,n).intersection(set(missing + revoked))) if blocked else []})
+        targets_to_check = roots
+        if config.policy in ('dependency_closure', 'verify_all_closure'):
+            targets_to_check = sorted(nodes - set(missing))
+            decisions[-1]['verification_targets'] = targets_to_check
+            decisions[-1]['verification_scope'] = 'issuer_dependency_closure_v1'
         if required and not blocked:
-            for root in roots:
+            for root in targets_to_check:
                 entry = checks.setdefault(root, {'root': root,
                     'authority': gateway.claims[root]['signature']['issuer'],
                     'proposals': [], 'exposure': 0.0})
@@ -143,7 +153,7 @@ def run_batch(gateway, proposals, query_authority, effect,
         # can authorize one of those proposals in this batch: stop that branch.
         dependents = [d for d in schedule['decisions'] if d['proposal'] in check['proposals']]
         if all(any(status.get(r) in ('revoked', 'unknown', 'unavailable', 'budget_exhausted')
-                   for r in d['roots']) for d in dependents):
+                   for r in verification_targets(d)) for d in dependents):
             status[root] = 'branch_frozen'
             continue
         if verification_budget is not None and calls >= verification_budget:
@@ -164,11 +174,7 @@ def run_batch(gateway, proposals, query_authority, effect,
             status[root] = body['status']
             replies.append(packet)
             gateway.record('reliability_status_received', root, [digest(packet), body['status']])
-            if body['status']=='revoked' and body.get('revocation') is not None:
-                revoker,revocation=read(body['revocation'],gateway.public)
-                if revoker!=owner or revocation.get('kind')!='revoke' or revocation.get('target')!=root:
-                    raise ValueError('revocation proof scope mismatch')
-                gateway.receive(body['revocation'])
+            apply_status_evidence(gateway, body)
         except Exception:
             if status.get(root) not in ('revoked','unknown'):
                 status[root] = 'unavailable'
@@ -177,9 +183,9 @@ def run_batch(gateway, proposals, query_authority, effect,
     by_id = {p['id']: p for p in proposals}
     for decision in schedule['decisions']:
         proposal = by_id[decision['proposal']]
-        failed = [r for r in decision['roots'] if status.get(r) != 'active'] if decision['action'] == 'VERIFY' else []
+        failed = [r for r in verification_targets(decision) if status.get(r) != 'active'] if decision['action'] == 'VERIFY' else []
         outcome = {'proposal': proposal['id'], 'result': None, 'failed_roots': failed}
-        known_negative = [r for r in decision['roots'] if status.get(r) in ('revoked','unknown')]
+        known_negative = [r for r in verification_targets(decision) if status.get(r) in ('revoked','unknown')]
         if decision['action'] == 'REQUEST_EVIDENCE' or known_negative:
             outcome['action'] = 'REQUEST_EVIDENCE'
         elif failed:
@@ -214,7 +220,8 @@ def run_batch(gateway, proposals, query_authority, effect,
                 except Exception:
                     # An effect adapter may have performed work before failing.
                     outcome['action'] = 'EFFECT_UNKNOWN'
-        gateway.record('reliability_outcome', digest(proposal), [outcome['action']])
+        receipt=gateway.record('reliability_outcome', digest(proposal), [outcome['action']])
+        outcome['local_head']=digest(receipt)
         outputs.append(outcome)
     report = {'kind': 'reliability_batch', 'workflow': gateway.workflow,
               'action_semantics':'explicit-intent-v1',
@@ -229,11 +236,45 @@ def authority_status(gateway, query):
         raise ValueError('wrong query scope')
     root = query['root']
     original = gateway.claims.get(root)
-    owned = original and read(original, gateway.public)[0] == gateway.owner and not original['body']['parents']
-    status = ('revoked' if gateway.blockers(root) else 'active') if owned else 'unknown'
+    owned = original and read(original, gateway.public)[0] == gateway.owner
+    blockers = gateway.blockers(root) if owned else []
+    status = ('unknown' if any(b.startswith('missing:') for b in blockers) else
+              'revoked' if blockers else 'active') if owned else 'unknown'
     body = {'kind': 'reliability_status', 'query': query, 'status': status}
     if status=='revoked':
-        body['revocation']=gateway.revoked[root]
+        if root in gateway.revoked:
+            body['revocation']=gateway.revoked[root]
+        else:
+            body['reason']='local_dependency_not_active'
+            body['dependency_revocations']=[gateway.revoked[c] for c in blockers]
     packet = issue(gateway.owner, gateway.key, body)
     gateway.record('reliability_status_replied', root, [digest(packet), status])
     return packet
+
+
+def apply_status_evidence(gateway, body):
+    """Validate negative proofs against this query's locally visible ancestry.
+
+    Caller verifies the outer reply's issuer and exact query binding first.
+    Apply only after the entire proof list passes; unavailable is not revoked.
+    """
+    target=body['query']['root']
+    proofs=[]
+    if body.get('revocation') is not None:
+        proof=body['revocation']; signer,value=read(proof,gateway.public)
+        if (value.get('kind')!='revoke' or value.get('target')!=target or target not in gateway.claims or
+            signer!=gateway.claims[target]['signature']['issuer']):
+            raise ValueError('revocation proof scope mismatch')
+        proofs.append(proof)
+    extra=body.get('dependency_revocations',[])
+    if not isinstance(extra,list): raise ValueError('invalid dependency proofs')
+    proper=ancestors(gateway,target)-{target}
+    for proof in extra:
+        _,value=read(proof,gateway.public)
+        if value.get('kind')!='revoke' or value.get('target') not in proper:
+            raise ValueError('unrelated dependency revocation')
+        proofs.append(proof)
+    if proofs and body.get('status')!='revoked': raise ValueError('contradictory status evidence')
+    staged=gateway.fork()
+    for proof in proofs: staged.receive(proof)
+    gateway.adopt(staged)
