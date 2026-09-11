@@ -41,3 +41,21 @@ def test_traced_retry_archives_each_request_and_response(monkeypatch):
     assert json.loads(attempts[1]['response_text'])['choices'][0]['message']['content'].startswith('{')
     assert calls[1].startswith('prompt\n请确保返回完整')
     assert 'Authorization' not in json.dumps(attempts[0]['request'])
+
+
+def test_traced_retries_transient_provider_failure(monkeypatch):
+    calls=[]
+    def reply(config,system,prompt):
+        calls.append(prompt)
+        if len(calls)==1:
+            raise RuntimeError('MiniMax network connection failed')
+        usage={'total_tokens':5,'prompt_tokens':3,'completion_tokens':2}
+        raw={'choices':[{'message':{'content':'{"action":"hold","reason":"check"}'},
+                         'finish_reason':'stop'},], 'usage':usage}
+        return {'action':'hold','reason':'check'},usage,{'model':config.model},json.dumps(raw),raw
+    monkeypatch.setattr(provider,'_complete_once_trace',reply)
+    result,usage,attempts=provider.complete_traced(
+        ProviderConfig('model','https://example.invalid','secret'),'system','prompt')
+    assert result['action']=='hold' and usage['attempts']==2
+    assert len(attempts)==2 and attempts[0]['error']['message']=='MiniMax network connection failed'
+    assert calls[1].startswith('prompt\n请确保返回完整')

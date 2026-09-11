@@ -21,7 +21,7 @@ from .spec import config,dossier,OWNERS
 
 
 def public_view(gateway):
-    return {'claims':list(gateway.claims.values()),'revocations':list(gateway.revoked.values()),
+    return {'fact_disputes':gateway.fact_disputes,'claims':list(gateway.claims.values()),'revocations':list(gateway.revoked.values()),
             'blocked':{c:gateway.blockers(c) for c in gateway.claims if gateway.blockers(c)}}
 
 
@@ -30,13 +30,20 @@ class MemoryBackend:
         self._private=copy.deepcopy(private_state or {})
         self.configs={o:config(o,workload['public'],workload['workflow'],arm) for o in OWNERS}
         self.nodes={o:ClaimGateway(o,workload['keys'][o],workload['public'],workload['workflow'],
-            self.configs[o]['authorities']) for o in OWNERS}
+            self.configs[o]['authorities'],self.configs[o].get('fact_authorities')) for o in OWNERS}
         self.observer=lambda *args:None
 
     def call(self,owner,request,sender=None):
         request=copy.deepcopy(request);g=self.nodes[owner];start=len(g.events);op=request['operation']
         try:
-            if op=='receive':response={'event':g.receive(request['packet'])}
+            if op=='reliability_dispute_register':
+                from trust_network.demo.dispute_protocol import register_dispute
+                response={'target':register_dispute(g,request['proof'])}
+            elif op=='reliability_dispute_revision':
+                from trust_network.demo.dispute_protocol import propose_revision
+                response={'offer':propose_revision(g,request['proof'],request['fact'],
+                    lambda who,q:self.call(who,{'operation':'reliability_status','query':q},owner)['reply'])}
+            elif op=='receive':response={'event':g.receive(request['packet'])}
             elif op=='reliability_public_view':response={'view':public_view(g)}
             elif op=='reliability_sign_derived':
                 packet=issue(g.owner,g.key,{'kind':'claim','workflow':g.workflow,'parents':request['parents'],
@@ -48,14 +55,18 @@ class MemoryBackend:
                 if original['signature']['issuer']!=owner:raise ValueError('foreign retraction')
                 packet=issue(owner,g.key,{'kind':'revoke','workflow':g.workflow,'target':cid,'original':original})
                 response={'packet':packet,'event':g.receive(packet)}
-            elif op=='reliability_status':response={'reply':authority_status(g,request['query'])}
+            elif op=='reliability_status':
+                if request['query'].get('kind')=='fact_evidence_query':
+                    from trust_network.demo.fact_evidence import attest
+                    response={'reply':attest(g,self._private.get(owner,{}).get('settlement_registry',{}),request['query'])}
+                else:response={'reply':authority_status(g,request['query'])}
             elif op in ('reliability_batch','reliability_handoff_prepare'):
                 proposals=request.get('proposals')
                 if op=='reliability_handoff_prepare':
                     proposals=[{'id':request['id'],'operation':'forward','claims':request['claims'],'intent':'execute'}]
                 response={'batch':run_batch(g,proposals,lambda who,q:self.call(who,{'operation':'reliability_status','query':q},owner)['reply'],
                     (lambda p:{'handoff':prepare_handoff(g,request['recipient'],p['claims'])}) if op=='reliability_handoff_prepare'
-                    else (lambda p:{'simulated':True,'operation':p['operation']}),ReliabilityConfig(**self.configs[owner]['reliability']))}
+                    else (lambda p:{'simulated':True,'operation':p['operation']}),ReliabilityConfig(**self.configs[owner]['reliability']),fact_config=self.configs[owner].get('fact_policy'))}
             elif op in ('reliability_handoff_accept','reliability_handoff_ack','reliability_notification_accept','reliability_notification_ack'):
                 fn={'reliability_handoff_accept':accept_handoff,'reliability_handoff_ack':acknowledge_handoff,
                     'reliability_notification_accept':accept_notice,'reliability_notification_ack':acknowledge_notice}[op]
@@ -99,6 +110,7 @@ class ProcessBackend:
         if request['operation']=='reliability_model_decision' and not self.allow_paid:raise ValueError('paid calls disabled')
         command=[sys.executable,'-m','trust_network.demo.claim_worker','--directory',str(self.directory/owner),'--env-file',str(self.env_file)]
         process=subprocess.Popen(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+        worker_stderr=''
         try:
             process.stdin.write(json.dumps(request)+'\n');process.stdin.flush()
             with selectors.DefaultSelector() as selector:
@@ -115,8 +127,15 @@ class ProcessBackend:
             if process.returncode:raise RuntimeError('worker failed')
         except (ValueError,RuntimeError,OSError,subprocess.SubprocessError) as exc:
             response={'error':type(exc).__name__,'message':'worker call failed; no success inferred'}
+            # Keep only a bounded diagnostic tail when the worker has already
+            # exited. This makes adapter failures auditable without exposing
+            # provider credentials or turning a failed call into success.
+            if process.poll() is not None:
+                try:worker_stderr=process.stderr.read()[-4000:]
+                except (OSError,ValueError):worker_stderr=''
         finally:
             if process.poll() is None:process.kill();process.wait()
             process.stdin.close();process.stdout.close();process.stderr.close()
+        if worker_stderr:response['worker_stderr_tail']=worker_stderr
         self.observer(owner,copy.deepcopy(request),copy.deepcopy(response),sender)
         return response

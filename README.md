@@ -1,3 +1,17 @@
+> **2026-09-10 安全失败场景 live 与离线负向控制已完成：** [阶段报告](results/dispute_safety_live_pilot_20260910/report.md)。三条 MiniMax-M3 live 共21次模型决定、116985个已知token：authority `UNKNOWN` 闭合为 `REQUEST_EVIDENCE`，source缺少当前修订记录时模型主动hold，错误修订被worker以 `ValueError: revision lacks independent confirmation` 拒绝；三条均无初始A错误完成。离线6场景中5个程序拒绝全部通过且状态未改变，另含错误任务绑定、过期和重放证据。该阶段验证安全失败，不估计一般错误率或法律责任。
+
+> **2026-09-10 自然修复入口扩大 live 结果：** [结果与原因分析](results/dispute_live_repair_entry_analysis_20260910/report.md)。上下文修复后的 12 条 MiniMax-M3 workflow 共 24 个 A 分支：24/24 先安全 hold，21/24 提交无副作用 `request_recovery`，20 个进入恢复，40/40 个逐层重建包通过，18/20 个恢复后完成；无 worker error、无效动作或 unsafe 初始完成。该组证明恢复入口和协议闭环可用，不证明一般错误率下降；下一步是 UNKNOWN、source hold、错误修订和错误绑定的负向闭合。
+
+> **2026-09-10实验复核：** [核实结果、四策略图与下一步](REVIEW_EXPERIMENTS_20260910.md)。配对重放2/16→0/16支持完整依赖相对根门禁的增量；三种完整检查臂等价。事实补证/争议恢复已存在，不重复建设。新的真实流程缺口是自然hold缺少修复入口；本轮只生成已有数据图表，未调用模型。
+
+> **最新真实模型结果（2026-09-10）：** [争议传播与确认恢复 v1 pilot 总结](results/dispute_live_pilot_v1_summary.md)。`v1_05` 完成两条 A 分支的运行时阻断、source 模型修订、buyer 独立确认、四个逐层重建包和恢复后完成；自然 pilot 同时保留 A 的安全 hold 与 C 的完成样本。五个归档的正负结果均保留；当前全量测试为 200 项通过，这不是策略效果统计。
+
+> **最新统一 workflow live 扩大结果：** [阶段分析](results/workflow_v1_experiment_analysis_20260910.md)。当前代码的 88 条离线矩阵、进程回放和 21 条真实 MiniMax-M3 workflow 均已归档；4 条真实 intermediate decision tape 的五臂配对重放中，完整依赖臂将 autonomous/root_gate 的错误完成分别从 2/16 降为 0/16，并阻断 6 个错误动作。模型 hold/无效提议、signed_false 事实错误和公开冲突负结果同时保留。下一步是事实补证条件与三指标 benchmark 图。
+
+> **事实补证与争议恢复已落地：** [实现、结果和边界](FACT_EVIDENCE_V1.md) 与 [争议传播/恢复](DISPUTE_RECOVERY_V1.md)。16条离线流程、真实进程核验和新的 live pilot 共同显示，独立权威补证、沿交接路径的争议广播、局部冻结和确认后重建均已接通；签名有效但事实错误仍是机制边界。
+
+> **ee7a12d live 复核：** 完整依赖已阻断两次真实错误转交，push 提早通知后两位中间 Agent 选择 hold；最终错误率下降尚未证明。新增评分区分故障试验与硬门禁机会，并修复 claim_refs 引用漏计。下一阶段见 [事实补证协议规格](NEXT_FACT_EVIDENCE_PROTOCOL.md)；该新协议尚未实现，不自动扩大付费实验。
+
 > **最新 workflow v1 状态：** 已修复声明 ID/事实转抄接口，并完成三条 active live 校准及一次 [三臂中间撤销实验](results/workflow_reference_live_intermediate_02/POSTMORTEM.md)。最新校准中 6 个派生阶段和 4 个中间转交均在真实 worker 登记，三臂均真实注入撤销；完整依赖阻断了两条错误动作，主动通知提前 1 tick 发现，根门禁仍让错误中间证据继续传播。最终错误账单均未完成，但模型 hold 使部分臂缺少完整动作机会，不能据此估计真实错误率。当前全量测试 185 项通过；不再自动重复同一付费矩阵，下一重点是未撤销事实错误的权威补证与冲突解决。
 
 > **当前 benchmark 入口（2026-09-09）：** [统一跨组织 workflow v1](BENCHMARK_WORKFLOW_V1.md) 已实现并完成 [88 条离线工作流](results/unified_workflow_v1_offline/report.md)、[2 条实际进程重放](results/unified_workflow_v1_process_replay/report.md)、[v7 历史校准](results/unified_workflow_v1_v7_replay.json)、首个无效的 [3 条 live pilot](results/workflow_v1_live_pilot_01/report.md) 和修复后的 [3 条三臂 live 实验](results/workflow_reference_live_intermediate_02/report.md)。最新三臂结果支持完整依赖拦截撤销中间证据、push 提前发现，但没有形成真实模型最终错误率差异；签名事实错误仍漏过。下方为历史阶段记录。
@@ -257,3 +271,23 @@ MiniMax批次默认只估算，不调用API：
 新增报告明确标记“暴露受控”，并列历史银行暴露0/44，汇总温度分层；N=6/组仅描述观察结果，不能代表自然流程遇到冲突的概率。
 
 实际批次结果：A组有效5/6、检出5/5；B组有效6/6、检出6/6。两组有效检出率均100%，B−A为0个百分点，主指标达到天花板，不能说明resp-omission带来增量检出效果。A组一个run在出口方银行请求补证后失败，未计入分母；其余run均在出口方银行首个决策时检出并升级，开证行没有独立决策机会。实际12个工作流调用、11个评估调用，共23521 token。完整结果见[受控批次目录](results/framing_v3_controlled_retry)。
+
+协议贡献对照实验（离线，固定分母、冻结与通知范围分离）已纳入最终统一 live benchmark 的消融归档。
+
+本轮已完成 [离线实验报告](results/contribution_experiment_v1_figures_20260910/report.md)、[冻结四格图](results/contribution_experiment_v1_figures_20260910/freeze_four_cells.png)、[固定分母追溯图](results/contribution_experiment_v1_figures_20260910/traceability_fixed_denominator.png) 和 [原始归档](results/contribution_experiment_v1_20260910/)。共 8 个冻结条件、140 个证据投影，213 项测试通过，新增付费调用为 0。结果支持依赖粒度减少无关分支误冻、完整证据提供可验证路线和来源身份；普通日志可以估计路线，但不能提供签名可证性。该结果是受控机制验证，不代表一般错误率或法律责任准确率。
+
+本轮已完成 [Contribution Generalization v2](results/contribution_generalization_v2/report.md)：3 类拓扑 × 2 个故障位置 × 2 个通知时序 × 4 个冻结对照共 48 条运行，并以 3 个执行组织 × 5 个责任标签完成 120 条固定分母证据投影。结果支持依赖冻结在长链、汇聚后分叉和组织复用条件下保持局部隔离；晚通知造成的错误完成被保留，责任负例误指控为 0/96，证据不足时进入 `undetermined`。完整图表、原始执行、独立标签和 [归档清单](results/contribution_generalization_v2/artifact_manifest.json) 已保存；本轮未调用模型，结果仍属于受控机制验证。
+
+
+## 2026-09-10：统一L0–L4 benchmark实验交接
+
+已实现独立普通消息L0、累计协议层、三类多跳拓扑、十类场景及单项消融，共210条离线配置；同一节点接口可在持久组织进程中运行。完整代码绑定回归248 passed，其中5个进程等价病例。正式离线矩阵210/210完成，原始manifest及代码绑定验收通过，见`results/layered_v1_offline_final/`。新增MiniMax调用为0。
+
+[实现说明](BENCHMARK_LAYERED_V1.md)记录 L0–L4 接口与限制；最终统一 live 的主结果、消融和追溯投影见 [最终报告](FINAL_UNIFIED_LIVE_BENCHMARK_20260911.md)。结果区分模型 hold、程序阻断、网络失败和恢复停止，不把这些状态混为单一完成率。
+
+
+## 2026-09-11：最终统一 L0–L4 live benchmark
+
+最终统一实验完成 300 条主实验和 50 条消融，共 350 项固定计划；344 条有最终结果，6 条因审计暂停时没有最终调用结果而保留为 unknown。主矩阵中错误完成率从 L0 的 36.2% 降至 L4 的 0%，错误传播交接从 242 降至 0；L4 真实恢复入口提交 10/12，最终恢复 6/12，另外 4 条在 workflow 预算耗尽时停止。无关任务在 L4 保留 138/144 个完成机会。
+
+模型 claim-ref 契约、瞬时 provider/network 失败和剩余动作契约异常均已分类并对受影响 workflow 重跑；最终非法决定、非法结果和 worker error 均为 0。58 次篡改交接签名拒绝是预期安全门禁。完整结果、异常审计和图表见 [最终报告](FINAL_UNIFIED_LIVE_BENCHMARK_20260911.md) 与 [公开归档](results/final_unified_live_v1_combined_20260911/report.md)。

@@ -152,6 +152,9 @@ def validate_notice(gateway,packet):
 
 
 def accept_notice(gateway,packet):
+    if packet.get('body',{}).get('kind')=='dependency_dispute':
+        from trust_network.demo.dispute_protocol import accept_dispute
+        return accept_dispute(gateway,packet)
     sender,body=validate_notice(gateway,packet);nid=digest(packet)
     if nid in gateway.notification_receipts:
         return copy.deepcopy(gateway.notification_receipts[nid])
@@ -166,6 +169,9 @@ def accept_notice(gateway,packet):
 
 
 def acknowledge_notice(gateway,receipt):
+    if receipt.get('body',{}).get('kind')=='dispute_receipt':
+        from trust_network.demo.dispute_protocol import acknowledge_dispute
+        return acknowledge_dispute(gateway,receipt)
     owner,body=read(receipt,gateway.public);nid=body.get('notice');original=gateway.notification_outbox.get(nid)
     if (original is None or body.get('kind')!='notification_receipt' or body.get('protocol')!=PROTOCOL or
         body.get('workflow')!=gateway.workflow or owner!=original['body']['recipient'] or

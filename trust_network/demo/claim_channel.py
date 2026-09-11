@@ -24,14 +24,15 @@ def read(packet, public):
 
 
 class ClaimGateway:
-    def __init__(self, owner, key, public, workflow, authorities):
+    def __init__(self, owner, key, public, workflow, authorities, fact_authorities=None):
         self.owner, self.key, self.public = owner, key, public
         self.workflow, self.authorities = workflow, authorities
+        self.fact_authorities=dict(fact_authorities or {})
         self.claims, self.revoked, self.events = {}, {}, []
         for field in self.PROTOCOL_STATE: setattr(self,field,{})
 
     PROTOCOL_STATE=('handoffs','handoff_index','incoming_handoffs','handoff_receipts',
-                    'notification_outbox','notification_acks','notification_receipts')
+                    'notification_outbox','notification_acks','notification_receipts','fact_disputes')
 
     def snapshot(self):
         return copy.deepcopy({field:getattr(self,field) for field in
@@ -60,6 +61,7 @@ class ClaimGateway:
 
     def blockers(self, claim_id):
         if claim_id in self.revoked: return [claim_id]
+        if claim_id in self.fact_disputes:return ['disputed:'+claim_id]
         if claim_id not in self.claims: return ['missing:'+claim_id]
         result = []
         for parent in self.claims[claim_id]['body']['parents']:

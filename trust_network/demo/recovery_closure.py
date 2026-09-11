@@ -40,11 +40,18 @@ def validate_offer(gateway, packet):
             raise ValueError('invalid revised derivation')
     elif gateway.authorities.get(new['fact']['predicate'])!=owner:
         raise ValueError('revision source is not authoritative')
+    if 'fact_resolution' in offer:
+        from trust_network.demo.dispute_protocol import validate_resolution
+        validate_resolution(gateway,offer)
+    elif old_id in gateway.fact_disputes:
+        raise ValueError('disputed revision requires independent confirmation')
     return old_id,offer['new']
 
 
 def revision_offer(gateway,old_id,fact):
     """Local issuer proposes a correction, never a receiver-forced reissue."""
+    if not isinstance(fact, dict) or not isinstance(fact.get('value'), dict):
+        raise ValueError('invalid revision fact')
     old=gateway.claims[old_id]
     if old['signature']['issuer']!=gateway.owner or old_id not in gateway.revoked:
         raise ValueError('revision requires own directly retracted claim')
@@ -90,12 +97,15 @@ def validate_envelope(gateway,packet,receiver):
     batch_packet=body['batch_packet']; batch_owner,batch=read(batch_packet,gateway.public)
     if batch_owner!=receiver or batch.get('workflow')!=gateway.workflow or digest(batch_packet)!=body['batch']:
         raise ValueError('recovery batch binding mismatch')
-    assessment=audit_with_authorities(batch_packet,gateway.public,gateway.authorities)
+    assessment=audit_with_authorities(batch_packet,gateway.public,gateway.authorities,gateway.fact_authorities)
     if any(f['classification']!='no_proven_evidence_duty_violation' for f in assessment['findings']):
         raise ValueError('violating batch cannot authorize recovery')
+    disputed=set(batch.get('evidence',{}).get('fact_disputes',{}))
+    for check in batch.get('fact_checks',{}).values():disputed.update(check.get('disputed',[]))
     mapping={}; packets=[]
     for offer in body['offers']:
         old,new=validate_offer(gateway,offer)
+        if old in disputed and 'fact_resolution' not in offer['body']:raise ValueError('dispute batch requires confirmed revision')
         if old in mapping: raise ValueError('duplicate revision')
         mapping[old]=digest(new); packets.append(new)
     # v3 starts at an antichain: fix invalid parents first, then descendants.

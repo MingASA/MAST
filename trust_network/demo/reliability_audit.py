@@ -16,9 +16,9 @@ def audit_batch(packet, public):
     return body, signed_plan
 
 
-def audit_with_authorities(packet, public, authorities):
+def audit_with_authorities(packet, public, authorities, fact_authorities=None):
     body, signed_plan = audit_batch(packet, public)
-    gateway = ClaimGateway('offline_auditor', keypair()[0], public, body['workflow'], authorities)
+    gateway = ClaimGateway('offline_auditor', keypair()[0], public, body['workflow'], authorities, fact_authorities)
     pending = list(body['evidence']['claims'])
     while pending:
         progressed = False
@@ -34,6 +34,10 @@ def audit_with_authorities(packet, public, authorities):
             raise ValueError('incomplete or cyclic evidence graph')
     for revoke in body['evidence']['revocations']:
         gateway.receive(revoke)
+    from trust_network.demo.dispute_protocol import validate_dispute
+    for cid,proof in body['evidence'].get('fact_disputes',{}).items():
+        if validate_dispute(gateway,proof)!=cid:raise ValueError('wrong dispute snapshot target')
+        gateway.fact_disputes[cid]=proof
     expected = plan(gateway, signed_plan['proposals'], ReliabilityConfig(**signed_plan['plan']['config']))
     if expected != signed_plan['plan']:
         raise ValueError('plan does not follow declared policy')
@@ -95,6 +99,8 @@ def audit_with_authorities(packet, public, authorities):
         findings.append({'proposal': outcome['proposal'],
                          'classification': 'execution_report_violates_evidence_duty' if violates else 'no_proven_evidence_duty_violation',
                          'reported_outcome': outcome['action']})
+    from trust_network.demo.fact_evidence import audit_checks
+    audit_checks(gateway,body,signed_plan,fact_authorities)
     return {'policy_replay_valid': True, 'findings': findings,
             'effect_proven': False, 'authority_truth_proven': False,
             'limits': ['signed_reports_prove_statements_not_physical_effects',

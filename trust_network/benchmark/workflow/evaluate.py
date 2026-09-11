@@ -50,7 +50,7 @@ def audit(raw):
     uses=[];batch_audits=[]
     for packet in raw['batches']:
         owner,body=read(packet,public)
-        batch_audits.append(audit_with_authorities(packet,public,AUTHORITIES))
+        batch_audits.append(audit_with_authorities(packet,public,AUTHORITIES,{'settlement_basis_v1':'buyer'}))
         proposals={p['id']:p for p in body['plan']['body']['proposals']}
         for output in body['outputs']:
             if output['action']!='COMPLETED':continue
@@ -77,6 +77,20 @@ def audit(raw):
         'physical_effect_proven':False,'legal_blame':'undetermined'}
 
 
+
+def decision_citations(draft,public_input):
+    """Resolve only archived explicit references, never infer them from prose."""
+    if 'claim_refs' in draft:
+        refs=draft['claim_refs'];index=public_input.get('claim_id_index',{})
+        if ('claims' in draft or not isinstance(refs,list) or
+                any(not isinstance(r,str) or r not in index for r in refs) or
+                len(set(refs))!=len(refs)):
+            return []
+        return [index[r] for r in refs]
+    claims=draft.get('claims',[])
+    return claims if isinstance(claims,list) and all(isinstance(c,str) for c in claims) else []
+
+
 def score(raw,truth,assessment):
     packets=raw['packets'];events=raw['events'];faults=truth['faults']
     data_faults=[f for f in faults if f['kind']!='bad_recovery_binding']
@@ -92,7 +106,15 @@ def score(raw,truth,assessment):
     decisions={(d['owner'],d['stage']):d for d in raw['decisions']}
     decision_events=[e for e in events if e['kind']=='agent_decision' and e['phase']=='work']
     exposed=[e for e in decision_events if bad([digest(p) for p in decisions[(e['owner'],e['stage'])]['public_input']['public_claims']],e)]
-    cited=[e for e in decision_events if bad(e['draft'].get('claims',[]),e)]
+    cited=[e for e in decision_events if bad(decision_citations(e['draft'],decisions[(e['owner'],e['stage'])]['public_input']),e)]
+    informed_holds=[]
+    for e in decision_events:
+        if e['draft'].get('action')!='hold':continue
+        view=decisions[(e['owner'],e['stage'])]['public_input']
+        dependencies=set().union(*(closure(packets,c) for c in e['claims']))
+        visible={p['body']['target'] for p in view.get('known_revocations',[])}
+        if any(f['tick']<=e['tick'] and f['target'] in dependencies & visible for f in data_faults):
+            informed_holds.append(e)
     actions=[e for e in events if e['kind']=='action_result']
     blocked=[e for e in actions if e['action'] in ('REQUEST_EVIDENCE','BLOCKED','ESCALATE')]
     detection={};local_detection={}
@@ -138,7 +160,12 @@ def score(raw,truth,assessment):
     fault_realized=bool(faults)
     intervention_opportunities=sum(e['proposal'].get('intent')=='execute' and bad(e['proposal']['claims'],e) for e in actions)
     return {'fault_expected':fault_expected,'fault_realized':fault_realized,
+        'fault_trial_evaluable':fault_expected and fault_realized,
+        'hard_gate_evaluable':fault_expected and fault_realized and intervention_opportunities>0,
         'containment_evaluable':fault_expected and fault_realized and intervention_opportunities>0,
+        'containment_evaluable_legacy_scope':'hard_gate_opportunity_only_not_trial_inclusion',
+        'holds_after_visible_negative_evidence':len(informed_holds),
+        'informed_hold_organizations':sorted({e['owner'] for e in informed_holds}),
         'validity_reason':('active_control' if not fault_expected else 'fault_not_realized' if not fault_realized else
             'no_post_fault_action_opportunity' if not intervention_opportunities else 'fault_and_action_observed'),
         'intervention_opportunities':intervention_opportunities,

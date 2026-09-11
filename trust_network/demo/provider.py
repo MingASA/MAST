@@ -74,12 +74,37 @@ def _complete_once_trace(config: ProviderConfig, system: str, prompt: str):
     except urllib.error.URLError:
         raise RuntimeError('MiniMax network connection failed') from None
     if raw.get('base_resp',{}).get('status_code',0): raise RuntimeError('MiniMax application error')
-    return _parse_content(raw),raw.get('usage',{}),body,response_text,raw
+    try:
+        parsed=_parse_content(raw)
+    except Exception as exc:
+        error=RuntimeError(str(exc))
+        error.provider_response={'request':body,'response_text':response_text,'response':raw,'usage':raw.get('usage',{})}
+        raise error from None
+    return parsed,raw.get('usage',{}),body,response_text,raw
 
 
 def _complete_once(config: ProviderConfig, system: str, prompt: str):
     result,usage,_,_,_=_complete_once_trace(config,system,prompt)
     return result,usage
+
+
+def _retryable_provider_error(exc):
+    """Return whether a second provider attempt can safely address this error.
+
+    Transport failures and transient service responses are different from an
+    invalid model decision or an application/authentication error.  The
+    former may be retried once; the latter must remain visible to the caller.
+    """
+    if isinstance(exc, (TimeoutError, ConnectionError, urllib.error.URLError)):
+        return True
+    message=str(exc)
+    if 'network connection failed' in message or 'response truncated' in message:
+        return True
+    match=re.search(r'MiniMax HTTP (\d+)', message)
+    if not match:
+        return False
+    code=int(match.group(1))
+    return code in (408, 425, 429) or 500<=code<600
 
 
 def complete(config: ProviderConfig, system: str, prompt: str):
@@ -93,7 +118,7 @@ def complete(config: ProviderConfig, system: str, prompt: str):
     raise RuntimeError('MiniMax returned invalid JSON after two attempts')
 
 
-def complete_traced(config: ProviderConfig, system: str, prompt: str):
+def complete_traced(config: ProviderConfig, system: str, prompt: str, journal=None):
     """Complete with the normal retry policy and return a raw call trace.
 
     Request bodies contain no authorization header. Each attempt retains the
@@ -105,6 +130,7 @@ def complete_traced(config: ProviderConfig, system: str, prompt: str):
     for attempt in range(2):
         suffix='' if not attempt else '\n请确保返回完整、合法的JSON对象，不要Markdown，不要在字符串中使用未转义双引号。'
         entry={'attempt':attempt+1,'request':_request_body(config,system,prompt+suffix)}
+        if journal: journal({'status':'attempt_started',**entry})
         try:
             result,current,body,response_text,raw=_complete_once_trace(config,system,prompt+suffix)
             entry.update({'request':body,'response_text':response_text,'response':raw,
@@ -117,11 +143,17 @@ def complete_traced(config: ProviderConfig, system: str, prompt: str):
                     if type(value) is not int or value<0: usage_known=False
                     else: totals[key]+=value
             if isinstance(result,dict):
+                if journal: journal({'status':'attempt_returned',**entry})
                 usage=dict(totals,attempts=len(attempts)) if usage_known else None
                 return result,usage,attempts
             entry['error']={'type':'InvalidJSONDecision','message':'response content was not a JSON object'}
+            if journal: journal({'status':'attempt_returned',**entry})
         except Exception as exc:
+            entry.update(getattr(exc,'provider_response',{}))
             entry['error']={'type':type(exc).__name__,'message':str(exc)}
             attempts.append(entry)
+            if journal: journal({'status':'attempt_failed',**entry})
+            if attempt+1 < 2 and _retryable_provider_error(exc):
+                continue
             raise ProviderTraceError(str(exc),attempts) from None
     raise ProviderTraceError('MiniMax returned invalid JSON after two attempts',attempts)

@@ -23,7 +23,26 @@ def validate_invoice(gateway, claim_ids, order):
         fact=gateway.claims[claim_id]['body']['fact']
         if fact['predicate'] in facts: block('duplicate_evidence_type')
         facts[fact['predicate']]=fact['value']
-    if set(facts)!=set(contract['requires']): block('required_evidence_missing')
+    try:
+        validate_invoice_facts(facts, order)
+    except ValueError as exc:
+        block(str(exc))
+    return target,digest(contract)
+
+
+def approve_invoice(gateway, claim_ids, order, effect):
+    target,contract_id=validate_invoice(gateway,claim_ids,order)
+    gateway.record('action_contract_allowed',target,[contract_id,*claim_ids])
+    result=effect()
+    gateway.record('action_effect_returned',target,[digest(result)])
+    return result
+
+def validate_invoice_facts(facts, order):
+    """Shared business rules, independent of signatures/freshness/dependency gates."""
+    def block(reason):
+        raise ValueError(reason)
+    if not isinstance(order,str) or not order: block('invalid_order')
+    if set(facts)!={'invoice_authorization','total_charge'}: block('required_evidence_missing')
     authorization=facts['invoice_authorization']; total=facts['total_charge']
     if set(authorization)!={'order','operation','currency','maximum_cents','approved'}:
         block('invalid_authorization_schema')
@@ -36,12 +55,3 @@ def validate_invoice(gateway, claim_ids, order):
     if (type(total['cents']) is not int or type(authorization['maximum_cents']) is not int or
             total['cents']<0 or total['cents']>authorization['maximum_cents']):
         block('amount_not_authorized')
-    return target,digest(contract)
-
-
-def approve_invoice(gateway, claim_ids, order, effect):
-    target,contract_id=validate_invoice(gateway,claim_ids,order)
-    gateway.record('action_contract_allowed',target,[contract_id,*claim_ids])
-    result=effect()
-    gateway.record('action_effect_returned',target,[digest(result)])
-    return result

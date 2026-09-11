@@ -67,7 +67,7 @@ def execute(out,cases,arms,backend='memory',mode='replay',env_file=None,allow_pa
             if len({r['workload_hash'] for r in rows if r['case']==case})!=1:raise ValueError('unpaired public workload')
         lines=['# 跨组织工作流 benchmark v1','',
             f'模式：{mode}；后端：{backend}；决定来源：{manifest["decision_source"]}。共{len(rows)}条workflow，每条4项业务任务。',
-            '运行完成不代表有效性实验成功；故障未发生或没有故障后动作提议时不能比较containment。',
+            '运行完成不代表有效性实验成功；故障未发生不能用于故障控制比较。无故障后动作提议只表示缺少硬门禁机会，仍须保留通知后hold等流程观察。',
             '签名和私有事实正确性分别评估。跨任务恢复绑定失败另列，不伪装成已发生金额错误。','',
             '|条件|机制|有效性状态|错误完成/4|业务安全完成/4|恢复成功|错误接收组织|无关误冻|查证|跨任务绑定完成|',
             '|---|---|---|---:|---:|---:|---:|---:|---:|---:|']

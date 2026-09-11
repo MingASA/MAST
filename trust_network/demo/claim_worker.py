@@ -27,6 +27,15 @@ def recovery_receiver(config,gateway,envelope=None):
     return signer
 
 
+def answer_query(directory,gateway,query):
+    if query.get('kind')=='fact_evidence_query':
+        from trust_network.demo.fact_evidence import attest
+        private=json.loads((directory/'private.json').read_text())
+        return attest(gateway,private.get('settlement_registry',{}),query)
+    from trust_network.demo.network_reliability import authority_status
+    return authority_status(gateway,query)
+
+
 def model_decision(directory, request, env_file, gateway):
     config=json.loads((directory/'config.json').read_text())
     provider=ProviderConfig.load(env_file)
@@ -75,16 +84,26 @@ def model_decision(directory, request, env_file, gateway):
 def handle(directory, request, env_file):
     config=json.loads((directory/'config.json').read_text())
     key=Ed25519PrivateKey.from_private_bytes((directory/'signing.key').read_bytes())
-    gateway=ClaimGateway(config['owner'],key,config['public_keys'],config['workflow'],config['authorities'])
+    gateway=ClaimGateway(config['owner'],key,config['public_keys'],config['workflow'],config['authorities'],config.get('fact_authorities'))
     path=directory/'channel_state.json'
     if path.exists():
         gateway.restore(json.loads(path.read_text()))
     initial_events=len(gateway.events)
     operation=request['operation']
-    if operation=='receive':
+    if operation=='reliability_dispute_register':
+        from trust_network.demo.dispute_protocol import register_dispute
+        response={'target':register_dispute(gateway,request['proof'])}
+    elif operation=='reliability_dispute_revision':
+        from trust_network.demo.dispute_protocol import propose_revision
+        def query_fact(owner,query):
+            if owner==gateway.owner:return answer_query(directory,gateway,query)
+            print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
+            return json.loads(sys.stdin.readline())['reply']
+        response={'offer':propose_revision(gateway,request['proof'],request['fact'],query_fact)}
+    elif operation=='receive':
         response={'event':gateway.receive(request['packet'])}
     elif operation=='reliability_public_view':
-        response={'view':{'claims':list(gateway.claims.values()),'revocations':list(gateway.revoked.values()),
+        response={'view':{'fact_disputes':gateway.fact_disputes,'claims':list(gateway.claims.values()),'revocations':list(gateway.revoked.values()),
             'blocked':{c:gateway.blockers(c) for c in gateway.claims if gateway.blockers(c)}}}
     elif operation=='reliability_handoff_prepare':
         from trust_network.demo.propagation_notice import prepare_handoff
@@ -93,12 +112,12 @@ def handle(directory, request, env_file):
         def query(owner,query):
             if owner==gateway.owner:
                 from trust_network.demo.network_reliability import authority_status
-                return authority_status(gateway,query)
+                return answer_query(directory,gateway,query)
             print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
             return json.loads(sys.stdin.readline())['reply']
         response={'batch':run_batch(gateway,[proposal],query,
             lambda p:{'handoff':prepare_handoff(gateway,request['recipient'],p['claims'])},
-            ReliabilityConfig(**config.get('reliability',{})),config.get('verification_budget')),
+            ReliabilityConfig(**config.get('reliability',{})),config.get('verification_budget'),fact_config=config.get('fact_policy')),
             'events':gateway.events[initial_events:]}
     elif operation in ('reliability_handoff_accept','reliability_handoff_ack',
                        'reliability_notification_accept','reliability_notification_ack'):
@@ -243,7 +262,7 @@ def handle(directory, request, env_file):
         response={'offer':replacement_offer(gateway,request['old'],request['new'])}
     elif operation=='reliability_status':
         from trust_network.demo.network_reliability import authority_status
-        response={'reply':authority_status(gateway,request['query'])}
+        response={'reply':answer_query(directory,gateway,request['query'])}
     elif operation in ('reliability_plan','reliability_batch'):
         from trust_network.demo.network_reliability import ReliabilityConfig, plan, run_batch
         reliability_config=dict(config.get('reliability',{}))
@@ -260,12 +279,12 @@ def handle(directory, request, env_file):
             def query_reliability(owner,query):
                 if owner==gateway.owner:
                     from trust_network.demo.network_reliability import authority_status
-                    return authority_status(gateway,query)
+                    return answer_query(directory,gateway,query)
                 print(json.dumps({'authority':owner,'authority_query':query}),flush=True)
                 return json.loads(sys.stdin.readline())['reply']
             response={'batch':run_batch(gateway,proposals,query_reliability,
                 lambda p:{'simulated':True,'proposal':p['id'],'operation':p['operation']},
-                policy,config.get('verification_budget'))}
+                policy,config.get('verification_budget'),fact_config=config.get('fact_policy'))}
         response['events']=gateway.events[initial_events:]
     elif operation=='status':
         query=request['query']; root=query['root']

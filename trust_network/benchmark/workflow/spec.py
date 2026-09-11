@@ -34,7 +34,7 @@ def workload(seed=0):
 
 def config(owner,public,workflow,arm):
     return {'owner':owner,'public_keys':public,'workflow':workflow,'authorities':AUTHORITIES,
-        'recovery_receivers':['receiver_a','receiver_b'],
+        'recovery_receivers':['receiver_a','receiver_b'],'fact_authorities':{'settlement_basis_v1':'buyer'},
         'reliability':{'policy':arm.policy,'propagation_threshold':arm.threshold},
         'model_max_tokens':2048}
 

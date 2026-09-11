@@ -125,7 +125,7 @@ def plan(gateway, proposals, config=ReliabilityConfig()):
 
 
 def run_batch(gateway, proposals, query_authority, effect,
-              config=ReliabilityConfig(), verification_budget=None):
+              config=ReliabilityConfig(), verification_budget=None, fact_config=None):
     """Intercept model proposals; authorize once per batch, then contract-check.
 
     query_authority(owner, query) returns an owner-signed reliability_status
@@ -139,9 +139,16 @@ def run_batch(gateway, proposals, query_authority, effect,
     proposals = json.loads(json.dumps(proposals))
     evidence = json.loads(json.dumps({'claims': list(gateway.claims.values()),
                                     'revocations': list(gateway.revoked.values())}))
+    if gateway.fact_disputes:
+        evidence['fact_disputes']=json.loads(json.dumps(gateway.fact_disputes))
+    if fact_config is not None:
+        from trust_network.demo.fact_evidence import validate_config
+        validate_config(fact_config,gateway.public)
+        evidence['fact_disputes']=json.loads(json.dumps(gateway.fact_disputes))
     schedule = plan(gateway, proposals, config)
     plan_packet = issue(gateway.owner, gateway.key, {'kind': 'reliability_plan',
-        'workflow': gateway.workflow, 'plan': schedule, 'proposals': proposals})
+        'workflow': gateway.workflow, 'plan': schedule, 'proposals': proposals,
+        **({'fact_config':fact_config} if fact_config is not None else {})})
     gateway.record('reliability_planned', digest(plan_packet))
     batch = digest(plan_packet)
     challenge = secrets.token_hex(24)
@@ -179,6 +186,7 @@ def run_batch(gateway, proposals, query_authority, effect,
             if status.get(root) not in ('revoked','unknown'):
                 status[root] = 'unavailable'
             gateway.record('reliability_query_failed', root)
+    fact_checks={}
     outputs = []
     by_id = {p['id']: p for p in proposals}
     for decision in schedule['decisions']:
@@ -186,7 +194,14 @@ def run_batch(gateway, proposals, query_authority, effect,
         failed = [r for r in verification_targets(decision) if status.get(r) != 'active'] if decision['action'] == 'VERIFY' else []
         outcome = {'proposal': proposal['id'], 'result': None, 'failed_roots': failed}
         known_negative = [r for r in verification_targets(decision) if status.get(r) in ('revoked','unknown')]
-        if decision['action'] == 'REQUEST_EVIDENCE' or known_negative:
+        fact_result=None
+        if fact_config is not None and not failed and not known_negative and decision['action']!='REQUEST_EVIDENCE':
+            from trust_network.demo.fact_evidence import check
+            fact_result=check(gateway,proposal,batch,fact_config,query_authority)
+            fact_checks[proposal['id']]=fact_result
+        if fact_result is not None and fact_result['action']!='PASS':
+            outcome['action']=fact_result['action']
+        elif decision['action'] == 'REQUEST_EVIDENCE' or known_negative:
             outcome['action'] = 'REQUEST_EVIDENCE'
         elif failed:
             outcome['action'] = 'REQUEST_EVIDENCE' if any(status.get(r) == 'revoked' for r in failed) else 'ESCALATE'
@@ -227,7 +242,8 @@ def run_batch(gateway, proposals, query_authority, effect,
               'action_semantics':'explicit-intent-v1',
               'plan': plan_packet, 'evidence': evidence, 'queries': queries, 'replies': replies,
               'status': status, 'outputs': outputs, 'verification_calls': calls,
-              'effects_are_adapter_reports': True}
+              'effects_are_adapter_reports': True,
+              **({'fact_checks':fact_checks,'fact_verification_calls':sum(len(c['exchanges']) for c in fact_checks.values())} if fact_config is not None else {})}
     return issue(gateway.owner, gateway.key, report)
 
 
@@ -238,7 +254,7 @@ def authority_status(gateway, query):
     original = gateway.claims.get(root)
     owned = original and read(original, gateway.public)[0] == gateway.owner
     blockers = gateway.blockers(root) if owned else []
-    status = ('unknown' if any(b.startswith('missing:') for b in blockers) else
+    status = ('unknown' if any(b.startswith(('missing:','disputed:')) for b in blockers) else
               'revoked' if blockers else 'active') if owned else 'unknown'
     body = {'kind': 'reliability_status', 'query': query, 'status': status}
     if status=='revoked':

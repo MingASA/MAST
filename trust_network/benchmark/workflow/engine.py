@@ -35,7 +35,7 @@ class Decisions:
             'evidence_index':{digest(p):{'fact':p['body']['fact'],'issuer':p['signature']['issuer'],
                 'parents':p['body']['parents']} for p in view['claims']},
             'public_claims':view['claims'],'known_revocations':view['revocations'],
-            'known_blockers':view['blocked'],'stage_semantics':STAGE_SEMANTICS,
+            'known_fact_disputes':view.get('fact_disputes',{}),'known_blockers':view['blocked'],'stage_semantics':STAGE_SEMANTICS,
             'output_schema':({'action':'proceed|hold','claim_refs':['task[0]'],
                               'fact_ref':'task[0]；由worker按relay原样复制事实，不输出fact','reason':'string'} if derive else
                              {'action':'approve|forward|verify|hold','claim_refs':['task[0]'],'reason':'string'}),

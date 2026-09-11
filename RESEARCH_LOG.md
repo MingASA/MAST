@@ -2,6 +2,14 @@
 
 目标是提高真实跨组织Agent协作的正确性与可恢复性，并留下可检测、可追责的证据。工程通过、离线故障注入有效、真实工作流收益和一般化结论是不同层级，不互相替代。
 
+## 2026-09-10：workflow v1 当前代码复现、live 扩大与配对 tape 重放
+
+在争议恢复 pilot 之后，按“冻结核心机制、先观察实验结果和原因”的计划完成了当前代码的统一 workflow benchmark 复现，并进行有界真实模型扩大实验。`results/workflow_v1_current_reproduction_20260910/` 运行 11 条件 × 8 臂共 88 条 scripted memory workflow，0 次模型调用，445 个归档文件完整性通过；`results/workflow_v1_current_process_intermediate_20260910/` 对 root_gate 与 dependency_push 做 2 条实际进程回放，均无 worker error。离线/进程结果仍显示中间撤销时 root_gate 错误完成 2/4，完整依赖 0/4，后者恢复 2/2。
+
+真实 MiniMax-M3 live 归档包括：中间撤销三臂3条、事实缺口 signed_false/conflicting_sources 六条、active四臂4条、中间撤销扩大四臂4条，以及4条独立 autonomous intermediate sample；合计21条 workflow、345次模型调用、346次 provider 尝试、1,250,582 known tokens、6次未知 usage。真实进程 worker error 为0。live 负结果是模型 hold/无效引用使部分任务没有动作机会；`signed_false` 没有 consumer detection，说明 freshness/signature 仍不能证明隐藏事实正确。中间撤销 natural autonomous 样本出现错误完成，但同一提议的五臂固定重放把该增量分离出来：4条 tape、每臂16个任务中 autonomous/root_gate 各错误完成2个，dependency/dependency_push/verify_all均错误完成0个，各阻断6个错误动作。
+
+结果解释、分母、原因分析和所有 raw 目录见 [workflow v1 阶段分析](results/workflow_v1_experiment_analysis_20260910.md)。结论是核心依赖门禁/局部冻结路径已足够冻结；下一研究问题是独立权威事实补证、公开冲突未解决状态和恢复阶段自然模型行为，不再盲目重复同一中间撤销矩阵。
+
 ## 2026-09-07：为什么两批真实调用没有给出增量收益
 
 **原假设H1：** 当Agent准备放行不可靠结果时，运行时查证/证据协议能以合理成本阻止错误。它包含两个不同问题：真实流程有多少需要干预的提议，以及协议遇到这些提议时能否改善结果。
@@ -159,3 +167,160 @@ active/root_gate 的第一条付费校准仍暴露长 digest 转抄错误：真�
 随后按已授权范围运行 `intermediate_retraction` 的 `root_gate`、`dependency`、`dependency_push` 各一条。三臂都在 tick 10 真实撤销 coordinator 的 A 中间声明，原始归档在 `results/workflow_reference_live_intermediate_02/`，运行后复核在其 `POSTMORTEM.md`。root_gate 的错误证据继续到两个下游组织、两个分支，最大相对距离 2；dependency 在 tick 12 拦住两条错误依赖动作；dependency_push 的通知在 tick 11 让两个消费者发现，提前于普通依赖一 tick。
 
 这次三臂均有真实故障；root_gate 与 dependency 都有故障后 execute 提议，containment 可评估。dependency_push 因通知到达后模型没有再形成故障后 execute 提议，标记 `no_post_fault_action_opportunity`，零错误完成不计作 containment 证据。三臂最终错误账单均为 0，但 root_gate 也没有错误完成，原因是模型 hold/无效动作造成的样本不足；因此结果支持“完整依赖能阻断已撤销中间证据”和“push 提前发现”，不支持真实模型错误率已下降。总计 57 次模型调用、58 次 provider attempt、232059 个已知 token，worker error 0，归档完整性核对通过。下一步停止重复该静态 live 条件，转向签名有效但事实错误的权威补证和冲突解决。
+
+
+### 2026-09-09：真实中间撤销出现防传播增量，避免按模型动作筛样
+
+审阅 ee7a12d：root gate 的错误证据传至两个接收组织，完整依赖阻断两次明确 execute。push 的两个 middle 在撤销到达后 hold，并在理由中引用撤销；这是可观察的反馈行为，不可因不存在 execute 就排除整条故障试验。新评分区分 fault_trial_evaluable 与 hard_gate_evaluable，legacy containment_evaluable 仅保留原硬门禁口径；不把事后是否提出动作当作全流程纳入条件。该单次 live 非配对因果证明，unsafe 全零仍不足以说明最终安全性改善。
+
+claim_refs 接入后旧评分仍只读 draft.claims，已补按归档 public_input.claim_id_index 精确解析引用，不读 reason 猜测。复评分另存 workflow_intermediate02_review，当前仓库 integrity 清单的84个文件校验通过（旧 POSTMORTEM 记载运行时104个，不混用两个计数），不改旧归档。下一阶段定义有范围的独立结算依据补证和 dispute，不把 active freshness 当真实性。规格见 NEXT_FACT_EVIDENCE_PROTOCOL.md，尚未实现该新协议或启动付费试验。
+
+
+### 事实补证 v1：从发行者未撤销推进到独立业务依据
+
+新增 settlement_basis_v1 签名请求/答复，绑定声明、动作、批次、nonce、权威、时效和台账版本。runtime 在 freshness 后、effect 前强制检查；两个真实 worker 动作入口均接通。矛盾进入持久化本地 fact_disputes，不伪造 revoke；独立审计另行固定权威信任映射。
+
+16 条脚本矩阵加一条 process 核验：公开一致的未确认依据，closure-only/conflict-triggered 各无依据完成2/4；verify-all/selective均0，但错误触达分别1与5组织，事实查询20与12。这揭示少查的传播代价，不能只报最终零错误。正常任务均4/4完成，权威UNKNOWN强检查保留C并暂停A。未运行MiniMax，未解决任意真实性、权威欺骗、远端状态与effect竞态。
+
+下一步先接独立 dispute 传播与受证据约束的修订恢复，暂不启动付费实验。FACT_EVIDENCE_V1.md 清楚区分本轮已完成的门禁/本地争议和仍未完成的跨组织闭环。
+
+本轮最终验收192 passed，原始trace、独立audit与归档SHA256已保存。
+
+
+### 争议传播与确认恢复：从局部门禁到事后收敛
+
+复用handoff_index、notification outbox/receipt/ACK/pump，以独立dependency-dispute-v1消息传播原权威否认证据。每跳验证本地信任scope、原请求/答复和相关交接；网关用disputed前缀标识局部阻断，不伪造成原发行者revoke。负面证据不会随证书过期自动恢复旧claim。
+
+新增明确发行者修订接口：暂存候选，新claim获独立确认后才提交自己签署的撤销与revision offer；失败不部分撤销。fact_resolution绑定旧争议、修订意图、精确新claim和确认答复，接入原closure v3及frontier。batch始终保存已有争议，即便本组织不主动查事实，也不能在后续恢复时丢掉确认约束。
+
+内存与真实process脚本核验均为4个下游签收，A两分支冻结、C两分支继续、A两分支确认重建后完成。195 tests passed，零新付费调用。修订金额为脚本明确提供，不冒称LLM推断或真实模型恢复收益。下一步应停止继续扩机制，按TASK_EXPERIMENTS_DISPUTE_V1.md补薄live调度并小规模验证，保留模型hold和无效阶段。
+
+
+### 2026-09-10：争议传播与确认恢复 live pilot
+
+按 `TASK_EXPERIMENTS_DISPUTE_V1.md` 补齐 `trust_network.benchmark.dispute_live` 薄适配器，复用真实 `ProcessBackend`、`Workflow.Decisions`、claim_refs/fact_ref、原始 provider trace 和同一 28 决策/56 provider 尝试硬上限。运行了五条小规模 MiniMax-M3 流程，目录为 `results/dispute_live_pilot_v1_01` 至 `v1_05`，总解释见 `results/dispute_live_pilot_v1_summary.md`。
+
+第一条在进入 provider 前暴露授权 packet 被误当 claim ID 的适配器错误，原始失败保留；第二条自然决策得到 A 两分支 hold、C 两分支完成，source 主动提出125并获确认；第三条保留安全 hold和一次 provider timeout；第四条真实验证 A 的 `approve` 候选被 runtime 返回 `REQUEST_EVIDENCE`，并完成两封恢复信封和四个重建包，但最终模型因未看到签名确认而 hold；补入公开 revision offer 的独立确认后，第五条完成两条 A 分支的完整恢复闭环。四个通知均取得签收并通过独立审计；source 的新事实来自 private dossier，controller 未代填；C 的 hold 样本未被改写为程序过冻。
+
+正向结论是争议路由、局部阻断、来源模型修订、独立确认、逐层 `fact_ref` 重建和恢复后再门禁已在真实 process worker 上串通。负向结论是自然模型可能直接 hold、provider 可能 timeout，且一次完整恢复依赖明确的候选提交探针；这不能作为自然恢复率或四策略效果统计。五个归档完整性核对通过，模型输入未包含 evaluator truth 或 buyer 私有台账。全量回归为 `198 passed`。
+
+下一步冻结该机制版本，先做固定前置状态下的 benchmark 回放和少量有针对性的自然负向场景；不把 probe 样本混入自然成功率，也不因这次闭环扩大付费矩阵。
+
+
+### 2026-09-10：核实配对增量，转向自然修复入口
+
+核实四份真实tape五臂重放：autonomous/root_gate各2/16错误完成，三个完整依赖臂各0/16、拦6次错误动作。任务相关且tape不含恢复阶段，不称总体错误率或自主恢复率。21条live原始metrics的阻断合计5（原报告写3），有6次usage未知，1250582仅为已知token。
+
+已有事实补证四策略矩阵生成PNG/PDF/SVG三指标图，未启动新实验；不因旧signed_false没有启用fact_policy就重复建设已有权威门禁。争议自然pilot揭示更重要的可用性断点：合理hold不会产生blocked batch，因而不能发起恢复。下一步只补显式request_recovery的无副作用入口，沿现有确认/重建闭环运行，不能把hold偷偷变成approve。详见REVIEW_EXPERIMENTS_20260910.md。
+
+
+### 2026-09-10：自然修复入口扩大 live 实验完成
+
+按上一条复核提出的入口规格，在 `dispute_live.py` 中加入独立 `request_recovery` 阶段。该阶段要求模型精确绑定原任务、按顺序引用本地 `claim_refs` 和已登记争议；controller 只创建 `intent=verify` 的恢复依据，明确记录 `business_effect=false`。没有把自然 hold 改成失败的 approve，也没有改变已有签名、权威确认或 frontier 规则。seed 参数只用于生成独立 workflow ID，并写入 manifest。
+
+先跑 v1_06 诊断 pilot：两条 A 都提交了无副作用修复请求，source 修订确认成功，4/4 派生声明重建成功，但旧恢复上下文下最终 receiver 两次 hold。补入独立确认、envelope/task 绑定和 frontier 完成状态后，完成 v1_07–v1_18 共12条自然 workflow（24个A分支、24个无关C分支）。A 初始 hold 为24/24；修复请求21/24；进入恢复20/24；恢复重建40/40；最终A完成18/20个已进入恢复的分支，另2个在最终动作阶段 hold。source 11/12提出并获确认，C完成22/24，另外两次是模型自己的 hold。没有unsafe初始完成、无效动作、worker error或批次审计错误；48/48争议通知签收审计通过。
+
+后12条使用156次模型决定、159次provider尝试、1136895个已知token，未知usage为0；连同v1_06为170/173和1238668个已知token。13条新归档完整性哈希全部匹配；独立扫描170个模型调用文件、173次provider尝试，没有发现evaluator truth或buyer私有台账进入provider请求。原始目录与汇总报告保留在 `results/dispute_live_pilot_v1_06_natural_repair_20260910`、`v1_07`–`v1_18` 和 `results/dispute_live_repair_entry_analysis_20260910/`。
+
+结论分两层：机制层正向，显式修复入口让安全 hold 可以进入受绑定恢复，且所有到达重建阶段的证据包都通过；模型层仍有自然停机，故18/24不能当作一般恢复率，0/24 unsafe也不能当作错误率改善。主要剩余原因是模型在请求阶段混淆任务 token 与争议根 ID、source 在个别运行中等待额外澄清，以及最终动作对 `business_execution_authorized=false`/fresh check 语义过度保守。下一步转向 UNKNOWN、source hold、错误修订和错误绑定的负向场景，验证无法恢复时的局部冻结和可追溯性。
+
+
+### 2026-09-10：安全失败场景 live 与离线负向控制完成
+
+按 `TASK_EXPERIMENTS_DISPUTE_V1.md` 的优先顺序，先新增并运行无付费的 `trust_network.benchmark.dispute_failure`。6个离线场景中，authority `UNKNOWN` 返回 `REQUEST_EVIDENCE` 且无业务结果；来源缺失候选、权威否认错误修订、错误恢复任务绑定、过期确认和跨提议重放5个程序拒绝均实际发生，5个异常拒绝前后网关状态保持不变。完整逐例输入、签名候选、错误和摘要保存在 `results/dispute_safety_negative_offline_20260910/`。
+
+随后运行三条MiniMax-M3 + ProcessBackend live流程，目录为 `results/dispute_safety_live_pilot_20260910/authority_unknown`、`source_hold` 和 `wrong_revision`。共21次模型决定、21次provider尝试、116985个已知token、0次未知usage；UNKNOWN场景的A动作均被门禁停在REQUEST_EVIDENCE，source无当前记录时模型主动hold，错误金额修订由模型提出后被worker原始 `ValueError: revision lacks independent confirmation` 拒绝。三条均无初始A错误完成；source hold和错误修订各4/4通知签收审计通过。各目录完整性匹配，21个provider请求trace未发现评估真值或buyer私有台账关键词；该扫描不等同于严格信息流证明。
+
+本次直接支持“UNKNOWN、模型hold、程序拒绝”三类结果应分开计数，并支持错误修订不会在权威不确认时提交。它不支持一般错误率或全面恢复率，也没有把离线恶意输入伪装成live Agent行为。成功场景实验到此收敛，下一步整理论文主线与限制。
+
+## 2026-09-10：从饱和指标转向贡献对照
+
+当前 C 保留和条件化路由召回均为 100%，只能说明共享基础设施未损坏，不能证明独立贡献。新增 contribution 离线入口：相同发现条件下拆开通知范围与冻结粒度；固定签名执行下比较完整证据、无签收、普通日志和 opaque relay。普通日志在诚实条件下仍能正确重建，必须分开报告估计准确率与签名可证率。负例不臆断无责，正例 recall 防止全 abstain 得高分。该基础设施没有生产机制改动、模型调用或历史数据改写；构造对照尚不能代表现实效果，详见 TASK_EXPERIMENTS_CONTRIBUTION_V1.md。
+
+### 2026-09-10：协议贡献对照离线实验完成
+
+按 `TASK_EXPERIMENTS_CONTRIBUTION_V1.md` 在新目录 `results/contribution_experiment_v1_20260910/` 重跑并归档了 8 个冻结条件、5 条固定执行、140 个证据投影和公开观察审计；manifest 共 294 项且路径与内容核对一致，未调用 MiniMax。全量测试为 213 passed，报告、图表、CSV 指标和 provenance 保存在 `results/contribution_experiment_v1_figures_20260910/`，审计结果保存在 `results/contribution_experiment_v1_audit_own_notice_20260910/`。
+
+冻结对照中 8/8 条件均阻断受影响分支、无 unsafe completion；`dependency` 保留所有无关分支，`recipient_workload` 在 coordinator 故障下保留率为 0%，在 `middle_a` 路由场景为 67% 或 0%，说明冻结粒度决定误冻范围；broadcast 只增加通知开销，不改变该安全/隔离结论。固定分母追溯对照的 50 条路线、10 个来源身份和 1 个责任正例/4 个负例显示：完整证据为 50/50 可验证路线、10/10 来源身份和 1/1 责任正例；普通日志为 50/50 路线估计但 0/50 可验证；无签收证据仍可完成本地责任判断；opaque relay 无法提供路线或来源证明。所有负例误指控均为 0/4。
+
+这些结果正向支持协议的机制级主张：依赖粒度提供局部冻结，签名收据和来源链把“能估计”提升为“可验证”，并能在缺证据时保留不确定性。它们不支持一般错误率、真实 Agent 泛化收益或法律责任准确率；140 个投影不是 140 个独立样本，且执行轨迹由脚本固定，后续应将这组结果作为论文主线中的受控贡献验证和边界证据。
+
+### 2026-09-10：Contribution Generalization v2 拓扑时序与独立责任标签完成
+
+按 `TASK_EXPERIMENTS_NEXT_CONTRIBUTION.md` 增加最小参数化拓扑构造器，复用 ClaimGateway、签名 handoff、通知 relay 和 MessageBus，没有改生产协议。先在汇聚后分叉拓扑跑通四格，再完成 `results/contribution_generalization_v2/` 的 48 条冻结运行：长链后分叉、两路汇聚后分叉、组织复用但任务依赖独立，各覆盖 shared-upstream/branch-middle、按时/关键边晚到、routed/broadcast、dependency/recipient-workload。48 条运行中按时通知的 unsafe completion 为 0/36；关键边晚到时为 26/36，错误完成保留在截止时间前的实际状态。dependency 过度冻结为 0，recipient-workload 累计误冻 34 个无关任务；汇聚场景出现重复通知，组织复用场景保留了同组织内独立任务。广播通知次数、字节和到达路径单独记录，没有被解释为冻结粒度收益。
+
+责任轴构造了 receiver_a、receiver_b、receiver_c 三个执行组织各五种独立标签，共 15 条基础执行和 120 条投影。每条执行固定 8 个观察条件：四种证据视图和 full 的缺相关通知、缺顺序节点、观察重排、同一 action ID 冲突记录。完整 clean 的明确正例为 3/3；缺证据或冲突时 9/9 进入 `undetermined`；所有 96 个负例动作误指控为 0。独立标签保存在 `label_*.json`，审计器只接收公开 observation，未使用 truth 或 projection 名称；合法不同 action ID 不被当作冲突。raw manifest 320 项、最终 artifact manifest 332 项均核验一致，全量测试 228 passed，模型调用和 token 为 0。
+
+本轮把结论推进到有限拓扑和独立责任标签下的机制边界：局部冻结对三类结构稳定，关键边延迟暴露了通知时序的真实失败边界，证据链能定位明确的本地义务违约并在材料不足时保持待定。它仍不支持现实网络错误率、Agent 一般化收益或法律责任准确率；48/120 是构造条件与投影，不是独立样本。按任务书在本轮完成后停止扩大实验，下一步可将结果整理进论文主线与限制部分。
+
+## 2026-09-10：连接真实 Agent 历史证据
+
+新增 live_replay 导入器，直接验证原始 reliability_batch 与本地动作顺序，不重签。3 条历史轨迹 84 个投影完成；clean full 路线 35/35，普通日志估计同样 35/35，可证性仍有区分。责任证据没有独立正负标签，不能把现有审计结论作为 oracle；明确 duty_accuracy=null。这一步补真实工作流证据接口，不提供一般错误率或真实责任准确率增量。
+
+### 2026-09-10：分支撤销与迟到通知 MiniMax live pilot
+
+在不重复 v2 离线 48/120 矩阵的前提下，使用真实 MiniMax-M3、ProcessBackend 和固定七组织三跳两分支工作流运行 `branch_retraction` 与 `late_notice`：autonomous/dependency 四条流程，加跑一条 `dependency_push` 的迟到通知补充流程。5 条 workflow 共 98 次模型决定、98 次 provider 尝试、397954 个已知 token，所有 usage 已知，worker error 为 0；两组原始目录完整性索引共 140 项，均核验通过。
+
+`late_notice` 的有效故障条件中，autonomous 让 2/4 个错误任务完成，dependency 和 dependency_push 均为 0/4，并分别留下 1 和 2 次程序阻断。push 通知在 tick 10 发出、tick 18 到达，晚于 tick 14 动作截止；dependency pull 在 tick 12 已发现撤销，说明迟到通知时仍能由依赖闭包阻断。`branch_retraction` 虽成功注入故障，但两臂都没有故障后的动作机会，按规范标为不可比较，不能把 0/4 错误完成当作 containment 成功。可评估流程均无协议无关误冻，但 C 任务仍有模型 hold/无效动作造成的未完成。
+
+该 live pilot 正向支持“依赖门禁控制错误传播，通知是及时暴露而非唯一安全路径”的接口级判断，同时保留 autonomous 的真实失败、模型停机和固定拓扑边界。它不足以估计一般错误率、通知策略统计收益、Agent 泛化或责任准确率；详细原始目录与解释见 `results/workflow_v1_live_branch_late_analysis_20260910.md`。
+
+
+## 2026-09-10：统一L0–L4 benchmark实验交接
+
+已实现独立普通消息L0、累计协议层、三类多跳拓扑、十类场景及单项消融，共210条离线配置；同一节点接口可在持久组织进程中运行。完整代码绑定回归248 passed，其中5个进程等价病例。正式离线矩阵210/210完成，原始manifest及代码绑定验收通过，见`results/layered_v1_offline_final/`。新增MiniMax调用为0。
+
+[统一任务书](TASK_EXPERIMENTS_LAYERED_V1.md)安排离线分析、固定分母证据对照、历史终端提议转移和15条有界live，由实验端统一执行；[实现说明](BENCHMARK_LAYERED_V1.md)记录接口与限制。结果不预设各层单调提升，模型hold与程序阻断分开，真实模型与固定提议比较分开。所有状态持久保存在仓库内。
+
+### 2026-09-10：L0–L4 layered benchmark 实验完成
+
+按 `TASK_EXPERIMENTS_LAYERED_V1.md` 完成并保存 A–D。A 直接复用通过 hash 校验的正式 210 条离线矩阵，没有使用旧的 `results/layered_v1_offline/`；C 复用 21 条固定分母证据投影，并将两条历史模型终端 trace 各转移到 L0–L4，新增 10 条 tape 结果，均为 0 次模型调用且保留 source SHA256。D 的汇总、逐条 paired CSV、长表 chart data、PNG/PDF、provenance 和 artifact manifest 保存在 `results/layered_v1_experiments/`。
+
+正式主矩阵中，三拓扑合计 48 个受影响任务的错误完成从 L0 的 48/48，经 L1 45/48、L2 39/48、L3 24/48，降到 L4 的 0/48；72/72 个无关任务保留。增量分别对应交接篡改完整性、根撤销远端查证、中间/分支依赖闭包和签名有效但事实错误的权威补证。`L4_no_fact` 回到 24/24 错误完成；`L3_coarse` 无错误完成但误冻 9 个无关任务；`verify_all` 与 L3 在本轮撤销条件下持平，对隐藏事实仍无效。confirmed_repair 的离线 recovered_tasks 在低层也为 6，原因是低层允许普通重发，因此没有把普通修订成功冒称为 L4 独有恢复收益。
+
+固定分母追溯共 68 条路线、14 个来源身份和 51 个动作问题。L0 普通日志能估计 68/68 条路线但可验证路线为 0/68、来源身份为 0/14；L1–L4 均为可验证路线 68/68、来源身份 14/14。无签收配置保留估计路线但失去可验证路线，opaque relay 两者均失去；新执行没有独立责任真值，51 个问题均保留为 undetermined。独立责任标签继续引用 `contribution_generalization_v2`，不与本轮追溯投影合并。
+
+按任务书运行 15 条 MiniMax-M3 live pilot（active、late_notice、confirmed_repair × L0–L4），共 257 次模型决定和 provider attempt、403839 个已知 token、4 次未知 usage，全部调用返回，worker error 和 unfinished call 均为 0。late_notice 中 L0–L2 各完成 2/2 个受影响错误任务，L3/L4 为 0/2；confirmed_repair 中 L0–L3 为 2/2，L4 为 0/2，并发生 8 次程序对错误提议的阻断。L4 的 source repair 在主 pilot 中安全 hold，没有形成恢复动作机会，不能报告 live recovery success rate。
+
+为判断这是否只是一次随机 hold，另做 3 条独立 L4 recovery-entry 补充探针，不修改 prompt、工作负载或预算，也不并入 15 条主 pilot。三条均 17/17 调用返回、unsafe completion 为 0、程序阻断为 8/8/7、recovered_tasks 均为 0；前两条有模型 hold，第三条无 hold 但仍未提交恢复动作。该结果支持 live L4 的安全暂停和错误动作门禁，但不支持真实 Agent 已自主完成修订恢复。所有主结果、补充探针和私有 worker 日志均保存在仓库内；worker 目录由 `.gitignore` 排除，不作为公开附件。
+
+本轮全仓库回归为 `248 passed`，正式归档和汇总 manifest 逐项匹配。机制级结论是正向的，但受控矩阵不是独立统计样本，live 层级不是配对因果实验；仍需在论文中保留脚本初始化、同步零延迟 RPC、事实真实性、异步竞态以及 live recovery 未触发等边界。下一步停止扩大成功场景，进入主线写作与失败边界整理。
+
+### 2026-09-10：跨拓扑 MiniMax live 扩展
+
+应用户要求，在原 `long_chain_fork` 的 15 条 live pilot 之外，使用相同 MiniMax-M3、ProcessBackend、prompt、2048 token 上限和每条最多 28 次模型决定的配置，补跑 `converge_then_fork` 与 `reused_org_independent` 两种拓扑的 `active / late_notice / confirmed_repair × L0–L4`，共 30 条。运行器和原始归档保存在 `scripts/run_layered_live_expanded.py` 与 `results/layered_v1_live_expanded_topologies_20260910/`，没有修改 layered benchmark 机制代码。
+
+30 条全部完成，551/551 个 started provider calls 返回或失败并有 journal，已知 token 739245，22 次 usage 未知，worker error、unfinished call、malformed journal 和自动重试均为 0。两种新拓扑的 `late_notice` 均表现为 L0–L2 各 2/2 unsafe、L3/L4 各 0/2；两种新拓扑的 `confirmed_repair/L4` 均为 0/2 unsafe，而低层通常为 2/2。新增流程没有 overfreeze；`converge_then_fork/L1 confirmed_repair` 的 0/2 同时伴随 0/4 完成和 6 次模型 hold，不计为协议安全收益。
+
+与原 15 条合并后，45 条 live 在 12 个受影响任务上的 L0–L4 错误完成为 12/12、10/12、12/12、6/12、0/12；L1 的两个差异都来自汇聚拓扑的模型 hold，层间数值只作描述性观察。实际接受的故障后错误交接为 32、31、25、20、0，说明 L3/L4 的传播阻断方向在三种拓扑上复现。L4 合计执行333次事实查询、37条通知、226891 bytes；模型 hold、invalid action 和安全最终完成分别单独记录。
+
+30 条新增流程没有触发 recovered_tasks，连同旧 pilot 仍无真实模型自主修订恢复成功证据。汇总分析、逐条 CSV、图表、provenance 和 manifest 保存在 `results/layered_v1_live_expanded_analysis_20260910/`；结论增强了跨拓扑的机制方向证据，但不改变 live recovery 未触发、脚本初始化、同步零延迟 RPC 和非独立统计样本等边界。
+
+### 2026-09-10：confirmed_repair live 入口诊断
+
+针对 6 条 L4 `confirmed_repair` 原始运行（主 pilot 1 条、跨拓扑扩展 2 条、recovery probe 3 条）核对 source 的真实模型输入、权威查询结果和 RPC 顺序。6/6 条的控制器日志都包含旧 `root_A=100` 被权威判为 `CONTRADICTED` 的证据，但没有一次生成新 `125` 候选的 `CONFIRMED` 证据，因为 `revision` 入口从未被调用。
+
+source 修复决定为 `hold` 5 条、`verify` 1 条、`proceed` 0 条。模型输入在 6/6 条中都只有空 `task_claims`、脚本提供的 `own_business_revision=125`、本地 disputed/blocked 旧声明和 `bound_recovery=true`；没有 fact evidence reply、recovery offer、recovery envelope 或 `request_recovery` 动作。当前 system schema 只允许 `proceed / verify / hold`，而 `repair()` 对 source 的 `verify` 和 `hold` 都直接返回，不执行查询后的第二轮决定。
+
+因此这些 hold/verify 是“模型没有看到可执行恢复入口时的安全暂停”，不是“模型在满足模型可见前提后拒绝请求恢复”。控制器隐藏地把 source 的 `proceed` 解释为启动 `revision`，再自动进入 envelope/frontier/rebuild；这可以验证程序闭环，但不能证明真实 Agent 自主请求恢复。诊断报告与逐条审计在 `results/layered_v1_confirmed_repair_diagnosis_20260910/`，审计脚本为 `scripts/audit_layered_confirmed_repair.py`。下一次 live 前应先修正 repair action/schema、传入绑定的权威证据和结构化恢复任务，并让 `verify` 有真实后续回合。
+
+### 2026-09-10：confirmed_repair live 适配器修复与真实模型复核
+
+本轮由当前实验执行端独立完成修复。首先在 `trust_network/benchmark/layered/engine.py` 增加显式的 `request_recovery` 控制平面阶段、source 私有 `fact_ref` 修订入口、权威确认后的 recovery envelope/frontier/rebuild 调度和最终审批上下文；`backend.py` 只允许 source 从本地私有 fact index 解析修订事实，派生 worker 只允许从恢复父声明解析 `fact_ref`。随后根据第一轮 live 原始输出修正两处适配语义：接受与上下文完全一致且顺序正确的真实 claim ID，明确 `CONTRADICTED` 是启动恢复的依据；再根据第二轮真实输出明确新父事实已由权威确认、可以替代旧事实，并要求派生签发者使用本轮 `task_claims` 中的父声明，不能等待一个本阶段本来就要生成的派生声明。模型不能提供金额 JSON，金额始终由 source 私有索引和 worker 产生。
+
+修复期间的失败和中断目录均保留，未混入最终统计。最终版本先通过 250 项回归和 5 个 ProcessBackend parity case，完成 210 条离线矩阵并通过源码哈希 preflight；再运行 6 条 MiniMax-M3 / ProcessBackend `L4/confirmed_repair` replication，覆盖 `long_chain_fork`、`converge_then_fork`、`reused_org_independent` 三种拓扑各两次。12/12 个受影响任务均由模型选择 `request_recovery`，12/12 个 verify-only 恢复基础提交成功；6/6 次 source 选择 `propose_revision`，6/6 个修订 offer 获 buyer 权威 `CONFIRMED`。25 个 frontier 重建步骤中 19 个完成，6 个因模型 hold 停止；最终完整恢复 6/12 个受影响任务，已完成恢复的 6/6 个最终动作完成。6 条 workflow 全部为 0 unsafe completion，合计 0 次 RPC rejection、0 次 worker error；无关任务完成 9/12。共 149 次模型调用、152 次 provider attempt、309384 个已知 token、1 次 usage 未知，所有 provider journal 已返回且无 malformed line 或 unfinished call。
+
+修复前 3 条正式 L4 `confirmed_repair` live workflow 共 0/6 个受影响任务恢复；旧数据没有恢复阶段字段，不能反推出当时模型是否发起过请求。该前后结果是适配器修复的受控比较，不是随机化因果估计。当前证据支持：协议的安全门禁在真实模型流程中保持 0/12 unsafe，模型已经能够在安全暂停后主动进入恢复入口，source 权威确认和绑定重建可以在真实多跳流程中完成；恢复可用性仍为 6/12，`converge_then_fork` 两次均在多跳重建阶段停止，不能宣称所有受影响任务自动恢复。
+
+最终原始数据、worker journal、manifest、分析报告和图表保存在 `results/layered_v1_live_confirmed_repair_final_v2_20260910/`；复现脚本为 `scripts/run_layered_confirmed_repair_live.py`，分析脚本为 `scripts/analyze_layered_confirmed_repair_live.py`。第一轮入口修复和重建 prompt 的失败边界分别保存在 `results/layered_v1_live_repair_request_fix_pilot_20260910/` 与 `results/layered_v1_live_confirmed_repair_replication_20260910/`。
+
+
+## 2026-09-11：最终统一live基础设施与交接
+
+最终统一 live 计划随后完成 300 条主实验和 50 条消融；完整结果、公开汇总和异常审计见 `FINAL_UNIFIED_LIVE_BENCHMARK_20260911.md` 及 `results/final_unified_live_v1_combined_20260911/`。本条之前的交接状态仅保留为时间线记录。
+
+### 2026-09-11：最终统一 live 实验完成
+
+最终统一 live 计划完成 300 条主实验和 50 条消融。344/350 条 workflow 有最终结果，6 条在审计暂停时没有最终调用结果，保留为 unknown 并继续留在固定分母。L0–L4 主矩阵的错误完成率分别为 36.2%、36.2%、30.8%、19.2% 和 0%；错误传播交接分别为 242、236、196、153 和 0。L4 无关任务保留 138/144，确认修订恢复请求 10/12，最终恢复 6/12；其余 4 条在 workflow 预算耗尽时停止。
+
+最终异常审计区分了模型/适配器契约异常、瞬时 provider/network 失败、预期安全拒绝和预算停机。claim-ref 与动作契约异常及 46 条 network overlay 均只重跑受影响 workflow；最终非法决定、非法结果、provider failure decision 和 worker error 均为 0，58 次篡改交接签名拒绝属于预期门禁。公开 aggregate、逐任务指标、差异、追溯投影、异常审计和图表保存在 `results/final_unified_live_v1_combined_20260911/`，摘要见 `FINAL_UNIFIED_LIVE_BENCHMARK_20260911.md`。
