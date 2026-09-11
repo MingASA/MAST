@@ -791,6 +791,8 @@ def main():
             "base": str(BASE.relative_to(ROOT)), "claimref_fix": str(CLAIMREF.relative_to(ROOT)),
             "provider_retry": str(RETRY.relative_to(ROOT)), "contract_cleanup": str(CONTRACT.relative_to(ROOT)),
         },
+        "source_artifacts_public": False,
+        "source_artifact_policy": "Only this combined public archive is published; source workflow and private worker directories remain local.",
         "selection_rule": "contract cleanup overrides model action/claim_refs contract failures; provider retry overrides network-failure workflows; claimref fix overrides initial claim_refs INVALID workflows; other good base results preserved; interrupted workflows remain unknown",
     })
     write_json(OUT / "analysis_provenance.json", {
@@ -802,6 +804,8 @@ def main():
         "invalid_base_workflows": sorted(invalid_base), "network_retry_workflows": sorted(retry_ids),
         "contract_cleanup_workflows": sorted(contract_ids),
         "fixed_denominator": True, "new_model_calls": 0,
+        "source_artifacts_public": False,
+        "source_artifact_policy": "Only this combined public archive is published; source workflow and private worker directories remain local.",
     })
     write_csv(OUT / "aggregate.csv", rows)
     write_json(OUT / "aggregate.json", rows)
