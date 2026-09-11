@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAST · Protocol Replay</title><link rel="stylesheet" href="replay.css">
+</head>
+<body>
+<main class="page">
+  <header>
+    <div class="brand"><h1>MAST <i>·</i> Protocol Replay</h1><p>确认修复 · 长链分叉</p></div>
+    <div class="modes" aria-label="播放模式">
+      <button class="mode-pill l0 active" id="mode-l0"><i></i><span>对照组 · L0</span></button>
+      <b>›</b>
+      <button class="mode-pill l4" id="mode-l4"><i></i><span>MAST · L4</span></button>
+      <small>点击切换两套独立演示</small>
+    </div>
+    <div class="provenance"><b>Replay from final benchmark fixture</b><span id="fixture-id">loading…</span></div>
+  </header>
+
+  <section class="stage" aria-label="MAST 协议重放">
+    <div class="stage-copy"><span id="stage-mode">L0 · 对照组</span><strong id="stage-title">准备开始</strong><small id="stage-detail">同一个业务场景，先看没有 MAST 修复能力时会发生什么</small></div>
+    <div class="legend" aria-label="传播链图例">
+      <div><i class="sample claim-a"></i><span>claim A 传播链</span></div>
+      <div><i class="sample claim-b"></i><span>claim B 传播链</span><small>fixture 中的 Order C</small></div>
+    </div>
+
+    <svg class="network" viewBox="0 0 1500 600" role="img" aria-label="供应商经购物平台和仓库分叉到物流与买家的业务树">
+      <defs>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker>
+        <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker>
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker>
+        <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z"/></marker>
+      </defs>
+      <g class="links">
+        <path id="main-a-1" class="link a-link" style="--order:0" d="M315 315 H445"/>
+        <path id="main-b-1" class="link b-link" d="M315 335 H445"/>
+        <path id="main-a-2" class="link a-link" style="--order:1" d="M615 315 H745"/>
+        <path id="main-b-2" class="link b-link" d="M615 335 H745"/>
+        <path id="branch-a-1" class="link a-link branch-link" style="--order:2" d="M915 310 L1040 235"/>
+        <path id="branch-a-2" class="link a-link branch-link" style="--order:3" d="M1190 220 H1300"/>
+        <path id="branch-b-1" class="link b-link branch-link" d="M915 340 L1040 415"/>
+        <path id="branch-b-2" class="link b-link branch-link" d="M1190 430 H1300"/>
+        <path id="prime-main-1" class="link prime hidden" style="--order:0" d="M315 305 H445"/>
+        <path id="prime-main-2" class="link prime hidden" style="--order:1" d="M615 305 H745"/>
+        <path id="prime-a-1" class="link prime hidden" style="--order:2" d="M915 300 L1040 225"/>
+        <path id="prime-a-2" class="link prime hidden" style="--order:3" d="M1190 210 H1300"/>
+      </g>
+      <g class="locks">
+        <g class="lock lock-a1" transform="translate(972 258)"><rect width="30" height="25" rx="5"/><path d="M8 8V5a7 7 0 0114 0v3"/></g>
+        <g class="lock lock-a2" transform="translate(1230 195)"><rect width="30" height="25" rx="5"/><path d="M8 8V5a7 7 0 0114 0v3"/></g>
+        <g class="lock lock-b1" transform="translate(972 382)"><rect width="30" height="25" rx="5"/><path d="M8 8V5a7 7 0 0114 0v3"/></g>
+        <g class="lock lock-b2" transform="translate(1230 405)"><rect width="30" height="25" rx="5"/><path d="M8 8V5a7 7 0 0114 0v3"/></g>
+      </g>
+      <g class="nodes">
+        <g class="node" data-node="source" transform="translate(230 325)"><circle r="70"/><text>供应商</text><title>source</title></g>
+        <g class="node" data-node="chain_1" transform="translate(530 325)"><circle r="70"/><text>购物平台</text><title>chain_1</title></g>
+        <g class="node" data-node="chain_2" transform="translate(830 325)"><circle r="70"/><text>仓库</text><title>chain_2</title></g>
+        <g class="node" data-node="branch_a" transform="translate(1115 220)"><circle r="70"/><text>物流 A</text><title>branch_a</title></g>
+        <g class="node" data-node="branch_b" transform="translate(1115 430)"><circle r="70"/><text>物流 B</text><title>branch_b</title></g>
+        <g class="node" data-node="receiver_a" transform="translate(1375 220)"><circle r="70"/><text>买家 A</text><title>receiver_a</title></g>
+        <g class="node" data-node="receiver_b" transform="translate(1375 430)"><circle r="70"/><text>买家 B</text><title>receiver_b</title></g>
+      </g>
+    </svg>
+    <div class="outcome" id="outcome" aria-live="polite"></div>
+  </section>
+
+  <footer>
+    <ol id="timeline" aria-label="重放步骤"></ol>
+    <div class="controls"><button id="auto" class="primary"><span>▶</span> Auto Replay</button><button id="pause">Ⅱ　暂停</button><button id="step">▸　单步</button><button id="reset">↻　重置</button></div>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body></html>

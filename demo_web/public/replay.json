@@ -1,0 +1,1126 @@
+{
+  "schema": "mast-demo-replay-v1",
+  "fixture_id": "final-v1:long_chain_fork:confirmed_repair:business-1",
+  "fixture_hash": "66f427dff54458754a291a2d17b3c45de58a047003e4db5ad2d302e5c035bf59",
+  "provenance": {
+    "label": "Replay from final benchmark fixture",
+    "plan": "results/final_unified_live_v1_combined_20260911/plan.json",
+    "aggregate": "results/final_unified_live_v1_combined_20260911/aggregate.json",
+    "task_metrics": "results/final_unified_live_v1_combined_20260911/task_metrics.json",
+    "runs": {
+      "L0": {
+        "workflow_id": "w0130",
+        "path": "results/final_unified_live_v1_claimref_fix_20260911/runs/w0130/result.json",
+        "sha256": "fb735b911fd49093f522e9381f45ba190c00ee755a068994f440dbd72596e2a9"
+      },
+      "L4": {
+        "workflow_id": "w0134",
+        "path": "results/final_unified_live_v1_claimref_fix_20260911/runs/w0134/result.json",
+        "sha256": "36280c3755410e8d8d1e4b17f6bae3bf5ac22423e733ef69d41578289bc82f03"
+      }
+    }
+  },
+  "business": {
+    "base_cents": 43750,
+    "corrected_cents": 51250,
+    "currency": "USD",
+    "maximum_cents": 60000,
+    "tampered_cents": 45100,
+    "effect": "simulated invoice approval"
+  },
+  "topology": {
+    "organizations": [
+      "source",
+      "chain_1",
+      "chain_2",
+      "branch_a",
+      "branch_b",
+      "receiver_a",
+      "receiver_b",
+      "buyer"
+    ],
+    "edges": [
+      {
+        "claims": [
+          "root_A",
+          "root_C"
+        ],
+        "label": "source_to_chain_1",
+        "receiver": "chain_1",
+        "sender": "source"
+      },
+      {
+        "claims": [
+          "shared_A",
+          "shared_C"
+        ],
+        "label": "chain_1_to_chain_2",
+        "receiver": "chain_2",
+        "sender": "chain_1"
+      },
+      {
+        "claims": [
+          "common_A",
+          "common_C"
+        ],
+        "label": "chain_2_to_branch_a",
+        "receiver": "branch_a",
+        "sender": "chain_2"
+      },
+      {
+        "claims": [
+          "common_A",
+          "common_C"
+        ],
+        "label": "chain_2_to_branch_b",
+        "receiver": "branch_b",
+        "sender": "chain_2"
+      },
+      {
+        "claims": [
+          "branch_A_a",
+          "branch_C_a"
+        ],
+        "label": "branch_a_to_receiver_a",
+        "receiver": "receiver_a",
+        "sender": "branch_a"
+      },
+      {
+        "claims": [
+          "branch_A_b",
+          "branch_C_b"
+        ],
+        "label": "branch_b_to_receiver_b",
+        "receiver": "receiver_b",
+        "sender": "branch_b"
+      }
+    ],
+    "tasks": [
+      {
+        "branch": "a",
+        "claim": "f1a8e29328ef7b9fddaa9f7e73380c193d63affe30b68b5cbc0b6a2b6e6562ba",
+        "claim_key": "branch_A_a",
+        "id": "A_a",
+        "owner": "receiver_a"
+      },
+      {
+        "branch": "b",
+        "claim": "b7103eb60bf06285fd388233cfbaf1dd6841cd5c8d8d5e5e1c87e1cc3ae35289",
+        "claim_key": "branch_A_b",
+        "id": "A_b",
+        "owner": "receiver_b"
+      },
+      {
+        "branch": "a",
+        "claim": "4eb6d81d46ec6548a370b1fd67dfc04a6955cb923257d23e73a27ea8d1a1d012",
+        "claim_key": "branch_C_a",
+        "id": "C_a",
+        "owner": "receiver_a"
+      },
+      {
+        "branch": "b",
+        "claim": "4c1478496bae8a1c7787b29540a7c4a055a0b520501781b30d8e1ab4d9a0e7e6",
+        "claim_key": "branch_C_b",
+        "id": "C_b",
+        "owner": "receiver_b"
+      }
+    ]
+  },
+  "truth": {
+    "affected_tasks": [
+      "A_a",
+      "A_b"
+    ],
+    "authority_status": "confirmed",
+    "expected_frontier": {
+      "A_a": [
+        "branch_A_a",
+        "common_A",
+        "root_A",
+        "shared_A"
+      ],
+      "A_b": [
+        "branch_A_b",
+        "common_A",
+        "root_A",
+        "shared_A"
+      ]
+    },
+    "fault_injection_tick": 0,
+    "fault_kind": "confirmed_repair",
+    "fault_ref": null,
+    "private_expected_cents": {
+      "A": 51250,
+      "C": 43750
+    },
+    "unrelated_tasks": [
+      "C_a",
+      "C_b"
+    ],
+    "claim_ids": {
+      "root_A": "37ff04507a03b2c4476571b319820b5982156d64cf8cfbe64c7428cc06206fbb",
+      "shared_A": "9277060eabf276d63930237dfa64cfe153285a3c98eb12575be09d47e3bf46c3",
+      "common_A": "7e1a4dff28fc86fa0e1c9b605f75113e2bde123b22f3b7fc7f9c18608732b3ea",
+      "branch_A_a": "f1a8e29328ef7b9fddaa9f7e73380c193d63affe30b68b5cbc0b6a2b6e6562ba",
+      "branch_A_b": "b7103eb60bf06285fd388233cfbaf1dd6841cd5c8d8d5e5e1c87e1cc3ae35289",
+      "root_C": "3f2a3329709eb17d3a8c822faa35099437ebf7f411e7f3350b04702163b20367",
+      "shared_C": "8a36b2bfc4445a9bab97a37565eb3ab7d97d8063f9e5f8d3271ed8792eb2d60f",
+      "common_C": "f2dac5c61236175f8cebe202499636f656186181d0c23986c09bdc24dc011c12",
+      "branch_C_a": "4eb6d81d46ec6548a370b1fd67dfc04a6955cb923257d23e73a27ea8d1a1d012",
+      "branch_C_b": "4c1478496bae8a1c7787b29540a7c4a055a0b520501781b30d8e1ab4d9a0e7e6"
+    },
+    "affected_order": "A",
+    "unrelated_order": "C"
+  },
+  "claims": {
+    "branch_A_a": {
+      "id": "f1a8e29328ef7b9fddaa9f7e73380c193d63affe30b68b5cbc0b6a2b6e6562ba",
+      "short_id": "f1a8e2…2ba",
+      "issuer": "branch_a",
+      "parents": [
+        "7e1a4dff28fc86fa0e1c9b605f75113e2bde123b22f3b7fc7f9c18608732b3ea"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "A"
+        }
+      },
+      "handoff_receiver": "receiver_a",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "branch_A_b": {
+      "id": "b7103eb60bf06285fd388233cfbaf1dd6841cd5c8d8d5e5e1c87e1cc3ae35289",
+      "short_id": "b7103e…289",
+      "issuer": "branch_b",
+      "parents": [
+        "7e1a4dff28fc86fa0e1c9b605f75113e2bde123b22f3b7fc7f9c18608732b3ea"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "A"
+        }
+      },
+      "handoff_receiver": "receiver_b",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "branch_C_a": {
+      "id": "4eb6d81d46ec6548a370b1fd67dfc04a6955cb923257d23e73a27ea8d1a1d012",
+      "short_id": "4eb6d8…012",
+      "issuer": "branch_a",
+      "parents": [
+        "f2dac5c61236175f8cebe202499636f656186181d0c23986c09bdc24dc011c12"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "C"
+        }
+      },
+      "handoff_receiver": "receiver_a",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "branch_C_b": {
+      "id": "4c1478496bae8a1c7787b29540a7c4a055a0b520501781b30d8e1ab4d9a0e7e6",
+      "short_id": "4c1478…7e6",
+      "issuer": "branch_b",
+      "parents": [
+        "f2dac5c61236175f8cebe202499636f656186181d0c23986c09bdc24dc011c12"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "C"
+        }
+      },
+      "handoff_receiver": "receiver_b",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "common_A": {
+      "id": "7e1a4dff28fc86fa0e1c9b605f75113e2bde123b22f3b7fc7f9c18608732b3ea",
+      "short_id": "7e1a4d…3ea",
+      "issuer": "chain_2",
+      "parents": [
+        "9277060eabf276d63930237dfa64cfe153285a3c98eb12575be09d47e3bf46c3"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "A"
+        }
+      },
+      "handoff_receiver": "branch_a",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "common_C": {
+      "id": "f2dac5c61236175f8cebe202499636f656186181d0c23986c09bdc24dc011c12",
+      "short_id": "f2dac5…c12",
+      "issuer": "chain_2",
+      "parents": [
+        "8a36b2bfc4445a9bab97a37565eb3ab7d97d8063f9e5f8d3271ed8792eb2d60f"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "C"
+        }
+      },
+      "handoff_receiver": "branch_a",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "root_A": {
+      "id": "37ff04507a03b2c4476571b319820b5982156d64cf8cfbe64c7428cc06206fbb",
+      "short_id": "37ff04…fbb",
+      "issuer": "source",
+      "parents": [],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "A"
+        }
+      },
+      "handoff_receiver": "chain_1",
+      "receipt": "accepted",
+      "authority_status": "CONTRADICTED"
+    },
+    "root_C": {
+      "id": "3f2a3329709eb17d3a8c822faa35099437ebf7f411e7f3350b04702163b20367",
+      "short_id": "3f2a33…367",
+      "issuer": "source",
+      "parents": [],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "C"
+        }
+      },
+      "handoff_receiver": "chain_1",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "shared_A": {
+      "id": "9277060eabf276d63930237dfa64cfe153285a3c98eb12575be09d47e3bf46c3",
+      "short_id": "927706…6c3",
+      "issuer": "chain_1",
+      "parents": [
+        "37ff04507a03b2c4476571b319820b5982156d64cf8cfbe64c7428cc06206fbb"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "A"
+        }
+      },
+      "handoff_receiver": "chain_2",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    },
+    "shared_C": {
+      "id": "8a36b2bfc4445a9bab97a37565eb3ab7d97d8063f9e5f8d3271ed8792eb2d60f",
+      "short_id": "8a36b2…60f",
+      "issuer": "chain_1",
+      "parents": [
+        "3f2a3329709eb17d3a8c822faa35099437ebf7f411e7f3350b04702163b20367"
+      ],
+      "fact": {
+        "predicate": "total_charge",
+        "value": {
+          "cents": 43750,
+          "currency": "USD",
+          "order": "C"
+        }
+      },
+      "handoff_receiver": "chain_2",
+      "receipt": "accepted",
+      "authority_status": "CONFIRMED"
+    }
+  },
+  "comparison": {
+    "L0": {
+      "workflow_id": "w0130",
+      "metrics": {
+        "unsafe_completion_count": 2,
+        "safe_final_completion": 2,
+        "unrelated_completed": 2,
+        "recovered_tasks": 0,
+        "post_fault_error_handoffs": 6,
+        "notifications": 0,
+        "authority_confirmed": 0,
+        "budget_decisions": 0
+      },
+      "tasks": [
+        {
+          "task_id": "A_a",
+          "affected": true,
+          "status": "completed",
+          "unsafe_completion": true,
+          "recovered": false,
+          "safe_final": false
+        },
+        {
+          "task_id": "A_b",
+          "affected": true,
+          "status": "completed",
+          "unsafe_completion": true,
+          "recovered": false,
+          "safe_final": false
+        },
+        {
+          "task_id": "C_a",
+          "affected": false,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": false,
+          "safe_final": true
+        },
+        {
+          "task_id": "C_b",
+          "affected": false,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": false,
+          "safe_final": true
+        }
+      ],
+      "routes": [
+        {
+          "sender": "source",
+          "receiver": "chain_1",
+          "claim_keys": [
+            "root_A",
+            "root_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_1",
+          "receiver": "chain_2",
+          "claim_keys": [
+            "shared_A",
+            "shared_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_a",
+          "claim_keys": [
+            "common_A",
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_b",
+          "claim_keys": [
+            "common_A",
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_a",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "branch_A_a",
+            "branch_C_a"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_b",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "branch_A_b",
+            "branch_C_b"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "auth_A"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "auth_A"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "auth_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "auth_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "source",
+          "receiver": "chain_1",
+          "claim_keys": [
+            "root_A"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "source",
+          "receiver": "chain_1",
+          "claim_keys": [
+            "root_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_1",
+          "receiver": "chain_2",
+          "claim_keys": [
+            "shared_A"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_1",
+          "receiver": "chain_2",
+          "claim_keys": [
+            "shared_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_a",
+          "claim_keys": [
+            "common_A"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_a",
+          "claim_keys": [
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_b",
+          "claim_keys": [
+            "common_A"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_b",
+          "claim_keys": [
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_a",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "branch_A_a"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_a",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "branch_C_a"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_b",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "branch_A_b"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        },
+        {
+          "sender": "branch_b",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "branch_C_b"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": false,
+          "receipt": null
+        }
+      ],
+      "event_counts": {
+        "source": {},
+        "chain_1": {},
+        "chain_2": {},
+        "branch_a": {},
+        "branch_b": {},
+        "receiver_a": {},
+        "receiver_b": {},
+        "buyer": {}
+      }
+    },
+    "L4": {
+      "workflow_id": "w0134",
+      "metrics": {
+        "unsafe_completion_count": 0,
+        "safe_final_completion": 4,
+        "unrelated_completed": 2,
+        "recovered_tasks": 2,
+        "post_fault_error_handoffs": 0,
+        "notifications": 12,
+        "authority_confirmed": 1,
+        "budget_decisions": 0
+      },
+      "tasks": [
+        {
+          "task_id": "A_a",
+          "affected": true,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": true,
+          "safe_final": true
+        },
+        {
+          "task_id": "A_b",
+          "affected": true,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": true,
+          "safe_final": true
+        },
+        {
+          "task_id": "C_a",
+          "affected": false,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": false,
+          "safe_final": true
+        },
+        {
+          "task_id": "C_b",
+          "affected": false,
+          "status": "completed",
+          "unsafe_completion": false,
+          "recovered": false,
+          "safe_final": true
+        }
+      ],
+      "routes": [
+        {
+          "sender": "source",
+          "receiver": "chain_1",
+          "claim_keys": [
+            "root_A",
+            "root_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_1",
+          "receiver": "chain_2",
+          "claim_keys": [
+            "shared_A",
+            "shared_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_a",
+          "claim_keys": [
+            "common_A",
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_b",
+          "claim_keys": [
+            "common_A",
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "branch_a",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "branch_A_a",
+            "branch_C_a"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "branch_b",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "branch_A_b",
+            "branch_C_b"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "auth_A"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "auth_A"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "auth_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "buyer",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "auth_C"
+          ],
+          "accepted": true,
+          "tick": 0,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "source",
+          "receiver": "chain_1",
+          "claim_keys": [
+            "root_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_1",
+          "receiver": "chain_2",
+          "claim_keys": [
+            "shared_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_a",
+          "claim_keys": [
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "chain_2",
+          "receiver": "branch_b",
+          "claim_keys": [
+            "common_C"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "branch_a",
+          "receiver": "receiver_a",
+          "claim_keys": [
+            "branch_C_a"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        },
+        {
+          "sender": "branch_b",
+          "receiver": "receiver_b",
+          "claim_keys": [
+            "branch_C_b"
+          ],
+          "accepted": true,
+          "tick": 12,
+          "signed": true,
+          "receipt": "accepted"
+        }
+      ],
+      "event_counts": {
+        "source": {
+          "received": 3,
+          "handoff_prepared": 2,
+          "handoff_acknowledged": 2,
+          "reliability_planned": 2,
+          "reliability_status_replied": 21,
+          "reliability_status_received": 2,
+          "fact_dispute_registered": 2,
+          "dispute_notification_queued": 1,
+          "fact_evidence_received": 2,
+          "reliability_outcome": 2,
+          "dispute_notification_acknowledged": 1,
+          "revocation_received": 1,
+          "notification_queued": 1,
+          "claim_revision_offered": 1,
+          "dispute_revision_confirmed": 1,
+          "notification_acknowledged": 1
+        },
+        "chain_1": {
+          "received": 21,
+          "handoff_received": 2,
+          "handoff_prepared": 2,
+          "handoff_acknowledged": 2,
+          "reliability_planned": 2,
+          "reliability_status_received": 3,
+          "reliability_outcome": 2,
+          "reliability_status_replied": 10,
+          "fact_evidence_received": 2,
+          "fact_dispute_registered": 1,
+          "dispute_notification_queued": 1,
+          "dispute_notification_received": 1,
+          "dispute_notification_acknowledged": 1,
+          "blocked": 8,
+          "frontier_claim_rebuilt": 2,
+          "revocation_received": 1,
+          "notification_queued": 1,
+          "notification_received": 1,
+          "notification_acknowledged": 1
+        },
+        "chain_2": {
+          "received": 26,
+          "handoff_received": 2,
+          "handoff_prepared": 4,
+          "handoff_acknowledged": 4,
+          "reliability_planned": 4,
+          "reliability_status_received": 8,
+          "reliability_outcome": 4,
+          "reliability_status_replied": 9,
+          "fact_evidence_received": 6,
+          "fact_dispute_registered": 1,
+          "dispute_notification_queued": 2,
+          "dispute_notification_received": 1,
+          "dispute_notification_acknowledged": 2,
+          "blocked": 8,
+          "frontier_claim_rebuilt": 2,
+          "revocation_received": 1,
+          "notification_queued": 2,
+          "notification_received": 1,
+          "notification_acknowledged": 2
+        },
+        "branch_a": {
+          "received": 21,
+          "handoff_received": 2,
+          "handoff_prepared": 2,
+          "handoff_acknowledged": 2,
+          "reliability_planned": 2,
+          "reliability_status_received": 5,
+          "reliability_outcome": 2,
+          "reliability_status_replied": 4,
+          "fact_evidence_received": 4,
+          "fact_dispute_registered": 1,
+          "dispute_notification_queued": 1,
+          "dispute_notification_received": 1,
+          "dispute_notification_acknowledged": 1,
+          "blocked": 4,
+          "frontier_claim_rebuilt": 1,
+          "revocation_received": 1,
+          "notification_queued": 1,
+          "notification_received": 1,
+          "notification_acknowledged": 1
+        },
+        "branch_b": {
+          "received": 21,
+          "handoff_received": 2,
+          "handoff_prepared": 2,
+          "handoff_acknowledged": 2,
+          "reliability_planned": 2,
+          "reliability_status_received": 5,
+          "reliability_outcome": 2,
+          "reliability_status_replied": 3,
+          "fact_evidence_received": 4,
+          "fact_dispute_registered": 1,
+          "dispute_notification_queued": 1,
+          "dispute_notification_received": 1,
+          "dispute_notification_acknowledged": 1,
+          "blocked": 4,
+          "frontier_claim_rebuilt": 1,
+          "revocation_received": 1,
+          "notification_queued": 1,
+          "notification_received": 1,
+          "notification_acknowledged": 1
+        },
+        "receiver_a": {
+          "received": 18,
+          "handoff_received": 4,
+          "reliability_planned": 5,
+          "reliability_status_received": 17,
+          "reliability_outcome": 5,
+          "fact_evidence_received": 12,
+          "verification_completed": 1,
+          "action_contract_allowed": 2,
+          "action_effect_returned": 2,
+          "fact_dispute_registered": 1,
+          "dispute_notification_received": 1,
+          "revocation_received": 2,
+          "closure_recovery_prepared": 1,
+          "notification_received": 1
+        },
+        "receiver_b": {
+          "received": 18,
+          "handoff_received": 4,
+          "reliability_planned": 4,
+          "reliability_status_received": 12,
+          "reliability_outcome": 4,
+          "fact_evidence_received": 8,
+          "action_contract_allowed": 2,
+          "action_effect_returned": 2,
+          "fact_dispute_registered": 1,
+          "dispute_notification_received": 1,
+          "revocation_received": 2,
+          "closure_recovery_prepared": 1,
+          "notification_received": 1
+        },
+        "buyer": {
+          "received": 2,
+          "handoff_prepared": 4,
+          "handoff_acknowledged": 4,
+          "fact_evidence_replied": 39,
+          "reliability_status_replied": 5
+        }
+      }
+    }
+  },
+  "repair": {
+    "status": "confirmed_offer",
+    "old_root": "37ff04507a03b2c4476571b319820b5982156d64cf8cfbe64c7428cc06206fbb",
+    "new_root": "b77954bb7c6664ab220ea05aa1811d4cec04cf478f469a9154e4b68d61cef05d",
+    "new_root_short": "b77954…05d",
+    "issuer": "source",
+    "old_cents": 43750,
+    "new_cents": 51250,
+    "authority": "buyer",
+    "authority_status": "CONFIRMED",
+    "rebuilds": [
+      {
+        "old": "9277060eabf276d63930237dfa64cfe153285a3c98eb12575be09d47e3bf46c3",
+        "old_short": "927706…6c3",
+        "issuer": "chain_1",
+        "status": "completed",
+        "new": "8ec451719be8bfa3cadd54bfea8624644158ca48c8c907695c74f69dc065191a",
+        "new_short": "8ec451…91a",
+        "action_authorized": false
+      },
+      {
+        "old": "7e1a4dff28fc86fa0e1c9b605f75113e2bde123b22f3b7fc7f9c18608732b3ea",
+        "old_short": "7e1a4d…3ea",
+        "issuer": "chain_2",
+        "status": "completed",
+        "new": "e56174fdb1dbfcc661d5ca8acfbcb36d9ff9765cae5d77b8b8ed36df6d1b0aa5",
+        "new_short": "e56174…aa5",
+        "action_authorized": false
+      },
+      {
+        "old": "f1a8e29328ef7b9fddaa9f7e73380c193d63affe30b68b5cbc0b6a2b6e6562ba",
+        "old_short": "f1a8e2…2ba",
+        "issuer": "branch_a",
+        "status": "completed",
+        "new": "08d4cbdf4db3d70c9fd1587a82ddba4935f853c3303f29edda788c90b65ae314",
+        "new_short": "08d4cb…314",
+        "action_authorized": false
+      }
+    ],
+    "recoveries": [
+      {
+        "task_id": "A_a",
+        "status": "recovery_completed",
+        "final_action": "COMPLETED",
+        "authority_confirmation": "CONFIRMED"
+      },
+      {
+        "task_id": "A_b",
+        "status": "recovery_completed",
+        "final_action": "COMPLETED",
+        "authority_confirmation": "CONFIRMED"
+      }
+    ]
+  },
+  "stages": [
+    {
+      "id": "normal",
+      "label": "正常传播",
+      "duration_ms": 3500
+    },
+    {
+      "id": "fault",
+      "label": "发现错误",
+      "duration_ms": 3500
+    },
+    {
+      "id": "contain",
+      "label": "局部阻断",
+      "duration_ms": 5000
+    },
+    {
+      "id": "repair",
+      "label": "修订与重建",
+      "duration_ms": 4500
+    },
+    {
+      "id": "recheck",
+      "label": "重新检查",
+      "duration_ms": 3500
+    }
+  ]
+}
